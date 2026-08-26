@@ -186,6 +186,81 @@ export const caseStudies: CaseStudy[] = [
       { value: "2", label: "perfis de usuário atendidos (staff e tutor)" },
       { value: "1", label: "design system estruturado do zero" },
     ],
+    nextProjectSlug: "aurum-bet-torneios",
+  },
+  // Real content added 2026-08-26. Company name "Aurum Bet" is explicitly
+  // fictional per the user's own source draft (nda: false -- this is not
+  // the Figma-template placeholder state, just an anonymized employer
+  // name, disclosed as such in subtitle/summary). Assumed (not
+  // user-confirmed) fields, same "flag, don't invent" treatment as the
+  // zentupet entry's assumed fields above: metadata.duracao
+  // ("3 a 6 meses"), metadata.plataforma ("Web"), and year ("2026").
+  // coverImage and imageBlocks[].image are still empty -- no screenshots
+  // supplied yet.
+  {
+    slug: "aurum-bet-torneios",
+    nda: false,
+    category: "Sistema de Torneios",
+    title: "Aurum Bet",
+    subtitle:
+      "Sistema de torneios desenhado do zero para uma plataforma de apostas (nome fictício), com cobertura completa de estados e a origem do processo de handoff estruturado no Notion",
+    summary:
+      "Estruturação do zero do sistema de torneios de uma plataforma de apostas (nome fictício: Aurum Bet) -- 33 telas cobrindo lobby, detalhes, participação e todos os estados de status, suportadas por 7 componentes reutilizáveis e 3 modais. Também foi o projeto onde o processo de handoff estruturado no Notion foi implementado pela primeira vez, documentando telas e componentes para o time de dev.",
+    cardDescription:
+      "Sistema de torneios estruturado do zero, com cobertura completa de estados -- e o primeiro handoff estruturado no Notion do time.",
+    year: "2026",
+    metadata: {
+      papel: "Pesquisa de referência, UX/UI e handoff para dev",
+      duracao: "3 a 6 meses",
+      plataforma: "Web",
+      squad: "Eu (pesquisa, UX/UI e handoff) + time de dev (implementação)",
+    },
+    contexto: {
+      paragraph:
+        "Torneios era uma feature já prevista no roadmap de produto da Aurum Bet -- não houve redirecionamento de escopo nem reinterpretação de briefing. O trabalho começou direto na estruturação completa da funcionalidade: pesquisa de referência com concorrentes diretos, desenho de todas as telas e estados, definição dos componentes reutilizáveis e apresentação do handoff diretamente ao time de dev.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Benchmark competitivo",
+        description:
+          "Mapeamento do fluxo de participação, pontuação e premiação de concorrentes diretos antes do desenho das telas -- processo real de pesquisa, ainda que não documentado como artefato à parte.",
+      },
+      {
+        number: "02",
+        title: "Cobertura sistemática de estados",
+        description:
+          "33 telas cobrindo o fluxo completo -- lobby dos torneios, detalhes do torneio, participação, loading e fallback -- com cobertura de todos os status (não iniciado, em andamento, encerrado) em vez de desenhar só o caminho feliz.",
+      },
+      {
+        number: "03",
+        title: "Componentes e modais reutilizáveis",
+        description:
+          "7 componentes reutilizáveis (sem contar variações) e 3 modais sustentando o fluxo inteiro, pensados para reuso entre lobby, detalhes e participação em vez de soluções pontuais por tela.",
+      },
+      {
+        number: "04",
+        title: "Handoff estruturado -- a origem do processo",
+        description:
+          "Primeiro projeto com handoff documentado de forma estruturada no Notion: todas as telas e componentes, criados e reutilizados, com explicação de como cada ponto da funcionalidade deveria se comportar -- apresentado diretamente ao time de dev.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Lobby de torneios com cobertura completa dos estados -- não iniciado, em andamento e encerrado",
+      },
+      {
+        caption:
+          "Handoff estruturado no Notion -- telas e componentes documentados para o time de dev",
+      },
+    ],
+    stats: [
+      { value: "33", label: "telas cobrindo lobby, detalhes, participação e status" },
+      { value: "7", label: "componentes reutilizáveis" },
+      { value: "3", label: "modais no fluxo de torneios" },
+      { value: "~50%", label: "menos dúvidas de dev após o handoff estruturado (percepção do time)" },
+    ],
     nextProjectSlug: "multi-tenant-design-system",
   },
 ];
