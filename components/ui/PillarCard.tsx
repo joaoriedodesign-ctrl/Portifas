@@ -31,7 +31,7 @@ export function PillarCard({
   const isHome = variant === "home";
 
   return (
-    <div className="flex w-full min-h-[220px] flex-1 basis-[260px] flex-col gap-4 rounded-[32px] border border-border-surface-primary bg-surface-primary p-6 sm:p-8">
+    <div className="flex h-full w-full min-h-[220px] flex-1 basis-[260px] flex-col gap-4 rounded-[32px] border border-border-surface-primary bg-surface-primary p-6 sm:p-8">
       <div className="flex w-full items-center justify-between">
         <span
           className={
