@@ -1,22 +1,23 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { caseStudies } from "@/lib/case-studies";
+import { ProjectCard } from "@/components/ui/ProjectCard";
 
-export default function Home() {
+export default function CaseStudiesIndex() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-24">
-      <h1 className="heading-display">João Lucas</h1>
-      <p className="body-lg mt-4 text-text-secondary">
-        Product Designer especializado em Design Systems — arquitetura de
-        tokens, governança multi-tenant e workflows AI-assisted.
-      </p>
+    <main className="mx-auto max-w-[1312px] px-6 pb-24 pt-40">
+      <h1 className="heading-h1 text-text-primary">Projetos</h1>
 
-      <div className="mt-8 flex gap-3">
-        <Link href="/case-studies">
-          <Button variant="primary">Ver case studies</Button>
-        </Link>
-        <a href="mailto:hello@example.com">
-          <Button variant="secondary">Contato</Button>
-        </a>
+      <div className="mt-10 flex flex-col gap-4">
+        {caseStudies.map((cs) => (
+          <ProjectCard
+            key={cs.slug}
+            slug={cs.slug}
+            category={cs.category}
+            year={cs.year}
+            title={cs.title}
+            description={cs.cardDescription}
+            image={cs.coverImage}
+          />
+        ))}
       </div>
     </main>
   );

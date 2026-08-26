@@ -1,9 +1,11 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "secondary";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
+  /** Exact exported icon asset for this instance (e.g. arrow-down, arrow-right) — Figma uses a different icon per CTA, so this isn't baked into the component. */
+  icon?: ReactNode;
 }
 
 /**
@@ -19,10 +21,11 @@ export function Button({
   className = "",
   disabled,
   children,
+  icon,
   ...props
 }: ButtonProps) {
   const base =
-    "label-button inline-flex items-center justify-center rounded-md px-5 py-2.5 transition-colors disabled:cursor-not-allowed disabled:opacity-40";
+    "label-button inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 transition-colors disabled:cursor-not-allowed disabled:opacity-40";
 
   const variants: Record<ButtonVariant, string> = {
     primary:
@@ -38,6 +41,7 @@ export function Button({
       {...props}
     >
       {children}
+      {icon}
     </button>
   );
 }

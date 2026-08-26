@@ -1,33 +1,24 @@
-import Link from "next/link";
 import { caseStudies } from "@/lib/case-studies";
-import { Badge } from "@/components/ui/Badge";
+import { ProjectCard } from "@/components/ui/ProjectCard";
 
 export default function CaseStudiesIndex() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-24">
-      <h1 className="heading-h1">Case studies</h1>
+    <main className="mx-auto max-w-[1312px] px-6 pb-24 pt-40">
+      <h1 className="heading-h1 text-text-primary">Projetos</h1>
 
-      <ul className="mt-10 flex flex-col gap-6">
+      <div className="mt-10 flex flex-col gap-4">
         {caseStudies.map((cs) => (
-          <li
+          <ProjectCard
             key={cs.slug}
-            className="rounded-lg border border-border bg-surface p-6"
-          >
-            <Link href={`/case-studies/${cs.slug}`} className="block">
-              <h2 className="heading-h4">{cs.title}</h2>
-              <p className="body-base mt-2 text-text-secondary">
-                {cs.summary}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {cs.tags.map((tag) => (
-                  <Badge key={tag}>{tag}</Badge>
-                ))}
-                {cs.nda && <Badge>Detalhes sob NDA — disponível em call</Badge>}
-              </div>
-            </Link>
-          </li>
+            slug={cs.slug}
+            category={cs.category}
+            year={cs.year}
+            title={cs.title}
+            description={cs.cardDescription}
+            image={cs.coverImage}
+          />
         ))}
-      </ul>
+      </div>
     </main>
   );
 }

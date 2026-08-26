@@ -1,11 +1,11 @@
 {
   "color": {
-    "paper": { "$type": "color", "$value": "#F2EBDD" },
-    "surface": { "$type": "color", "$value": "#FAF6EC" },
-    "border": { "$type": "color", "$value": "#DAD0BC" },
+    "paper": { "$type": "color", "$value": "#FFFFFF" },
+    "surface": { "$type": "color", "$value": "#FBFAFA" },
+    "border": { "$type": "color", "$value": "#D8D8D8" },
     "border-strong": { "$type": "color", "$value": "#C2B79E" },
-    "ink": { "$type": "color", "$value": "#1E1B16" },
-    "ink-muted": { "$type": "color", "$value": "#6E675C" },
+    "ink": { "$type": "color", "$value": "#2C2C2C" },
+    "ink-muted": { "$type": "color", "$value": "#676767" },
     "red": { "$type": "color", "$value": "#B8492F" },
     "red-hover": { "$type": "color", "$value": "#9C3D27" },
     "blue": { "$type": "color", "$value": "#35618F" },

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sora, DM_Sans } from "next/font/google";
+import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
 // These two variables are the ONLY place font-family is decided.
@@ -31,7 +32,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${sora.variable} ${dmSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

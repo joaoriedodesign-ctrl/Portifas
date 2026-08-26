@@ -8,13 +8,16 @@
  */
 
 :root {
-  /* Primitivas */
-  --color-paper: #f2ebdd;
-  --color-surface: #faf6ec;
-  --color-border: #dad0bc;
-  --color-border-strong: #c2b79e;
-  --color-ink: #1e1b16;
-  --color-ink-muted: #6e675c;
+  /* Primitivas
+     Atualizado em 2026 — neutros migraram do papel quente (Bauhaus matte)
+     para um cinza padrão, confirmado como intencional. Ver nota de versão
+     no fim deste arquivo. */
+  --color-paper: #ffffff;
+  --color-surface: #fbfafa;
+  --color-border: #d8d8d8;
+  --color-border-strong: #c2b79e; /* não observado nos frames lidos — não migrado, confirmar */
+  --color-ink: #2c2c2c;
+  --color-ink-muted: #676767;
   --color-red: #b8492f;
   --color-red-hover: #9c3d27;
   --color-blue: #35618f;

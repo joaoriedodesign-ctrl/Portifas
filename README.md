@@ -62,6 +62,32 @@ Add an entry to the `caseStudies` array in `lib/case-studies.ts`. Set
 already renders a "full narrative available on a call" note instead of the
 protected content when that flag is set.
 
+## Pending assets from Figma
+
+The home page (`app/page.tsx`) references four assets exported from the
+PORTIFÓLIO Figma file. Figma's export URLs expire ~7 days after generation —
+run these before then (the code already points at the correct local paths,
+so no code changes needed after downloading):
+
+```bash
+curl -o public/images/hero/profile.png "https://www.figma.com/api/mcp/asset/e7f45719-f3f9-43be-9cc1-c846249cd7d6.png"
+curl -o public/images/hero/blob.svg "https://www.figma.com/api/mcp/asset/21715cc0-75b3-4a80-af0f-7f0816eb43a7.svg"
+curl -o public/icons/arrow-down.svg "https://www.figma.com/api/mcp/asset/2962465b-3266-4b72-b025-2e19d0fbceb2.svg"
+curl -o public/icons/arrow-right.svg "https://www.figma.com/api/mcp/asset/a6e450df-a09d-4f53-a59d-9bc35a140f1d.svg"
+```
+
+`arrow-right.svg` is reused at two sizes (project card and footer CTA) —
+that's one glyph, not a missing second asset.
+
+**Known gaps vs. the Figma file**, flagged rather than silently fixed:
+- The small decorative divider line (node `31:1905`, a 4×115px accent near
+  the hero) wasn't ported — low-impact, easy to add once the photo is in
+  place and its position can be checked against the real image.
+- The rotated tertiary-yellow pill behind the hero photo (node `31:1806`)
+  uses an approximated transform, not the exact chain from Figma (which
+  combines a grid-cell offset with a rotate+scaleY on an inner element).
+  Worth a visual compare once the real photo is in and adjusting if it's off.
+
 ## Local development
 
 ```bash
