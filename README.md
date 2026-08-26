@@ -64,15 +64,19 @@ protected content when that flag is set.
 
 ## Pending assets from Figma
 
-The home page (`app/page.tsx`) references four assets exported from the
-PORTIFÓLIO Figma file. Figma's export URLs expire ~7 days after generation —
-run these before then (the code already points at the correct local paths,
-so no code changes needed after downloading):
+`public/images/hero/hero-visual.png` (the photo + blue/yellow blob group,
+Figma node `31:1805`) is already in place — supplied directly by the user as
+a pre-composited, transparent-background PNG. The earlier plan below of
+separately downloading `profile.png` + `blob.svg` and reconstructing the
+blobs in CSS/SVG was dropped as a result; see the comment at the top of
+`components/sections/Hero.tsx` for why.
+
+Two icon assets are still pending. Figma's export URLs expire ~7 days after
+generation — run these before then (the code already points at the correct
+local paths, so no code changes needed after downloading):
 
 ```bash
-curl -o public/images/hero/profile.png "https://www.figma.com/api/mcp/asset/e7f45719-f3f9-43be-9cc1-c846249cd7d6.png"
-curl -o public/images/hero/blob.svg "https://www.figma.com/api/mcp/asset/21715cc0-75b3-4a80-af0f-7f0816eb43a7.svg"
-curl -o public/icons/arrow-down.svg "https://www.figma.com/api/mcp/asset/2962465b-3266-4b72-b025-2e19d0fbceb2.svg"
+curl -o public/icons/arrow-down.svg "https://www.figma.com/api/mcp/asset/4156fc04-03ac-4a99-ae62-b3bcb483d405.svg"
 curl -o public/icons/arrow-right.svg "https://www.figma.com/api/mcp/asset/a6e450df-a09d-4f53-a59d-9bc35a140f1d.svg"
 ```
 
@@ -81,12 +85,12 @@ that's one glyph, not a missing second asset.
 
 **Known gaps vs. the Figma file**, flagged rather than silently fixed:
 - The small decorative divider line (node `31:1905`, a 4×115px accent near
-  the hero) wasn't ported — low-impact, easy to add once the photo is in
-  place and its position can be checked against the real image.
-- The rotated tertiary-yellow pill behind the hero photo (node `31:1806`)
-  uses an approximated transform, not the exact chain from Figma (which
-  combines a grid-cell offset with a rotate+scaleY on an inner element).
-  Worth a visual compare once the real photo is in and adjusting if it's off.
+  the hero) wasn't ported — out of scope for the Hero section built so far;
+  revisit if/when it's requested.
+- ~~The rotated tertiary-yellow pill behind the hero photo used an
+  approximated transform~~ — resolved: the pill is now part of the supplied
+  `hero-visual.png` composite instead of being reconstructed, so there's no
+  transform left to approximate.
 
 ## Local development
 

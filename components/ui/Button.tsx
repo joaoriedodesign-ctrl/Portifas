@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "transparent";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -10,8 +10,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 /**
  * Reference implementation for the project's Label/Button text style +
- * brand tokens. Covers default / hover / focus-visible / disabled, per the
- * "todos os estados relevantes" rule in the project checklist.
+ * the v2 `cta-*` tokens (docs/design-tokens.md §1.2). Covers default /
+ * hover / focus-visible / disabled, per the "todos os estados relevantes"
+ * rule in the project checklist.
+ *
+ * `secondary` used to reach for `brand-secondary` (blue) — blue was
+ * discontinued in the v2 palette with no replacement accent
+ * (docs/design-tokens.md §4), so it's remapped onto the doc's own
+ * `cta-secondary` tokens (outline style) instead of inventing a color.
+ *
+ * `transparent` is new here: the doc already defines a full `cta-transparent`
+ * token set (ghost button — ver §1.2) that had no consumer in code yet.
+ * Adding the variant wires it up rather than leaving it undocumented-but-unused.
  *
  * Do not fork this into a one-off styled <button> elsewhere — extend the
  * variant prop instead, so every CTA in the site stays visually consistent.
@@ -28,10 +38,11 @@ export function Button({
     "label-button inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 transition-colors disabled:cursor-not-allowed disabled:opacity-40";
 
   const variants: Record<ButtonVariant, string> = {
-    primary:
-      "bg-brand-primary text-text-inverse hover:bg-brand-primary-hover",
+    primary: "bg-cta-primary-bg text-cta-primary-text hover:bg-cta-primary-bg-hover",
     secondary:
-      "bg-transparent text-brand-secondary border border-border hover:border-border-strong hover:text-brand-secondary-hover",
+      "border border-cta-secondary-border bg-transparent text-cta-secondary-text hover:bg-cta-secondary-bg-hover",
+    transparent:
+      "border border-transparent bg-transparent text-cta-transparent-text hover:bg-cta-transparent-bg-hover hover:text-cta-transparent-text-hover",
   };
 
   return (

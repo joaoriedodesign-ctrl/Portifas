@@ -1,24 +1,24 @@
-import { caseStudies } from "@/lib/case-studies";
-import { ProjectCard } from "@/components/ui/ProjectCard";
+import { Hero } from "@/components/sections/Hero";
+import { PillarsSection } from "@/components/sections/PillarsSection";
 
-export default function CaseStudiesIndex() {
+/**
+ * Home page.
+ *
+ * Flagging, not silently fixing: before this change, app/page.tsx was a
+ * byte-for-byte duplicate of app/case-studies/page.tsx (a "Projetos" list),
+ * not actual home content — a leftover from scaffolding, not something
+ * pulled from Figma. It was removed when the Pillars section was built.
+ *
+ * Built so far: Hero (Figma node 31:1793) and Pillars (node 31:1809) — the
+ * two sections requested. The rest of the home page — "sobre", "contato"
+ * (both linked from the header nav) — is NOT built yet and is intentionally
+ * left out rather than invented.
+ */
+export default function Home() {
   return (
-    <main className="mx-auto max-w-[1312px] px-6 pb-24 pt-40">
-      <h1 className="heading-h1 text-text-primary">Projetos</h1>
-
-      <div className="mt-10 flex flex-col gap-4">
-        {caseStudies.map((cs) => (
-          <ProjectCard
-            key={cs.slug}
-            slug={cs.slug}
-            category={cs.category}
-            year={cs.year}
-            title={cs.title}
-            description={cs.cardDescription}
-            image={cs.coverImage}
-          />
-        ))}
-      </div>
+    <main>
+      <Hero />
+      <PillarsSection />
     </main>
   );
 }

@@ -5,16 +5,31 @@
 @import "../styles/tokens-colors.css";
 @import "../styles/tokens-typography.css";
 
-/* Base element styles — always through semantic tokens, never a raw value */
+/* Base element styles — always through semantic tokens, never a raw value.
+   Tokens are stored as "R G B" triplets (see tokens-colors.css), so plain
+   CSS consumption needs the rgb() wrapper too, same as the Tailwind config.
+
+   `color-scheme: dark` (2026-08-26, alongside inverting the `primary`
+   scale to dark mode): tells the browser to use its dark native UI for
+   things tokens don't cover — form control chrome, the scrollbar, default
+   selection highlight — instead of defaulting to light chrome on a dark
+   page. */
+:root {
+  color-scheme: dark;
+}
+
 body {
-  background-color: var(--bg-page);
-  color: var(--text-primary);
+  background-color: rgb(var(--surface-background));
+  color: rgb(var(--text-primary));
 }
 
 /* Visible focus state is not optional — accessibility rule from the project
-   persona. Applies project-wide so no interactive element ships without it. */
+   persona. Applies project-wide so no interactive element ships without it.
+   Was `var(--brand-secondary)` (blue) — blue was discontinued in the v2
+   palette (docs/design-tokens.md §4) with no replacement accent, so this
+   now uses the single remaining accent (`cta-primary-bg` / brand-500). */
 :focus-visible {
-  outline: 2px solid var(--brand-secondary);
+  outline: 2px solid rgb(var(--cta-primary-bg));
   outline-offset: 2px;
 }
 

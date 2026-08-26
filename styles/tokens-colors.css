@@ -1,42 +1,92 @@
 /**
- * Source of truth: referencia-cores.md (project knowledge base).
+ * Source of truth: docs/design-tokens.md (v2), migrated from
+ * referencia-cores.md / REFERE_2.MD per the 2026 palette rewrite.
  * Figma: arquivo PORTIFÓLIO, coleções `Primitivas` e `Semânticas`.
  *
- * Rule mirrored from the MD: never use a primitive hex directly in a
- * component — always go through the semantic token. Colored backgrounds
- * are not allowed; accent colors are reserved for CTA / link / one-off highlight.
+ * Rule mirrored from the doc: never use a primitive value directly in a
+ * component when a semantic token exists — always go through the semantic
+ * layer below. Colored backgrounds are not allowed; `brand-*` is reserved
+ * for CTA / link / one-off highlight ("destaque pontual").
+ *
+ * Values are stored as space-separated "R G B" triplets (not hex) so
+ * Tailwind's `rgb(var(--x) / <alpha-value>)` pattern can apply opacity
+ * modifiers (e.g. `bg-surface-primary/60`) to any token — primitive or
+ * semantic — without inventing a new color for that state.
  */
 
 :root {
-  /* Primitivas
-     Atualizado em 2026 — neutros migraram do papel quente (Bauhaus matte)
-     para um cinza padrão, confirmado como intencional. Ver nota de versão
-     no fim deste arquivo. */
-  --color-paper: #ffffff;
-  --color-surface: #fbfafa;
-  --color-border: #d8d8d8;
-  --color-border-strong: #c2b79e; /* não observado nos frames lidos — não migrado, confirmar */
-  --color-ink: #2c2c2c;
-  --color-ink-muted: #676767;
-  --color-red: #b8492f;
-  --color-red-hover: #9c3d27;
-  --color-blue: #35618f;
-  --color-blue-hover: #2c4f76;
-  --color-yellow: #d6a64a;
-  --color-yellow-hover: #be8f3b;
+  /* Primitivas — escala neutra `primary`, INVERTIDA para modo escuro
+     (pedido do usuário, 2026-08-26). Os nomes dos degraus (50-950) e todos
+     os aliases semânticos abaixo continuam os mesmos de antes — só os
+     valores de cada degrau foram espelhados (50<->950, 100<->900, etc.,
+     500 fica no meio). Isso significa que `primary-50` deixou de ser "o
+     tom mais claro possível" e passou a ser o mais escuro — é a troca
+     inteira do modo claro/escuro vivendo só na camada primitiva, sem
+     tocar em nenhum alias semântico nem em componente. */
+  --color-primary-50: 23 23 23;
+  --color-primary-100: 36 36 36;
+  --color-primary-200: 56 56 56;
+  --color-primary-300: 77 77 77;
+  --color-primary-400: 102 102 102;
+  --color-primary-500: 128 128 128;
+  --color-primary-600: 158 158 158;
+  --color-primary-700: 189 189 189;
+  --color-primary-800: 214 214 214;
+  --color-primary-900: 235 235 235;
+  --color-primary-950: 245 245 245;
 
-  /* Semânticas — aliased to primitives, this is what components consume */
-  --bg-page: var(--color-paper);
-  --bg-surface: var(--color-surface);
-  --border-default: var(--color-border);
-  --border-strong: var(--color-border-strong);
-  --text-primary: var(--color-ink);
-  --text-secondary: var(--color-ink-muted);
-  --text-inverse: var(--color-paper);
-  --brand-primary: var(--color-red);
-  --brand-primary-hover: var(--color-red-hover);
-  --brand-secondary: var(--color-blue);
-  --brand-secondary-hover: var(--color-blue-hover);
-  --brand-tertiary: var(--color-yellow);
-  --brand-tertiary-hover: var(--color-yellow-hover);
+  /* Primitivas — escala de acento `brand` (laranja, único acento) */
+  --color-brand-50: 246 245 243;
+  --color-brand-100: 241 233 228;
+  --color-brand-200: 235 210 194;
+  --color-brand-300: 235 180 142;
+  --color-brand-400: 240 142 76;
+  --color-brand-500: 255 103 0;
+  --color-brand-600: 199 83 5;
+  --color-brand-700: 144 63 9;
+  --color-brand-800: 98 48 14;
+  --color-brand-900: 57 32 14;
+  --color-brand-950: 34 21 11;
+
+  /* Semânticas — Surfaces (docs/design-tokens.md §1.2) */
+  --surface-background: var(--color-primary-50);
+  --surface-primary: var(--color-primary-100);
+  --surface-secondary: var(--color-primary-200);
+  --border-background: var(--color-primary-200);
+  /* 2026-08-26, softened twice at the user's request. First pass moved
+     primary-300 -> primary-200 (still felt too bright/visible). Second
+     pass: the user asked for "só um nível de diferença da cor surface" —
+     genuinely one small step above surface-primary's own fill (36 36 36),
+     not a whole named rung on the primary scale (the next rung, 200, is
+     already +20; there's no primary-150 to reach for). So this is now its
+     own explicit value, 10 points above surface-primary's RGB, not an
+     alias to any primary-* step — flagging that per the project's "don't
+     invent, signal it" rule: it's a genuinely new token value, not yet
+     folded into the documented 50/100/200.../950 scale. `surface-secondary`'s
+     border is intentionally left at the higher-contrast primary-300 —
+     nothing consumes it yet, and docs/design-tokens.md §3 already flagged
+     it as the one that might want *more* separation from primary, not
+     less, if a nested-surface case shows up. */
+  --border-surface-primary: var(--color-primary-200);
+  --border-surface-secondary: var(--color-primary-300);
+  --on-surface-primary: var(--color-primary-900);
+  --on-surface-secondary: var(--color-primary-700);
+
+  /* Semânticas — Texto de uso geral */
+  --text-primary: var(--color-primary-900);
+  --text-secondary: var(--color-primary-600);
+  --text-disable: var(--color-primary-300);
+
+  /* Semânticas — Botões (CTA). `bg`/`border` default = transparente is
+     expressed with Tailwind's built-in `bg-transparent` / `border-transparent`
+     utilities in components, not a token here — "transparent" isn't a color. */
+  --cta-primary-bg: var(--color-brand-500);
+  --cta-primary-bg-hover: var(--color-brand-600);
+  --cta-primary-text: var(--color-primary-50);
+  --cta-secondary-bg-hover: var(--color-primary-100);
+  --cta-secondary-border: var(--color-primary-900);
+  --cta-secondary-text: var(--color-primary-900);
+  --cta-transparent-bg-hover: var(--color-primary-100);
+  --cta-transparent-text: var(--color-brand-500);
+  --cta-transparent-text-hover: var(--color-brand-600);
 }

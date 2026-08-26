@@ -1,37 +1,70 @@
 {
   "color": {
-    "paper": { "$type": "color", "$value": "#FFFFFF" },
-    "surface": { "$type": "color", "$value": "#FBFAFA" },
-    "border": { "$type": "color", "$value": "#D8D8D8" },
-    "border-strong": { "$type": "color", "$value": "#C2B79E" },
-    "ink": { "$type": "color", "$value": "#2C2C2C" },
-    "ink-muted": { "$type": "color", "$value": "#676767" },
-    "red": { "$type": "color", "$value": "#B8492F" },
-    "red-hover": { "$type": "color", "$value": "#9C3D27" },
-    "blue": { "$type": "color", "$value": "#35618F" },
-    "blue-hover": { "$type": "color", "$value": "#2C4F76" },
-    "yellow": { "$type": "color", "$value": "#D6A64A" },
-    "yellow-hover": { "$type": "color", "$value": "#BE8F3B" }
+    "primary": {
+      "50": { "$type": "color", "$value": "#171717", "$description": "Inverted for dark mode 2026-08-26 (was #f5f5f5) — semantic aliases unchanged, only this primitive scale flipped." },
+      "100": { "$type": "color", "$value": "#242424" },
+      "200": { "$type": "color", "$value": "#383838" },
+      "300": { "$type": "color", "$value": "#4d4d4d" },
+      "400": { "$type": "color", "$value": "#666666" },
+      "500": { "$type": "color", "$value": "#808080" },
+      "600": { "$type": "color", "$value": "#9e9e9e" },
+      "700": { "$type": "color", "$value": "#bdbdbd" },
+      "800": { "$type": "color", "$value": "#d6d6d6" },
+      "900": { "$type": "color", "$value": "#ebebeb" },
+      "950": { "$type": "color", "$value": "#f5f5f5" }
+    },
+    "brand": {
+      "50": { "$type": "color", "$value": "#f6f5f3" },
+      "100": { "$type": "color", "$value": "#f1e9e4" },
+      "200": { "$type": "color", "$value": "#ebd2c2" },
+      "300": { "$type": "color", "$value": "#ebb48e" },
+      "400": { "$type": "color", "$value": "#f08e4c" },
+      "500": { "$type": "color", "$value": "#ff6700" },
+      "600": { "$type": "color", "$value": "#c75305" },
+      "700": { "$type": "color", "$value": "#903f09" },
+      "800": { "$type": "color", "$value": "#62300e" },
+      "900": { "$type": "color", "$value": "#39200e" },
+      "950": { "$type": "color", "$value": "#22150b" }
+    }
   },
-  "bg": {
-    "page": { "$type": "color", "$value": "{color.paper}" },
-    "surface": { "$type": "color", "$value": "{color.surface}" }
+  "surface": {
+    "background": { "$type": "color", "$value": "{color.primary.50}" },
+    "primary": { "$type": "color", "$value": "{color.primary.100}" },
+    "secondary": { "$type": "color", "$value": "{color.primary.200}" }
   },
   "border": {
-    "default": { "$type": "color", "$value": "{color.border}" },
-    "strong": { "$type": "color", "$value": "{color.border-strong}" }
+    "background": { "$type": "color", "$value": "{color.primary.200}" },
+    "surface-primary": { "$type": "color", "$value": "#2e2e2e", "$description": "Softened twice 2026-08-26 at user request (primary.300 -> primary.200 -> this). Now a bespoke value ~10 points above surface/primary's own fill (#242424), not an alias to any primary-* rung — flagged as a value outside the documented scale, not yet formalized." },
+    "surface-secondary": { "$type": "color", "$value": "{color.primary.300}" }
+  },
+  "on-surface": {
+    "primary": { "$type": "color", "$value": "{color.primary.900}" },
+    "secondary": { "$type": "color", "$value": "{color.primary.700}" }
   },
   "text": {
-    "primary": { "$type": "color", "$value": "{color.ink}" },
-    "secondary": { "$type": "color", "$value": "{color.ink-muted}" },
-    "inverse": { "$type": "color", "$value": "{color.paper}" }
+    "primary": { "$type": "color", "$value": "{color.primary.900}" },
+    "secondary": { "$type": "color", "$value": "{color.primary.600}" },
+    "disable": { "$type": "color", "$value": "{color.primary.300}" }
   },
-  "brand": {
-    "primary": { "$type": "color", "$value": "{color.red}" },
-    "primary-hover": { "$type": "color", "$value": "{color.red-hover}" },
-    "secondary": { "$type": "color", "$value": "{color.blue}" },
-    "secondary-hover": { "$type": "color", "$value": "{color.blue-hover}" },
-    "tertiary": { "$type": "color", "$value": "{color.yellow}" },
-    "tertiary-hover": { "$type": "color", "$value": "{color.yellow-hover}" }
+  "cta": {
+    "primary": {
+      "bg": { "$type": "color", "$value": "{color.brand.500}" },
+      "bg-hover": { "$type": "color", "$value": "{color.brand.600}" },
+      "text": { "$type": "color", "$value": "{color.primary.50}" },
+      "border": { "$type": "color", "$value": "transparent" }
+    },
+    "secondary": {
+      "bg": { "$type": "color", "$value": "transparent" },
+      "bg-hover": { "$type": "color", "$value": "{color.primary.100}" },
+      "border": { "$type": "color", "$value": "{color.primary.900}" },
+      "text": { "$type": "color", "$value": "{color.primary.900}" }
+    },
+    "transparent": {
+      "bg": { "$type": "color", "$value": "transparent" },
+      "bg-hover": { "$type": "color", "$value": "{color.primary.100}" },
+      "border": { "$type": "color", "$value": "transparent" },
+      "text": { "$type": "color", "$value": "{color.brand.500}" },
+      "text-hover": { "$type": "color", "$value": "{color.brand.600}" }
+    }
   }
 }

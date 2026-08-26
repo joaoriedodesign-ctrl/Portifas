@@ -1,5 +1,5 @@
 /**
- * Source of truth: typography reference MD (project knowledge base).
+ * Source of truth: typography reference (docs/design-tokens.md §2).
  * Figma: arquivo PORTIFÓLIO, coleção `Primitivas` + text styles.
  *
  * --font-heading and --font-body are intentionally NOT redeclared here.
@@ -8,8 +8,18 @@
  * Redeclaring them in this stylesheet would risk a cascade conflict with
  * next/font's own stylesheet — this file only *consumes* var(--font-*).
  *
- * Rule mirrored from the MD: always reach for one of the 10 text styles
+ * Rule mirrored from the doc: always reach for one of the 10 text styles
  * below instead of typing a raw size/weight/letter-spacing.
+ *
+ * Responsive rule (docs/diretrizes-responsividade.md §2): "um h1 no
+ * desktop pode renderizar como h2 em mobile" — applied here systemically
+ * instead of per-component, so every use of `.heading-display/h1/h2/h3`
+ * site-wide is mobile-first automatically. Below the `lg` breakpoint
+ * (1024px, matching the project's documented breakpoint table) each of
+ * these four styles renders at the *next size down in this same
+ * documented scale* — never an invented value. `h4` and the `body-*` /
+ * `caption` / `label-button` styles stay constant across breakpoints;
+ * 14–20px doesn't need a mobile step-down.
  */
 
 :root {
@@ -27,37 +37,67 @@
 .heading-display {
   font-family: var(--font-heading, ui-sans-serif);
   font-weight: var(--font-weight-heading-extrabold);
-  font-size: 56px;
-  line-height: 60px;
-  letter-spacing: -1.5px;
+  /* mobile: renders at `h1` size */
+  font-size: 40px;
+  line-height: 46px;
+  letter-spacing: -1px;
   /* uso: hero, nome em destaque */
 }
 
 .heading-h1 {
   font-family: var(--font-heading, ui-sans-serif);
   font-weight: var(--font-weight-heading-bold);
-  font-size: 40px;
-  line-height: 46px;
-  letter-spacing: -1px;
+  /* mobile: renders at `h2` size */
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.5px;
   /* uso: título de seção principal */
 }
 
 .heading-h2 {
   font-family: var(--font-heading, ui-sans-serif);
   font-weight: var(--font-weight-heading-bold);
-  font-size: 32px;
-  line-height: 38px;
-  letter-spacing: -0.5px;
+  /* mobile: renders at `h3` size */
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0px;
   /* uso: título de seção */
 }
 
 .heading-h3 {
   font-family: var(--font-heading, ui-sans-serif);
   font-weight: var(--font-weight-heading-semibold);
-  font-size: 24px;
-  line-height: 30px;
+  /* mobile: renders at `h4` size */
+  font-size: 20px;
+  line-height: 26px;
   letter-spacing: 0px;
   /* uso: subtítulo */
+}
+
+@media (min-width: 1024px) {
+  .heading-display {
+    font-size: 56px;
+    line-height: 60px;
+    letter-spacing: -1.5px;
+  }
+
+  .heading-h1 {
+    font-size: 40px;
+    line-height: 46px;
+    letter-spacing: -1px;
+  }
+
+  .heading-h2 {
+    font-size: 32px;
+    line-height: 38px;
+    letter-spacing: -0.5px;
+  }
+
+  .heading-h3 {
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0px;
+  }
 }
 
 .heading-h4 {
