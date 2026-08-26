@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { AlignLeft, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -96,9 +97,33 @@ import { Button } from "@/components/ui/Button";
  * this full-screen use case wanted a heavier effect than a small pill
  * does) — noting the divergence so it doesn't read as an inconsistency
  * bug later.
+ *
+ * REAL BUG fixed (2026-08-26, confirmed on an actual iPhone, not just
+ * a resized desktop window): the header's avatar/name/hamburger stayed
+ * crisp on top of the blurred overlay instead of being covered by it.
+ * Root cause — `<MobileNav />` was rendered as a child of
+ * Header.tsx's `<header>`, and that `<header>` has both `transform`
+ * (the `-translate-x-1/2` centering trick) and `backdrop-filter`
+ * (`backdrop-blur-sm`). Per the CSS Transforms spec, an ancestor with
+ * `transform` OR `filter`/`backdrop-filter` becomes the containing
+ * block for its `position: fixed` descendants instead of the
+ * viewport — so this overlay was never truly a top-level, full-screen
+ * fixed element, it was contained by (and interacting with) the small
+ * header pill's own box. Fixed by portaling the overlay straight to
+ * `document.body` with `createPortal` — the trigger `Button` stays
+ * exactly where it was (inside Header, for correct in-pill layout),
+ * only the full-screen overlay markup escapes Header's DOM subtree,
+ * so its `fixed` positioning is finally relative to the real viewport.
+ * A `mounted` guard delays the portal to after the first client-side
+ * effect, since `document` doesn't exist during SSR.
  */
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -149,7 +174,7 @@ export function MobileNav() {
         <AlignLeft aria-hidden className="size-5" />
       </Button>
 
-      {isOpen && (
+      {mounted && isOpen && createPortal(
         <div
           id="mobile-menu"
           role="dialog"
@@ -193,7 +218,8 @@ export function MobileNav() {
           >
             <X aria-hidden className="size-6" />
           </Button>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
