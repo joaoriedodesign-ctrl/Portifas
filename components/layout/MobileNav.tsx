@@ -184,7 +184,7 @@ export function MobileNav() {
         >
           <nav className="flex flex-col items-center gap-8 text-center">
             <Link
-              href="/#sobre"
+              href="/sobre"
               onClick={() => setIsOpen(false)}
               className="heading-h2 text-text-primary"
             >

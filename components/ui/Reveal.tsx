@@ -16,9 +16,9 @@ const TRANSLATE_PX = 16;
 
 /**
  * Generic scroll-reveal wrapper: fades + translates its children up into
- * place the first time they enter the viewport. See hooks/useInView.ts for
- * the "new, undocumented motion pattern" flag and the timing rationale —
- * every value here traces back to that comment.
+ * place every time they enter the viewport, and back out again when they
+ * scroll out — see hooks/useInView.ts for the "repeats on every scroll"
+ * behavior and the timing rationale every value here traces back to.
  *
  * Renders as a plain `div`, so pass whatever layout classes the wrapped
  * element needs on the grid/flex parent via `className` (e.g. the

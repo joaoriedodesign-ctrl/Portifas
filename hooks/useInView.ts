@@ -17,15 +17,16 @@ interface UseInViewOptions {
  * starting point pending a real "Motion" section being added to the
  * design-tokens reference, not an already-approved token.
  *
- * Fires once: after the target intersects, `inView` stays true even if it
- * later scrolls out of view again — this is a one-time reveal, not a
- * repeating effect (re-triggering on every scroll direction would read as
- * "chamativo", the opposite of what this was asked to be).
+ * Repeats: `inView` toggles both ways — true when the target enters the
+ * viewport, false again once it scrolls back out — so the reveal replays
+ * every time the element crosses into view, not just once per page load
+ * (per explicit user direction 2026-08-26: animations don't need to be
+ * "once in a lifetime", they can fire on every scroll).
  *
  * Respects prefers-reduced-motion: when the OS/browser has that set,
- * `inView` resolves to `true` immediately on mount instead of waiting on
- * IntersectionObserver, so anything gated on it renders in its final state
- * right away with no animated transition.
+ * `inView` resolves to `true` immediately on mount and never toggles again
+ * (no IntersectionObserver is created), so anything gated on it renders in
+ * its final state right away with no animated transition, ever.
  */
 export function useInView<T extends HTMLElement>({
   threshold = 0.25,
@@ -45,10 +46,7 @@ export function useInView<T extends HTMLElement>({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
+        setInView(entry.isIntersecting);
       },
       { threshold, rootMargin }
     );

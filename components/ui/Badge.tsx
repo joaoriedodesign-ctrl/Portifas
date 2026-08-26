@@ -11,14 +11,32 @@ import { HTMLAttributes } from "react";
  * so the "accent color only in CTA/link/one-off highlight" rule stays
  * enforceable in one place.
  */
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  /**
+   * Accent-tinted category pill (bg-brand-500/10 + brand-500 text,
+   * uppercase) — added 2026-08-26 for app/sobre/page.tsx's "ABORDAGEM" /
+   * "FORMAÇÃO" section badges, which need accent-colored uppercase text
+   * instead of this component's default neutral/sentence-case treatment
+   * (the one already in use for Hero's "Product Designer" status pill).
+   * Same reasoning as Button.tsx's `iconOnly` prop: extend the shared
+   * component instead of forking a new one.
+   */
+  accent?: boolean;
+}
+
 export function Badge({
   children,
   className = "",
+  accent = false,
   ...props
-}: HTMLAttributes<HTMLSpanElement>) {
+}: BadgeProps) {
   return (
     <span
-      className={`caption inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-text-primary ${className}`}
+      className={`caption inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 ${
+        accent
+          ? "font-semibold uppercase tracking-wide text-brand-500"
+          : "text-text-primary"
+      } ${className}`}
       {...props}
     >
       {children}

@@ -51,8 +51,16 @@ export default function CaseStudyPage({
     <main className="w-full">
       {/* Header Section — node 38:4. The global floating nav (Header
           component in layout.tsx) sits above this; this back-link is
-          page-specific breadcrumb furniture, not a duplicate of the nav. */}
-      <div className="flex w-full items-center justify-between px-6 py-6 sm:px-16 sm:py-8">
+          page-specific breadcrumb furniture, not a duplicate of the nav.
+          Top padding bumped on mobile only (2026-08-26, user-reported via
+          screenshot: "← Projetos" sat at the same height as the floating
+          header pill, reading as cluttered/overlapping at narrow widths).
+          `pt-24` (96px) clears the header's own documented mobile
+          footprint — `top-6` (24px) + 54px height = ~78px bottom edge,
+          per the geometry Hero.tsx's own comment already computes this
+          from. `sm:pt-8` unchanged — not reported as an issue at that
+          breakpoint, where the header sits lower (`sm:top-8`). */}
+      <div className="flex w-full items-center justify-between px-6 pb-6 pt-24 sm:px-16 sm:pb-8 sm:pt-8">
         <Link href="/case-studies" className="label-button text-text-secondary">
           ← Projetos
         </Link>

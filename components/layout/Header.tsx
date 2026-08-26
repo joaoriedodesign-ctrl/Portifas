@@ -69,7 +69,7 @@ import { MobileNav } from "@/components/layout/MobileNav";
  * pill's width was accommodating.
  *
  * RESOLVED (2026-08-26, same day): the usability gap this left — no way
- * to reach /case-studies, #sobre, or #contato from the header below
+ * to reach /case-studies, /sobre, or #contato from the header below
  * `sm` — is now closed by `<MobileNav />` (components/layout/MobileNav.tsx),
  * a hamburger trigger + full-screen menu rendered right after this <nav>,
  * each self-hiding at the opposite breakpoint (`<nav>` is `hidden
@@ -98,7 +98,7 @@ export function Header() {
           <Link href="/case-studies" className="caption text-text-primary">
             PROJETOS
           </Link>
-          <Link href="/#sobre" className="caption text-text-primary">
+          <Link href="/sobre" className="caption text-text-primary">
             SOBRE
           </Link>
           <Link href="/#contato" className="caption text-text-primary">

@@ -23,6 +23,12 @@ const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
  * animating 0 to a single digit over ~900ms reads as nothing happening,
  * not motion — and gets a soft scale+fade "pop" instead so it still feels
  * alive. Same "new, undocumented motion pattern" flag as hooks/useInView.ts.
+ *
+ * Repeats: when `start` goes false (card scrolled out of view, per
+ * useInView's toggle-both-ways behavior), the displayed digits/pop state
+ * reset back to their pre-animation baseline — invisible to the user since
+ * the parent card has already faded out by then — so the count/pop plays
+ * again in full the next time `start` flips back to true.
  */
 export function AnimatedNumber({
   value,
@@ -39,7 +45,16 @@ export function AnimatedNumber({
   const [popVisible, setPopVisible] = useState(false);
 
   useEffect(() => {
-    if (!start) return;
+    if (!start) {
+      // Reset so the animation replays in full next time `start` flips
+      // back to true — happens while hidden, so no visible flash.
+      if (isCountable) {
+        setDisplay(`${match![1]}0${match![3]}`);
+      } else {
+        setPopVisible(false);
+      }
+      return;
+    }
 
     if (!isCountable) {
       const t = setTimeout(() => setPopVisible(true), delay);
