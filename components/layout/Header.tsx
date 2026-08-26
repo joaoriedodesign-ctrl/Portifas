@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { HeaderNav } from "@/components/layout/HeaderNav";
 
 /**
  * Fixed/floating nav, per node 31:1911 "Frame 16" in the PORTIFÓLIO Figma file.
@@ -75,11 +76,55 @@ import { MobileNav } from "@/components/layout/MobileNav";
  * each self-hiding at the opposite breakpoint (`<nav>` is `hidden
  * sm:flex`, `MobileNav`'s trigger is `sm:hidden`) so exactly one
  * navigation affordance is visible at any given width.
+ *
+ * Liquid Glass restyle (2026-08-26, explicit user request: lighter pill
+ * color + a "liquid glass" material treatment) — RESTORED after this
+ * file got reverted to its pre-glass committed state (`git log` showed
+ * it back at commit `v9`, matching HEAD exactly, while sibling files
+ * with uncommitted edits from the same session stayed dirty — likely a
+ * single-file discard/checkout done outside this session, not something
+ * this session did):
+ * - Lighter color: moved one documented step up the surface scale,
+ *   `surface/primary` (`primary-100`, #242424) -> `surface/secondary`
+ *   (`primary-200`, #383838). Both are real semantic tokens from
+ *   docs/design-tokens.md §1.2 — no invented hex here. Opacity also
+ *   dropped 60% -> 45% so more of the blurred/saturated backdrop shows
+ *   through, which is what makes the glass read as "lighter" rather than
+ *   just a flat darker-grey pill.
+ * - Liquid glass material: three ingredients, none of which have a
+ *   documented token yet (flagging per project rule — these are new
+ *   proposals, not references to something already approved):
+ *   1. `backdrop-blur-xl` + `backdrop-saturate-150` replacing the old
+ *      `backdrop-blur-sm` alone — the saturate boost is what actually
+ *      sells "liquid glass" (Apple's material spec): content behind the
+ *      pill reads more vivid/saturated through the glass than it does
+ *      unblurred, not just blurry.
+ *   2. `border-white/10` hairline + an arbitrary
+ *      `shadow-[0_8px_32px_rgba(0,0,0,0.35)]` for edge definition and
+ *      floating elevation against the dark page background.
+ *   3. A `::before` sheen (`before:bg-gradient-to-b before:from-white/10
+ *      before:to-transparent`) simulating a specular highlight catching
+ *      the top of curved glass. Given `position: absolute` on `::before`
+ *      would otherwise paint over the static-flow nav content per CSS2.1
+ *      painting order, the actual content row now carries `relative z-10`
+ *      so it stays above the sheen.
+ *   Proposing these as the seed of a "Effects/Glass" section in
+ *   docs/design-tokens.md (blur intensity, saturate step, rim-light
+ *   opacity, elevation shadow) rather than letting them stay one-off
+ *   arbitrary values here and in any future glass surface (e.g. if
+ *   MobileNav's fixed pill treatment ever gets the same look).
+ *
+ * Active/hover-orange nav state (2026-08-26): the desktop `<nav>` above
+ * was extracted into `<HeaderNav />` (components/layout/HeaderNav.tsx,
+ * "use client") so it can read the current route and turn the current
+ * page's link (and any hovered link) `text-brand-500` — see that file's
+ * doc comment for the color-token and active-matching rules, including
+ * why `/#contato` never gets an active state.
  */
 export function Header() {
   return (
-    <header className="fixed left-1/2 top-6 z-50 w-[564px] max-w-[calc(100%-32px)] -translate-x-1/2 rounded-[195px] bg-surface-primary/60 py-2 pl-2 pr-6 backdrop-blur-sm sm:top-8">
-      <div className="flex items-center justify-between gap-2">
+    <header className="fixed left-1/2 top-6 z-50 w-[564px] max-w-[calc(100%-32px)] -translate-x-1/2 rounded-[195px] border border-white/10 bg-surface-secondary/45 py-2 pl-2 pr-6 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl backdrop-saturate-150 before:pointer-events-none before:absolute before:inset-0 before:rounded-[195px] before:bg-gradient-to-b before:from-white/10 before:to-transparent before:content-[''] sm:top-8">
+      <div className="relative z-10 flex items-center justify-between gap-2">
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/header/avatar.png"
@@ -94,17 +139,7 @@ export function Header() {
             <span className="caption block text-text-secondary">PRODUCT DESIGNER</span>
           </span>
         </Link>
-        <nav className="hidden items-center gap-3 sm:flex sm:gap-6 lg:gap-8">
-          <Link href="/case-studies" className="caption text-text-primary">
-            PROJETOS
-          </Link>
-          <Link href="/sobre" className="caption text-text-primary">
-            SOBRE
-          </Link>
-          <Link href="/#contato" className="caption text-text-primary">
-            CONTATO
-          </Link>
-        </nav>
+        <HeaderNav />
         <MobileNav />
       </div>
     </header>

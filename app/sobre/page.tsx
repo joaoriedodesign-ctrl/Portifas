@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Award, Mail, Smartphone } from "lucide-react";
+import { Mail, Smartphone } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { PillarCard } from "@/components/ui/PillarCard";
 import { Reveal } from "@/components/ui/Reveal";
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
  * page's "ABORDAGEM"/"FORMAÇÃO" category-pill style. Same reasoning
  * Button.tsx used for its `iconOnly` prop.
  *
- * ICONS: Mail / Smartphone / Award are lucide-react, matching the
+ * ICONS: Mail / Smartphone are lucide-react, matching the
  * project's established precedent (Hero/Footer/ProjectCard already use
  * lucide instead of one-off Figma SVG exports for icons that have a
  * lucide equivalent). LinkedIn does NOT have a lucide-react equivalent
@@ -116,6 +116,15 @@ export const metadata: Metadata = {
  * show how the bleed layout should respond, and every other image on the
  * site is already a rounded card, so this reuses that instead of
  * inventing a new responsive behavior for a one-off treatment.
+ * UPDATE 2026-08-26: reverted, per explicit user request — two reference
+ * screenshots pasted in chat (a color + a b/w version of the same layout)
+ * asked for the photo "nessa pegada, sem essa imagem dentro de um card."
+ * The Hero JSX below now does what this paragraph originally described
+ * skipping: the photo is edge-to-edge, no rounding, no card, bleeding to
+ * the section's real right/top/bottom edges on desktop (full details in
+ * the inline comment right above the Hero `<section>`). Leaving this
+ * paragraph in place rather than deleting it — it's still the accurate
+ * record of why the card version existed for one round before this.
  *
  * STAT SIZE: the "+2 Anos" / "LATAM & Asia" numbers use a raw `36px` in
  * Figma's own export — not tied to any of its named text styles (not in
@@ -240,12 +249,74 @@ const skills = [
   "Prototipagem de Alta Fidelidade",
 ] as const;
 
+// 2026-08-26: replaced with the user's real 9-credential list (exact
+// titles + Coursera/Tera verify links, supplied directly) — supersedes
+// the earlier 4-item placeholder above, which deliberately dropped
+// issue-date/credential-code fields rather than invent them (see prior
+// note, kept in project memory). `logo` points at the real issuer marks
+// the user provided (`public/images/sobre/logos/`); every card is now a
+// clickable link to its real verification URL.
 const certifications = [
-  "Build Wireframes and Low-Fidelity Prototypes (Google)",
-  "Google UX Design Professional Certificate",
-  "Build Dynamic User Interfaces (Coursera)",
-  "Conduct UX Research and Test Early Concepts",
+  {
+    title: "Google UX Design Professional Certificate",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/specialization/Y2WKA6Q7A19U",
+    logo: "google",
+  },
+  {
+    title: "Design a User Experience for Social Good & Prepare for Jobs",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/IBJJNGCDBRSR",
+    logo: "google",
+  },
+  {
+    title: "Build Dynamic User Interfaces (UI) for Websites",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/DPWEC33B85JH",
+    logo: "google",
+  },
+  {
+    title: "Create High-Fidelity Designs and Prototypes in Figma",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/HZW8WR203NHO",
+    logo: "google",
+  },
+  {
+    title: "Claude para Designers",
+    issuer: "Tera",
+    url: "https://credentials.somostera.com/d2a2aaf94c6cd04c9afdf55dcdadbebb",
+    logo: "tera",
+  },
+  {
+    title: "Conduct UX Research and Test Early Concepts",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/ILK6P2UV4GLU?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course",
+    logo: "google",
+  },
+  {
+    title: "Build Wireframes and Low-Fidelity Prototype",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/UMN275LDU6GZ",
+    logo: "google",
+  },
+  {
+    title: "Foundations of User Experience (UX) Design",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/BM65601UQ0NF",
+    logo: "google",
+  },
+  {
+    title: "Start the UX Design Process: Empathize, Define, and Ideate",
+    issuer: "Google",
+    url: "https://www.coursera.org/account/accomplishments/verify/LWRYK5Q53102",
+    logo: "google",
+  },
 ] as const;
+
+const certificationLogos = {
+  google: "/images/sobre/logos/google.png",
+  tera: "/images/sobre/logos/tera.png",
+} as const;
 
 /** Standard LinkedIn "in" brand glyph — see the file-level comment on why this is inlined instead of a lucide import or a downloaded Figma asset. */
 function LinkedInIcon({ className = "" }: { className?: string }) {
@@ -266,14 +337,37 @@ export default function SobrePage() {
           full page width, sitting at the top. Closer to Figma's own
           structure, actually — the "Hero" frame there is a full-bleed
           section fill too, not an inset card). The section itself carries
-          `bg-surface-primary` edge-to-edge; the content row is centered
+          `bg-surface-primary` edge-to-edge; the text column is centered
           inside it via `mx-auto max-w-[1312px]`, same content-width cap
           every other section on this page uses. No border/rounding on the
           section — that visual language stays reserved for actual cards
-          (PillarCard, the photo, the contact cards). */}
-      <section className="w-full bg-surface-primary px-6 pb-16 pt-28 sm:pt-32 lg:px-16 lg:pb-24 lg:pt-40">
-        <div className="mx-auto flex w-full max-w-[1312px] flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-16">
-          <div className="flex w-full max-w-[640px] flex-col items-start gap-8 lg:flex-1">
+          (PillarCard, the contact cards).
+
+          PHOTO, changed 2026-08-26 (explicit user request, two reference
+          screenshots pasted in chat): reverted the `rounded-[32px]` card
+          treatment described in the file-level "HERO PHOTO" comment above
+          — user wants the photo back to Figma's real edge-to-edge bleed,
+          not inside a card (see the "UPDATE" note added to that comment).
+          On `lg+` the photo is `absolute inset-y-0 right-0` relative to
+          the *section*, not the `max-w-[1312px]` row — it fills the
+          section's full rendered height flush to the true right edge, no
+          rounding, no inset margin. Text keeps its `max-w-[640px]`
+          reading measure but is also capped at `lg:max-w-[48%]` of the
+          row so it can never collide with the photo, checked down to the
+          `lg` breakpoint's own minimum width (1024px — still a
+          comfortable gap). `lg:w-[40%]` / `lg:max-w-[48%]` are inferred,
+          undocumented values — no Figma responsive frame exists for this
+          bleed layout, same "flag, don't invent a token" rule as the rest
+          of this page — chosen so the two columns never overlap while
+          still reading as a true bleed on wide screens. Mobile gets the
+          same "no card" treatment for consistency (not explicitly
+          requested for mobile, but the alternative — padded on mobile,
+          bled on desktop — would be a stranger inconsistency): full-bleed
+          edge-to-edge below the text, `mt-10` standing in for the row's
+          old `gap-10` now that the photo isn't a flex sibling anymore. */}
+      <section className="relative w-full overflow-hidden bg-surface-primary">
+        <div className="relative z-10 mx-auto flex w-full max-w-[1312px] flex-col px-6 pb-16 pt-28 sm:pt-32 lg:px-16 lg:pb-24 lg:pt-40">
+          <div className="flex w-full max-w-[640px] flex-col items-start gap-8 lg:max-w-[48%]">
             <div className="flex flex-col items-start gap-4">
               <p className="caption text-brand-500">SOBRE MIM</p>
               <h1 className="heading-display text-text-primary">
@@ -306,50 +400,61 @@ export default function SobrePage() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Photo — see file-level comment "HERO PHOTO". */}
-          <div className="relative aspect-[4/5] w-full max-w-[500px] overflow-hidden rounded-[32px] lg:flex-1">
-            <Image
-              src="/images/sobre/portrait.jpg"
-              alt="Foto de João Riedo"
-              fill
-              sizes="(min-width: 1024px) 500px, 100vw"
-              priority
-              className="object-cover"
-            />
-          </div>
+        {/* Photo — edge-to-edge bleed, no card. See comment above. */}
+        <div className="relative mt-10 aspect-[4/5] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:aspect-auto lg:w-[40%]">
+          <Image
+            src="/images/sobre/portrait.jpg"
+            alt="Foto de João Riedo"
+            fill
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            priority
+            className="object-cover"
+          />
         </div>
       </section>
 
-      {/* Perspective — node 133:36 */}
-      <section className="flex w-full flex-col gap-8 px-6 py-16 sm:px-10 lg:flex-row lg:gap-20 lg:px-16 lg:py-20">
-        <div className="flex w-full flex-col items-start gap-4 lg:w-[400px] lg:shrink-0">
-          <Badge accent>Abordagem</Badge>
-          <h2 className="heading-h2 text-text-primary">
-            Minha Filosofia de Trabalho
-          </h2>
-        </div>
-        <div className="flex flex-1 flex-col gap-6">
-          <p className="body-lg text-text-primary">
-            Acredito que o design vai muito além da estética. Meu foco
-            principal é construir sistemas inteligentes que permitam que
-            times de produto criem e escalem com eficiência técnica máxima.
-          </p>
-          <p className="body-base text-text-secondary">
-            Atualmente, me especializo em Design Operations, utilizando
-            inteligência artificial de alta complexidade (como Claude e
-            workflows de automação) para eliminar o trabalho operacional
-            repetitivo. Minha missão é traduzir dias de documentação,
-            tokenização de cores e preparação de handoff em tarefas
-            concluídas de forma consistente e precisa em apenas algumas
-            horas.
-          </p>
-          <p className="body-base text-text-secondary">
-            Ao unir uma mentalidade focada em métricas de produto com a
-            solidez de um design system robusto, garanto que o time de
-            engenharia receba especificações perfeitas e que o usuário final
-            desfrute de uma experiência integrada e limpa.
-          </p>
+      {/* Perspective — node 133:36. Content wrapped in the same
+          `mx-auto max-w-[1312px]` cap every other section on this page
+          uses — this section was the one exception (padding applied
+          directly on the `<section>`, no inner cap), which is why "Minha
+          Filosofia de Trabalho" sat flush against the true edge on wide
+          screens while Diferenciais' cards right below it stayed
+          centered/inset. Bug spotted by the user via screenshot,
+          2026-08-26 — fixed by matching the Trajetória/Formação idiom
+          (outer padding on the section, `mx-auto max-w-[1312px]` on an
+          inner wrapper). */}
+      <section className="flex w-full flex-col px-6 py-16 sm:px-10 lg:px-16 lg:py-20">
+        <div className="mx-auto flex w-full max-w-[1312px] flex-col gap-8 lg:flex-row lg:gap-20">
+          <div className="flex w-full flex-col items-start gap-4 lg:w-[400px] lg:shrink-0">
+            <Badge accent>Abordagem</Badge>
+            <h2 className="heading-h2 text-text-primary">
+              Minha Filosofia de Trabalho
+            </h2>
+          </div>
+          <div className="flex flex-1 flex-col gap-6">
+            <p className="body-lg text-text-primary">
+              Acredito que o design vai muito além da estética. Meu foco
+              principal é construir sistemas inteligentes que permitam que
+              times de produto criem e escalem com eficiência técnica máxima.
+            </p>
+            <p className="body-base text-text-secondary">
+              Atualmente, me especializo em Design Operations, utilizando
+              inteligência artificial de alta complexidade (como Claude e
+              workflows de automação) para eliminar o trabalho operacional
+              repetitivo. Minha missão é traduzir dias de documentação,
+              tokenização de cores e preparação de handoff em tarefas
+              concluídas de forma consistente e precisa em apenas algumas
+              horas.
+            </p>
+            <p className="body-base text-text-secondary">
+              Ao unir uma mentalidade focada em métricas de produto com a
+              solidez de um design system robusto, garanto que o time de
+              engenharia receba especificações perfeitas e que o usuário
+              final desfrute de uma experiência integrada e limpa.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -422,10 +527,27 @@ export default function SobrePage() {
         </div>
       </section>
 
-      {/* Formação — node 133:120 */}
+      {/* Formação — rebuilt 2026-08-26 from Figma node 140:52 (an updated
+          version of the original 133:120), per direct user request.
+          Two changes from the original build:
+          1. Full-bleed `surface-primary` band, same treatment as the Hero
+             correction above (full page width, no card/border/rounding),
+             per explicit instruction on this pass too — content centered
+             via `mx-auto max-w-[1312px]`.
+          2. Certificações moved OUT of the two-column grid into its own
+             full-width block below it, matching 140:52's actual layout
+             (the credential-card style there needs the full row width for
+             icon + title/issuer, not half a column) — Educação/Top Skills
+             stay as the two-column grid.
+          Skill tags kept `bg-surface-primary`/`border-surface-primary`
+          even though the whole section now already sits on
+          `surface-primary` — same "surface nested one level up" pattern
+          `ProjectCard`'s inner image placeholder uses (contrast via a
+          different token, not a repeat of the section's own fill); would
+          need re-checking if this ever gets a second nesting level. */}
       <section
         id="formacao"
-        className="flex w-full flex-col items-center gap-8 p-6 sm:p-10 lg:p-16"
+        className="flex w-full flex-col items-center gap-10 bg-surface-primary px-6 py-16 sm:px-10 lg:px-16 lg:py-20"
       >
         <div className="mx-auto flex w-full max-w-[1312px] flex-col gap-10 lg:flex-row lg:gap-20">
           <div className="flex flex-1 flex-col gap-8">
@@ -448,43 +570,60 @@ export default function SobrePage() {
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col gap-10">
-            <div className="flex flex-col gap-4">
-              <h4 className="heading-h4 text-text-primary">Top Skills</h4>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="body-sm rounded-full border border-border-surface-primary bg-surface-primary px-3.5 py-2 text-on-surface-secondary"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+          <div className="flex flex-1 flex-col gap-4">
+            <h4 className="heading-h4 text-text-primary">Top Skills</h4>
+            <div className="flex flex-wrap gap-2">
+              {skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="body-sm rounded-full border border-border-surface-primary bg-surface-primary px-3.5 py-2 text-on-surface-secondary"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
+          </div>
+        </div>
 
-            <div className="flex flex-col gap-4">
-              <h4 className="heading-h4 text-text-primary">Certificações</h4>
-              <div className="flex flex-col gap-3">
-                {certifications.map((cert) => (
-                  <div key={cert} className="flex items-start gap-3">
-                    <Award
-                      aria-hidden
-                      className="size-5 shrink-0 text-text-secondary"
-                    />
-                    <p className="body-base text-text-secondary">{cert}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <div className="mx-auto flex w-full max-w-[1312px] flex-col gap-6">
+          <h4 className="heading-h4 text-text-primary">Certificações</h4>
+          <div className="flex flex-col gap-6 sm:grid sm:grid-cols-2 sm:gap-x-10 sm:gap-y-6">
+            {certifications.map((cert) => (
+              <a
+                key={cert.title}
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-4 rounded-2xl transition-opacity hover:opacity-80"
+              >
+                <div className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-surface-secondary">
+                  <Image
+                    src={certificationLogos[cert.logo]}
+                    alt={cert.issuer}
+                    fill
+                    sizes="48px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex min-w-0 flex-1 flex-col gap-0.5 pt-1">
+                  <p className="body-base font-semibold text-text-primary">
+                    {cert.title}
+                  </p>
+                  <p className="body-sm text-text-secondary">{cert.issuer}</p>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Contato direto — trimmed from Figma node 133:173, see file-level "FOOTER CTA" note. */}
+      {/* Contato direto — trimmed from Figma node 133:173, see file-level "FOOTER CTA" note.
+          `pt-4` originally left this hugging the Formação section right above it — bumped to the
+          same symmetric `py-16`/`lg:py-20` every other section on this page uses, per user
+          feedback that the gap here read as too tight (2026-08-26). */}
       <section
         id="contato-direto"
-        className="flex w-full flex-col items-center gap-8 px-6 pb-16 pt-4 sm:px-10 lg:px-16 lg:pb-20"
+        className="flex w-full flex-col items-center gap-8 px-6 py-16 sm:px-10 lg:px-16 lg:py-20"
       >
         <p className="caption text-brand-500">CONTATO DIRETO</p>
 

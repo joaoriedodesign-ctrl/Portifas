@@ -24,7 +24,26 @@ interface ProjectCardProps {
  * Responsiveness: the fixed `h-[482px]` cover image is now `aspect-[4/3]`
  * (scales with card width instead of clipping/leaving gaps at narrow
  * widths — no aspect ratio was documented for this card, so 4/3 is a
- * proposed placeholder pending a real one). The category/title/description
+ * proposed placeholder pending a real one). **2026-08-26: widened twice
+ * per explicit user requests, both same session:**
+ * 1. `aspect-[4/3]` → `aspect-[16/9]` ("deixe a imagem dele mais
+ *    horizontal").
+ * 2. User then reported the image still didn't fit a desktop viewport
+ *    without scrolling ("deixe mais horizontal ainda, preciso que caiba
+ *    na tela desktop") — a pure aspect-ratio widen alone can't guarantee
+ *    that on its own, since height still grows with container width on
+ *    large monitors. Fix combines two things, desktop-only (`sm:`, this
+ *    project's existing desktop threshold), mobile keeps `16/9`
+ *    unchanged since only the desktop case was reported as an issue:
+ *    `sm:aspect-[21/9]` (wider ratio, shorter for a given width) **plus**
+ *    `sm:max-h-[400px]` (a hard cap so very wide monitors — where 21/9
+ *    at full container width would still exceed 400px — don't blow past
+ *    it; object-cover on the `<img>` crops horizontally to compensate,
+ *    which is fine, it's a photo/screenshot placeholder, not content
+ *    that needs to stay uncropped). Neither `21/9` nor `400px` is a
+ *    documented token — still an undocumented placeholder, same flag as
+ *    the original 4/3 pick, just tuned twice now based on user feedback.
+ * The category/title/description
  * block and the "VER PROJETO" CTA stack vertically below `sm` instead of
  * being forced into one row, since `min-w-0`+`truncate` alone isn't enough
  * room for both at narrow widths.
@@ -70,7 +89,7 @@ export function ProjectCard({
       href={`/case-studies/${slug}`}
       className="group flex w-full flex-col items-start gap-2.5 rounded-[32px] border border-border-surface-primary bg-surface-primary p-2"
     >
-      <div className="aspect-[4/3] w-full overflow-hidden rounded-3xl bg-surface-background">
+      <div className="aspect-[16/9] w-full overflow-hidden rounded-3xl bg-surface-background sm:aspect-[21/9] sm:max-h-[400px]">
         {image ? (
           <img
             src={image}

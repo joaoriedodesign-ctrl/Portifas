@@ -12,9 +12,14 @@ interface AnimatedNumberProps {
   className?: string;
 }
 
-const COUNT_DURATION_MS = 900;
-const POP_DURATION_MS = 420;
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+const COUNT_DURATION_MS = 1100;
+const POP_DURATION_MS = 550;
+// ease-out-quint — decelerates smoothly with no overshoot (was
+// cubic-bezier(0.34, 1.56, 0.64, 1), a springy bounce that read as harsh
+// alongside the softened Reveal curve; see lib/motion.ts for the same
+// 2026-08-26 "mais suave" pass on the reveal side).
+const POP_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
 
 /**
  * Counts up to the numeric lead of `value` (e.g. 0 -> 200 for "200+"),
@@ -73,7 +78,7 @@ export function AnimatedNumber({
         return;
       }
       const progress = Math.min(elapsed / COUNT_DURATION_MS, 1);
-      const current = Math.round(easeOutCubic(progress) * target);
+      const current = Math.round(easeOutQuint(progress) * target);
       setDisplay(`${prefix}${current}${suffix}`);
       if (progress < 1) raf = requestAnimationFrame(tick);
     };
@@ -89,8 +94,8 @@ export function AnimatedNumber({
         style={{
           display: "inline-block",
           opacity: popVisible ? 1 : 0,
-          transform: popVisible ? "scale(1)" : "scale(0.6)",
-          transition: `transform ${POP_DURATION_MS}ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity ${POP_DURATION_MS}ms ease-out`,
+          transform: popVisible ? "scale(1)" : "scale(0.85)",
+          transition: `transform ${POP_DURATION_MS}ms ${POP_EASING}, opacity ${POP_DURATION_MS}ms ${POP_EASING}`,
         }}
       >
         {value}

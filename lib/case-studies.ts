@@ -121,6 +121,72 @@ export const caseStudies: CaseStudy[] = [
       { value: "3", label: "tenants atendidos pela automação de tema" },
       { value: "1/5", label: "do tempo para criar uma tela nova" },
     ],
+    nextProjectSlug: "zentupet",
+  },
+  {
+    slug: "zentupet",
+    nda: false,
+    category: "SaaS de Gestão",
+    title: "Zentupet",
+    subtitle:
+      "SaaS de gestão desenhado do zero para creches e hotéis pet, do check-in ao check-out",
+    summary:
+      "Zentupet é um SaaS de gestão desenhado do zero para creches e hotéis pet, cobrindo toda a jornada do animal no estabelecimento — do check-in ao check-out — incluindo controle de atividades, remédios, banho, tosa e medicações. Projeto autoral: pesquisa de mercado, as 14 telas do produto, componentes e design system, tudo estruturado sem cliente ou equipe na etapa de design.",
+    cardDescription:
+      "SaaS de gestão para creches e hotéis pet — do check-in ao check-out, com portal em tempo real para o tutor.",
+    year: "2026",
+    metadata: {
+      papel: "Pesquisa de mercado, UX/UI e Design System",
+      duracao: "1 a 3 meses",
+      plataforma: "Web",
+      squad: "Eu (projeto autoral — sem cliente ou equipe na etapa de design)",
+    },
+    contexto: {
+      paragraph:
+        "Zentupet atende dois perfis de usuário com necessidades distintas: a operação do estabelecimento (staff) e o tutor do animal (cliente final). O projeto nasceu da observação de que grande parte das creches de cachorro não possuía sistema de gestão próprio — a operação era feita no papel ou em planilhas desorganizadas, sem controle estruturado de atividades nem visibilidade para o tutor sobre o que acontecia com o pet durante a estadia.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Agendamento sem fricção",
+        description:
+          "Controle de reservas e estadias no estabelecimento — a base operacional que sustenta toda a jornada do pet, do check-in ao check-out.",
+      },
+      {
+        number: "02",
+        title: "\"Janelinha\" do tutor",
+        description:
+          "Portal onde o tutor acompanha em tempo real cada atualização do pet durante a estadia — banho realizado, remédio administrado, atividade concluída. Funciona como um prontuário vivo do animal, visível para quem mais se importa com essa informação.",
+      },
+      {
+        number: "03",
+        title: "Contato direto com os tutores",
+        description:
+          "Canal de comunicação integrado ao fluxo operacional do staff, para que a conversa com o tutor aconteça sem sair do sistema que já registra a rotina do pet.",
+      },
+      {
+        number: "04",
+        title: "Lei de Jakob no calendário",
+        description:
+          "A tentativa inicial foi desenhar o componente de agenda do zero, mas o padrão mental já consolidado nos usuários tornava isso arriscado — pessoas já têm um modelo formado de como um calendário deve se comportar, a partir de ferramentas como Apple Calendar e Google Calendar. Usei essas referências como base do padrão de interação, em vez de forçar uma reinvenção que exigiria reaprendizado sem ganho real.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Painel operacional do staff — agendamento, atividades e controle de banho, tosa e medicação do pet",
+      },
+      {
+        caption:
+          "\"Janelinha\" do tutor — acompanhamento em tempo real de cada atualização do pet durante a estadia",
+      },
+    ],
+    stats: [
+      { value: "14", label: "telas desenhadas" },
+      { value: "2", label: "perfis de usuário atendidos (staff e tutor)" },
+      { value: "1", label: "design system estruturado do zero" },
+    ],
+    nextProjectSlug: "multi-tenant-design-system",
   },
 ];
 

@@ -14,8 +14,8 @@ import { caseStudies } from "@/lib/case-studies";
  *
  * Figma's canvas repeats one placeholder card 4× ("Plataforma de
  * Gamificação") — that's Figma mock content, not a spec for "always show
- * exactly 4" or "always show everything". There's currently one real
- * entry in `caseStudies`, so this renders all of it (matches what the
+ * exactly 4" or "always show everything". There are currently two real
+ * entries in `caseStudies`, so this renders both (matches what the
  * case-studies index page does). FLAGGING for later: once there are more
  * than ~3-4 case studies, this section should probably filter to a
  * `featured` subset instead of dumping the whole list on the home page —

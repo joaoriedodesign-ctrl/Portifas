@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { useInView } from "@/hooks/useInView";
+import { REVEAL_DURATION_MS, REVEAL_EASING, REVEAL_TRANSLATE_PX } from "@/lib/motion";
 
 interface RevealProps {
   children: ReactNode;
@@ -10,15 +11,12 @@ interface RevealProps {
   className?: string;
 }
 
-const DURATION_MS = 600;
-const EASING = "cubic-bezier(0.16, 1, 0.3, 1)"; // ease-out-expo — elegant, not bouncy
-const TRANSLATE_PX = 16;
-
 /**
  * Generic scroll-reveal wrapper: fades + translates its children up into
  * place every time they enter the viewport, and back out again when they
  * scroll out — see hooks/useInView.ts for the "repeats on every scroll"
- * behavior and the timing rationale every value here traces back to.
+ * behavior and lib/motion.ts for the timing/easing values (and why they
+ * were softened) that every value here traces back to.
  *
  * Renders as a plain `div`, so pass whatever layout classes the wrapped
  * element needs on the grid/flex parent via `className` (e.g. the
@@ -35,8 +33,8 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
       className={className}
       style={{
         opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : `translateY(${TRANSLATE_PX}px)`,
-        transition: `opacity ${DURATION_MS}ms ${EASING}, transform ${DURATION_MS}ms ${EASING}`,
+        transform: inView ? "translateY(0)" : `translateY(${REVEAL_TRANSLATE_PX}px)`,
+        transition: `opacity ${REVEAL_DURATION_MS}ms ${REVEAL_EASING}, transform ${REVEAL_DURATION_MS}ms ${REVEAL_EASING}`,
         transitionDelay: `${delay}ms`,
         willChange: "opacity, transform",
       }}

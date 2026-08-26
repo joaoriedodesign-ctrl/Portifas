@@ -29,9 +29,20 @@ export function generateStaticParams() {
  *   a 375px viewport and each item's own min-width fights the wrap, so
  *   both are now a `grid grid-cols-2 → sm:grid-cols-4`.
  * - Cover image (`h-[480px]`) and solution images (`h-[520px]`) are now
- *   `aspect-[16/10]` instead of a fixed height, so they scale instead of
- *   clipping on narrow screens (no aspect ratio was documented for these
- *   blocks — 16/10 is a proposed placeholder, flagging it as such).
+ *   scale-with-width instead of a fixed height (no aspect ratio was
+ *   documented for these blocks, so whatever ratio is used here is a
+ *   proposed placeholder, flagged as such). Originally `aspect-[16/10]`;
+ *   **2026-08-26, changed to match `components/ui/ProjectCard.tsx`'s
+ *   cover-image ratio exactly, per explicit user request ("deixe todas
+ *   as imagens que aparecem no projeto na mesma proporção da imagem do
+ *   card da home")**: `aspect-[16/9]` on mobile, `sm:aspect-[21/9]
+ *   sm:max-h-[400px]` on desktop (this project's `sm:` desktop
+ *   threshold) — same class combo as the home ProjectCard, so the home
+ *   card's thumbnail and this page's own cover/solution images always
+ *   read as the same shape. If ProjectCard's ratio changes again later,
+ *   mirror the change here too — there's no shared constant/component
+ *   between the two yet, just matching literal class strings by
+ *   convention.
  * - Removed `whitespace-nowrap` from the "Como cheguei lá" heading group —
  *   consistent with the same fix in PillarsSection, and the project's hard
  *   "no forced horizontal scroll" rule.
@@ -92,7 +103,7 @@ export default function CaseStudyPage({
           </div>
         </div>
 
-        <div className="flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-[32px] bg-surface-primary">
+        <div className="flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-[32px] bg-surface-primary sm:aspect-[21/9] sm:max-h-[400px]">
           {cs.coverImage ? (
             <img src={cs.coverImage} alt="" className="size-full object-cover" />
           ) : (
@@ -116,9 +127,21 @@ export default function CaseStudyPage({
           <p className="caption uppercase text-brand-500">ABORDAGEM</p>
           <p className="heading-h2 text-text-primary">Como cheguei lá</p>
         </div>
+        {/* Cards wrapped in a plain flex-1/basis-[260px] div, same recipe
+            as the "Diferenciais" pillars on the Sobre page (which wrap
+            each PillarCard in <Reveal className="flex-1 basis-[260px]">).
+            Without a wrapper, PillarCard was the direct flex item and its
+            own `h-full` (a literal 100%, not the keyword `auto`) doesn't
+            get flexbox's per-line auto-stretch treatment — so cards with
+            shorter copy rendered visibly shorter instead of matching the
+            row's tallest card (bug spotted by the user via screenshot,
+            2026-08-26). No <Reveal>/animation added here — wasn't asked
+            for, keeping this a targeted sizing fix only. */}
         <div className="flex w-full flex-wrap items-stretch gap-4">
           {cs.pillars.map((pillar) => (
-            <PillarCard key={pillar.number} variant="case-study" {...pillar} />
+            <div key={pillar.number} className="flex-1 basis-[260px]">
+              <PillarCard variant="case-study" {...pillar} />
+            </div>
           ))}
         </div>
       </section>
@@ -130,7 +153,7 @@ export default function CaseStudyPage({
 
         {cs.imageBlocks.map((block, i) => (
           <div key={i} className="flex w-full flex-col items-start gap-3">
-            <div className="aspect-[16/10] w-full rounded-[32px] bg-surface-primary">
+            <div className="aspect-[16/9] w-full overflow-hidden rounded-[32px] bg-surface-primary sm:aspect-[21/9] sm:max-h-[400px]">
               {block.image ? (
                 <img src={block.image} alt="" className="size-full rounded-[32px] object-cover" />
               ) : null}
