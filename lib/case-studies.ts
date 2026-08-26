@@ -40,64 +40,86 @@ export interface CaseStudy {
   nextProjectSlug?: string;
 }
 
-// Placeholder content. The multi-tenant design system case mirrors the
-// Figma template's own bracket placeholders 1:1 — that template exists
-// specifically because content is pending NDA/divulgation approval, so
-// showing "[Título do projeto]" etc. here is intentional, not a stub I forgot
-// to fill in. Swap the bracketed strings for real copy once cleared.
+// Real content, cleared for divulgation 2026-08-26 (nda -> false).
+// Confirmed directly with the user before filling this in — see the 3
+// pendências the source case-study draft itself flagged as blocking:
+//  1. Attribution: the DS was architected and built from scratch at
+//     Multibet (not brought over from Ana Gaming) — safe to name Multibet.
+//  2. Figma → Storybook bridge: manual/custom-script sync, no Tokens
+//     Studio or Style Dictionary in the pipeline — do not claim otherwise.
+//  3. Governance process (how a component gets reviewed/versioned) is
+//     genuinely not formalized yet — the "Governança compartilhada" pillar
+//     below describes who's involved, deliberately not a review/versioning
+//     process that doesn't exist. Don't upgrade this to "peer review" or
+//     "approval flow" language later without checking with the user again.
+// Bonus metric (3 tenants) and platform (Web multi-tenant) were also
+// user-confirmed, not inferred — the source draft didn't mention either.
+// coverImage and imageBlocks[].image are still empty; add real screenshots
+// when available.
 export const caseStudies: CaseStudy[] = [
   {
     slug: "multi-tenant-design-system",
-    nda: true,
-    category: "[CATEGORIA DO PROJETO]",
-    title: "[Título do projeto]",
-    subtitle: "[Subtítulo — o que é, em uma linha]",
+    nda: false,
+    category: "Design System",
+    title: "Design System Multi-tenant",
+    subtitle:
+      "De arquivos Figma defasados a uma base de tokens única para múltiplos tenants",
     summary:
-      "[Parágrafo de 2–3 linhas sobre o problema e a solução. Este é um placeholder — o conteúdo real será preenchido após confirmação de divulgação.]",
+      "Antes deste sistema, cada tela nova nascia garimpando componentes em arquivos Figma específicos que ficavam defasados quase na hora — sem fonte única, cada designer trabalhava com uma versão diferente da interface. Estruturei a arquitetura de tokens (primitivas → semânticas) e uma camada de automação de tema por tenant, hoje sustentando 87 telas e mais de 200 componentes consumidos direto no Storybook.",
     cardDescription:
-      "Design system multi-tenant com governança de tema e migração de um sistema legado.",
+      "Design system multi-tenant com automação de tema por tenant e uma base de tokens única consumida via Storybook.",
     year: "2026",
     metadata: {
-      papel: "[•]",
-      duracao: "[•]",
-      plataforma: "[•]",
-      squad: "[•]",
+      papel: "Arquitetura de Design System",
+      duracao: "Em andamento desde janeiro",
+      plataforma: "Web (multi-tenant)",
+      squad: "Eu (arquitetura) + líder (refinamento) + colega (aplicação)",
     },
     contexto: {
       paragraph:
-        "[Por que um design system multi-tenant era necessário — duas marcas, um único sistema, o que estava travando antes]",
+        "Antes do design system existir, não havia reuso real de componentes entre tenants: cada tela nova exigia entrar em arquivos específicos e garimpar o componente de onde ele tivesse sido usado da última vez — e esses arquivos ficavam defasados quase imediatamente. Na prática, nunca existia uma fonte única e atualizada: cada designer trabalhava com uma versão ligeiramente diferente da interface, o que gerava inconsistência visual e retrabalho constante entre design e desenvolvimento.",
     },
     pillars: [
       {
         number: "01",
-        title: "Auditoria & levantamento",
-        description: "[completar após validar o que pode ser mostrado]",
+        title: "Arquitetura de tokens",
+        description:
+          "Base estruturada em Figma variables com aliasing primitiva → semântica — a mesma disciplina de tokens usada hoje neste portfólio. Do lado do código, os tokens migram para o Storybook por sincronização própria (script/processo manual, sem Tokens Studio ou Style Dictionary na ponte).",
       },
       {
         number: "02",
-        title: "Arquitetura de tokens multi-marca",
-        description: "[completar após validar o que pode ser mostrado]",
+        title: "Automação de tema por tenant",
+        description:
+          "Em vez de customização manual, cor por cor, tela por tela, criei uma camada de automação sobre a base semântica que gera o tema de cada tenant automaticamente — hoje atende 3 tenants, eliminando a troca manual de cor e acelerando a entrada de novos tenants no sistema.",
       },
       {
         number: "03",
-        title: "Componentização & documentação",
-        description: "[completar após validar o que pode ser mostrado]",
+        title: "Dívida técnica em paralelo",
+        description:
+          "Corrigi componentes cadastrados sem cobertura responsiva completa e migrei componentes antigos para o padrão novo — dois problemas de dívida técnica resolvidos junto com a evolução da base, não depois dela.",
       },
       {
         number: "04",
-        title: "Governança & rollout",
-        description: "[completar após validar o que pode ser mostrado]",
+        title: "Governança compartilhada",
+        description:
+          "A evolução da base ficou dividida entre arquitetura (eu), refinamento (liderança) e aplicação rigorosa no dia a dia (um colega de time) — o que ajudou a manter consistência mesmo com mais de uma pessoa mexendo no sistema. Um processo formal de review/versionamento ainda está amadurecendo.",
       },
     ],
     imageBlocks: [
-      { caption: "[Print da biblioteca de componentes]" },
-      { caption: "[Exemplo de tema aplicado às duas marcas]" },
+      {
+        caption:
+          "Biblioteca de componentes documentada no Storybook, consumindo os tokens do design system",
+      },
+      {
+        caption:
+          "Mesmo componente com o tema aplicado automaticamente para tenants diferentes",
+      },
     ],
     stats: [
-      { value: "[XX]", label: "[nome da métrica]" },
-      { value: "[XX]", label: "[nome da métrica]" },
-      { value: "[XX]", label: "[nome da métrica]" },
-      { value: "[XX]", label: "[nome da métrica]" },
+      { value: "87", label: "telas sustentadas pelo design system" },
+      { value: "200+", label: "componentes reutilizados entre tenants" },
+      { value: "3", label: "tenants atendidos pela automação de tema" },
+      { value: "1/5", label: "do tempo para criar uma tela nova" },
     ],
   },
 ];

@@ -57,7 +57,7 @@ export function PillarsSection() {
         </h2>
       </div>
 
-      <div className="mx-auto flex w-full max-w-[1312px] flex-wrap items-stretch justify-center gap-x-4 gap-y-6">
+      <div className="mx-auto flex w-full max-w-[1312px] flex-wrap items-stretch justify-center gap-x-4 gap-y-4">
         {pillars.map((pillar) => (
           <PillarCard
             key={pillar.number}
