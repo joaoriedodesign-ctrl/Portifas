@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 /**
@@ -18,6 +19,30 @@ import Link from "next/link";
  *   state. Preserved as the same relationship in v2: the darker step of
  *   the single new accent (`bg-brand-600`), not the base `brand-500`.
  *
+ * Photo mark (2026-08-26, per Figma node 123:16 in the same file — the
+ * updated header frame): replaced the abstract rotated `bg-brand-600`
+ * blob with the user's actual photo. The source file
+ * (`public/images/header/avatar.png`) is already circle-cropped with a
+ * transparent background (confirmed: alpha 0 at all four corners, opaque
+ * center), so `rounded-full` is a defensive fallback, not load-bearing.
+ * Uses `next/image` (not a plain `<img>`) per
+ * `docs/diretrizes-responsividade.md` §2 ("Imagens sempre via
+ * next/image").
+ *
+ * Sizing correction (2026-08-26, same day): first pass sized the avatar
+ * at 56px and the pill padding at py-6/pr-6, read off `get_design_context`'s
+ * raw exported code (`inset-[-24.21%]` around a `56.4px` image) — that
+ * inset is Figma's export artifact for an oversized image fill cropped by
+ * its frame, not the actual visible size. `get_metadata` on the same node
+ * gives the real geometry, all internally consistent: pill 564×54,
+ * content padding top/bottom 8px, left 8px (measured 9), right 24px
+ * (measured 25), avatar (`Ellipse 1`) exactly 38×38, logo↔text gap 8px,
+ * nav item gap 32px — 8+8+38 = 54 matches the pill height exactly, which
+ * the 56px reading never did. Corrected to these numbers; treated as a
+ * fixed, intentionally-constant size per
+ * `docs/diretrizes-responsividade.md` §2 (avatar doesn't scale down on
+ * mobile — same carve-out as a small icon).
+ *
  * Responsive: nav content (logo + 3 links) is tightened at small widths
  * (smaller gaps/padding, secondary "PRODUCT DESIGNER" line hidden below
  * `sm`) so the pill never forces its content wider than the
@@ -26,25 +51,30 @@ import Link from "next/link";
  */
 export function Header() {
   return (
-    <header className="fixed left-1/2 top-6 z-50 w-[564px] max-w-[calc(100%-32px)] -translate-x-1/2 rounded-[195px] bg-surface-primary/60 py-4 pl-3 pr-4 backdrop-blur-sm sm:top-8 sm:py-6 sm:pr-6">
+    <header className="fixed left-1/2 top-6 z-50 w-[564px] max-w-[calc(100%-32px)] -translate-x-1/2 rounded-[195px] bg-surface-primary/60 py-2 pl-2 pr-6 backdrop-blur-sm sm:top-8">
       <div className="flex items-center justify-between gap-2">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex shrink-0 rotate-180">
-            <span className="size-[41px] rounded-bl-[39px] rounded-br-[39px] rounded-tr-[39px] bg-brand-600" />
-          </span>
+          <Image
+            src="/images/header/avatar.png"
+            alt="Foto de João Riedo"
+            width={76}
+            height={76}
+            priority
+            className="size-[38px] shrink-0 rounded-full object-cover"
+          />
           <span className="flex flex-col text-text-primary">
             <span className="heading-h4 -mb-1">JOÃO RIEDO</span>
-            <span className="caption hidden sm:block">PRODUCT DESIGNER</span>
+            <span className="caption hidden sm:block text-text-secondary">PRODUCT DESIGNER</span>
           </span>
         </Link>
         <nav className="flex items-center gap-3 sm:gap-6 lg:gap-8">
-          <Link href="/case-studies" className="label-button text-text-primary">
+          <Link href="/case-studies" className="caption text-text-primary">
             PROJETOS
           </Link>
-          <Link href="/#sobre" className="label-button text-text-primary">
+          <Link href="/#sobre" className="caption text-text-primary">
             SOBRE
           </Link>
-          <Link href="/#contato" className="label-button text-text-primary">
+          <Link href="/#contato" className="caption text-text-primary">
             CONTATO
           </Link>
         </nav>

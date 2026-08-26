@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 interface ProjectCardProps {
   slug: string;
@@ -27,6 +28,14 @@ interface ProjectCardProps {
  * block and the "VER PROJETO" CTA stack vertically below `sm` instead of
  * being forced into one row, since `min-w-0`+`truncate` alone isn't enough
  * room for both at narrow widths.
+ *
+ * Icon fix (2026-08-26, while building ProjectsSection): the "VER PROJETO"
+ * arrow was an <img src="/icons/arrow-right.svg"> pointing at a file that
+ * never existed (public/icons/ only ever had a .gitkeep) — a pre-existing
+ * gap, invisible until now because this card wasn't rendered anywhere with
+ * real traffic. Hero.tsx already established lucide-react as this
+ * project's icon source (its own CTA arrow), so this card now matches that
+ * precedent instead of pointing at a second, still-broken icon path.
  */
 export function ProjectCard({
   slug,
@@ -66,11 +75,9 @@ export function ProjectCard({
             <span className="label-button text-on-surface-primary group-hover:text-cta-transparent-text-hover">
               VER PROJETO
             </span>
-            <img
-              src="/icons/arrow-right.svg"
-              alt=""
+            <ArrowRight
               aria-hidden
-              className="size-4"
+              className="size-4 transition-colors group-hover:text-cta-transparent-text-hover"
             />
           </div>
         </div>

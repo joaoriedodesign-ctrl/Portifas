@@ -147,7 +147,7 @@
 
 .label-button {
   font-family: var(--font-body, ui-sans-serif);
-  font-weight: var(--font-weight-body-semibold);
+  font-weight: var(--font-weight-body-Bold);
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.2px;

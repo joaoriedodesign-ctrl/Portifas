@@ -76,6 +76,8 @@ componente sem antes definir um token semântico para eles.
 **Restrição mantida:** fundos coloridos com `brand-*` são proibidos fora de
 CTA, link ou destaque pontual — a marca não vira cor de fundo de seção.
 
+**Exceção documentada (2026-08-26, aprovada pelo usuário):** o hero (`components/sections/Hero.tsx`) usa `brand-500` como textura de um shader de dithering (`@paper-design/shaders-react`) cobrindo o cartão inteiro, a opacidade baixa (`opacity-30`, `mix-blend-screen`) para ler como atmosfera/ambiente, não como um bloco de cor sólido. Isso é uma exceção pontual e explícita para esse tipo de componente imersivo de fundo — não uma reversão da restrição acima. Qualquer outro uso de `brand-*` como fundo de seção continua proibido e precisa da mesma aprovação explícita antes de ser aplicado.
+
 ### 1.2 Semânticas
 
 **Surfaces**
