@@ -1,0 +1,39 @@
+/**
+ * Source of truth: referencia-cores.md (project knowledge base).
+ * Figma: arquivo PORTIFÓLIO, coleções `Primitivas` e `Semânticas`.
+ *
+ * Rule mirrored from the MD: never use a primitive hex directly in a
+ * component — always go through the semantic token. Colored backgrounds
+ * are not allowed; accent colors are reserved for CTA / link / one-off highlight.
+ */
+
+:root {
+  /* Primitivas */
+  --color-paper: #f2ebdd;
+  --color-surface: #faf6ec;
+  --color-border: #dad0bc;
+  --color-border-strong: #c2b79e;
+  --color-ink: #1e1b16;
+  --color-ink-muted: #6e675c;
+  --color-red: #b8492f;
+  --color-red-hover: #9c3d27;
+  --color-blue: #35618f;
+  --color-blue-hover: #2c4f76;
+  --color-yellow: #d6a64a;
+  --color-yellow-hover: #be8f3b;
+
+  /* Semânticas — aliased to primitives, this is what components consume */
+  --bg-page: var(--color-paper);
+  --bg-surface: var(--color-surface);
+  --border-default: var(--color-border);
+  --border-strong: var(--color-border-strong);
+  --text-primary: var(--color-ink);
+  --text-secondary: var(--color-ink-muted);
+  --text-inverse: var(--color-paper);
+  --brand-primary: var(--color-red);
+  --brand-primary-hover: var(--color-red-hover);
+  --brand-secondary: var(--color-blue);
+  --brand-secondary-hover: var(--color-blue-hover);
+  --brand-tertiary: var(--color-yellow);
+  --brand-tertiary-hover: var(--color-yellow-hover);
+}

@@ -1,0 +1,37 @@
+{
+  "color": {
+    "paper": { "$type": "color", "$value": "#F2EBDD" },
+    "surface": { "$type": "color", "$value": "#FAF6EC" },
+    "border": { "$type": "color", "$value": "#DAD0BC" },
+    "border-strong": { "$type": "color", "$value": "#C2B79E" },
+    "ink": { "$type": "color", "$value": "#1E1B16" },
+    "ink-muted": { "$type": "color", "$value": "#6E675C" },
+    "red": { "$type": "color", "$value": "#B8492F" },
+    "red-hover": { "$type": "color", "$value": "#9C3D27" },
+    "blue": { "$type": "color", "$value": "#35618F" },
+    "blue-hover": { "$type": "color", "$value": "#2C4F76" },
+    "yellow": { "$type": "color", "$value": "#D6A64A" },
+    "yellow-hover": { "$type": "color", "$value": "#BE8F3B" }
+  },
+  "bg": {
+    "page": { "$type": "color", "$value": "{color.paper}" },
+    "surface": { "$type": "color", "$value": "{color.surface}" }
+  },
+  "border": {
+    "default": { "$type": "color", "$value": "{color.border}" },
+    "strong": { "$type": "color", "$value": "{color.border-strong}" }
+  },
+  "text": {
+    "primary": { "$type": "color", "$value": "{color.ink}" },
+    "secondary": { "$type": "color", "$value": "{color.ink-muted}" },
+    "inverse": { "$type": "color", "$value": "{color.paper}" }
+  },
+  "brand": {
+    "primary": { "$type": "color", "$value": "{color.red}" },
+    "primary-hover": { "$type": "color", "$value": "{color.red-hover}" },
+    "secondary": { "$type": "color", "$value": "{color.blue}" },
+    "secondary-hover": { "$type": "color", "$value": "{color.blue-hover}" },
+    "tertiary": { "$type": "color", "$value": "{color.yellow}" },
+    "tertiary-hover": { "$type": "color", "$value": "{color.yellow-hover}" }
+  }
+}

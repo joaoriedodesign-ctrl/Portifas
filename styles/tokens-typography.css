@@ -1,0 +1,115 @@
+/**
+ * Source of truth: typography reference MD (project knowledge base).
+ * Figma: arquivo PORTIFÓLIO, coleção `Primitivas` + text styles.
+ *
+ * --font-heading and --font-body are intentionally NOT redeclared here.
+ * They're set once by next/font (see app/layout.tsx), which injects Sora
+ * and DM Sans and exposes them as those two CSS variables on <html>.
+ * Redeclaring them in this stylesheet would risk a cascade conflict with
+ * next/font's own stylesheet — this file only *consumes* var(--font-*).
+ *
+ * Rule mirrored from the MD: always reach for one of the 10 text styles
+ * below instead of typing a raw size/weight/letter-spacing.
+ */
+
+:root {
+  /* Peso */
+  --font-weight-heading-extrabold: 800;
+  --font-weight-heading-bold: 700;
+  --font-weight-heading-semibold: 600;
+  --font-weight-body-regular: 400;
+  --font-weight-body-medium: 500;
+  --font-weight-body-semibold: 600;
+}
+
+/* Text styles — Style / Família / Peso / Tamanho / LH / Letter-spacing / Uso */
+
+.heading-display {
+  font-family: var(--font-heading, ui-sans-serif);
+  font-weight: var(--font-weight-heading-extrabold);
+  font-size: 56px;
+  line-height: 60px;
+  letter-spacing: -1.5px;
+  /* uso: hero, nome em destaque */
+}
+
+.heading-h1 {
+  font-family: var(--font-heading, ui-sans-serif);
+  font-weight: var(--font-weight-heading-bold);
+  font-size: 40px;
+  line-height: 46px;
+  letter-spacing: -1px;
+  /* uso: título de seção principal */
+}
+
+.heading-h2 {
+  font-family: var(--font-heading, ui-sans-serif);
+  font-weight: var(--font-weight-heading-bold);
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.5px;
+  /* uso: título de seção */
+}
+
+.heading-h3 {
+  font-family: var(--font-heading, ui-sans-serif);
+  font-weight: var(--font-weight-heading-semibold);
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0px;
+  /* uso: subtítulo */
+}
+
+.heading-h4 {
+  font-family: var(--font-heading, ui-sans-serif);
+  font-weight: var(--font-weight-heading-semibold);
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  /* uso: subtítulo menor, título de card */
+}
+
+.body-lg {
+  font-family: var(--font-body, ui-sans-serif);
+  font-weight: var(--font-weight-body-regular);
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0px;
+  /* uso: intro, destaque de parágrafo */
+}
+
+.body-base {
+  font-family: var(--font-body, ui-sans-serif);
+  font-weight: var(--font-weight-body-regular);
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  /* uso: corpo padrão */
+}
+
+.body-small {
+  font-family: var(--font-body, ui-sans-serif);
+  font-weight: var(--font-weight-body-regular);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  /* uso: texto de apoio, metadados */
+}
+
+.caption {
+  font-family: var(--font-body, ui-sans-serif);
+  font-weight: var(--font-weight-body-medium);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  /* uso: legendas, datas, tags */
+}
+
+.label-button {
+  font-family: var(--font-body, ui-sans-serif);
+  font-weight: var(--font-weight-body-semibold);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  /* uso: texto de botão/CTA */
+}

@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../styles/tokens-colors.css";
+@import "../styles/tokens-typography.css";
+
+/* Base element styles — always through semantic tokens, never a raw value */
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+/* Visible focus state is not optional — accessibility rule from the project
+   persona. Applies project-wide so no interactive element ships without it. */
+:focus-visible {
+  outline: 2px solid var(--brand-secondary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
