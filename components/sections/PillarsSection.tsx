@@ -60,7 +60,7 @@ export function PillarsSection() {
 
       <div className="mx-auto flex w-full max-w-[1312px] flex-wrap items-stretch justify-center gap-x-4 gap-y-4">
         {pillars.map((pillar, i) => (
-          <Reveal key={pillar.number} className="flex-1 basis-[260px]" delay={i * 90}>
+          <Reveal key={pillar.number} className="flex-1 basis-[260px]" delay={i * 130}>
             <PillarCard
               number={pillar.number}
               title={pillar.title}
