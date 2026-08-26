@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCaseStudyBySlug, caseStudies } from "@/lib/case-studies";
 import { PillarCard } from "@/components/ui/PillarCard";
+import { StatCard } from "@/components/ui/StatCard";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -140,13 +141,7 @@ export default function CaseStudyPage({
         </p>
         <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-4">
           {cs.stats.map((stat, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center justify-center gap-2 rounded-[32px] border border-border-surface-primary bg-surface-primary p-6 sm:p-8"
-            >
-              <p className="heading-h1 text-brand-500">{stat.value}</p>
-              <p className="body-sm text-on-surface-secondary">{stat.label}</p>
-            </div>
+            <StatCard key={i} stat={stat} index={i} />
           ))}
         </div>
       </section>

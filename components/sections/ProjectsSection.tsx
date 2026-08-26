@@ -1,4 +1,5 @@
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { Reveal } from "@/components/ui/Reveal";
 import { caseStudies } from "@/lib/case-studies";
 
 /**
@@ -53,16 +54,17 @@ export function ProjectsSection() {
       </div>
 
       <div className="mx-auto flex w-full max-w-[1312px] flex-col gap-4">
-        {caseStudies.map((cs) => (
-          <ProjectCard
-            key={cs.slug}
-            slug={cs.slug}
-            category={cs.category}
-            year={cs.year}
-            title={cs.title}
-            description={cs.cardDescription}
-            image={cs.coverImage}
-          />
+        {caseStudies.map((cs, i) => (
+          <Reveal key={cs.slug} className="w-full" delay={i * 90}>
+            <ProjectCard
+              slug={cs.slug}
+              category={cs.category}
+              year={cs.year}
+              title={cs.title}
+              description={cs.cardDescription}
+              image={cs.coverImage}
+            />
+          </Reveal>
         ))}
       </div>
     </section>

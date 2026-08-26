@@ -1,4 +1,5 @@
 import { PillarCard } from "@/components/ui/PillarCard";
+import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * "Pillars" section — node 31:1809 ("Frame13") in the PORTIFÓLIO Figma file,
@@ -58,14 +59,15 @@ export function PillarsSection() {
       </div>
 
       <div className="mx-auto flex w-full max-w-[1312px] flex-wrap items-stretch justify-center gap-x-4 gap-y-4">
-        {pillars.map((pillar) => (
-          <PillarCard
-            key={pillar.number}
-            number={pillar.number}
-            title={pillar.title}
-            description={pillar.description}
-            variant="home"
-          />
+        {pillars.map((pillar, i) => (
+          <Reveal key={pillar.number} className="flex-1 basis-[260px]" delay={i * 90}>
+            <PillarCard
+              number={pillar.number}
+              title={pillar.title}
+              description={pillar.description}
+              variant="home"
+            />
+          </Reveal>
         ))}
       </div>
     </section>
