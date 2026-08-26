@@ -60,6 +60,27 @@ Figma (normalmente `lg`/`xl`) é o único estado possível.
 - Espaçamento (`gap`, `padding`, `margin`) pode — e geralmente deve —
   reduzir em mobile. Não é obrigatório manter o mesmo `gap-[87px]` do Figma
   em uma tela de 375px.
+- **Texto ou conteúdo vazando para fora da borda de um card/container é
+  bug bloqueante, nunca polimento — sem exceção.** Não basta não ter
+  scroll horizontal na página: um card pode estar contido na página como
+  um todo e ainda assim ter texto vazando visualmente por cima da própria
+  borda/rounded corner dele. Antes de considerar um card pronto, teste com
+  o conteúdo mais longo realista que ele vai receber (não só o texto de
+  exemplo curto), no mobile.
+  - Causa comum a checar: um item flex com `flex-1` mas sem `w-full`
+    dentro de um wrapper que muda de `flex-col` (mobile) para
+    `sm:flex-row`/`lg:flex-row` (desktop). `flex-1` só define largura
+    quando o eixo principal do container é horizontal — no estado
+    `flex-col` o eixo principal é vertical, então `flex-1` não segura
+    largura nenhuma, e o item cresce para caber o conteúdo. Se esse
+    conteúdo incluir texto com `truncate`/`whitespace-nowrap`, a
+    largura “natural” dele é a frase inteira em uma linha só — o `truncate`
+    não tem uma caixa para cortar e o texto vaza sem nem mostrar
+    reticências. Precisa de `w-full` (ou outra largura explícita) em toda
+    combinação de breakpoint, não só na que usa `flex-row`.
+  - Caso real corrigido em 2026-08-26: `components/ui/ProjectCard.tsx`
+    (descrição do projeto vazando para fora do card no mobile) — ver o
+    comentário no componente para o diagnóstico completo.
 
 ## 3. Checklist antes de considerar um componente/seção pronto
 

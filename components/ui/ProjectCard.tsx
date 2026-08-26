@@ -36,6 +36,26 @@ interface ProjectCardProps {
  * real traffic. Hero.tsx already established lucide-react as this
  * project's icon source (its own CTA arrow), so this card now matches that
  * precedent instead of pointing at a second, still-broken icon path.
+ *
+ * Overflow fix (2026-08-26, user-reported via screenshot — description
+ * text rendering past the card's rounded edge on mobile, no ellipsis):
+ * root cause was this card's text column div having `flex-1` but no
+ * `w-full`. `flex-1` only constrains size on the flex CONTAINER's main
+ * axis — which is horizontal in the `sm:flex-row` desktop layout (so it
+ * worked there) but VERTICAL in the default `flex-col` mobile layout, so
+ * below `sm` this div had no width constraint at all and sized itself to
+ * its own content's intrinsic width. Since the description paragraph has
+ * `truncate` (`white-space: nowrap`), its intrinsic/max-content width is
+ * the FULL unwrapped sentence — so the parent grew to fit that, and the
+ * whole block spilled past the card's actual boundary with no ellipsis
+ * ever kicking in (truncate can only clip once its box has a real,
+ * bounded width). Fix: added `w-full` alongside `flex-1` so the column
+ * has an explicit width at every breakpoint, not just when flex-row
+ * makes `flex-1` do that job implicitly. See
+ * docs/diretrizes-responsividade.md §2 for the general rule this
+ * violated — any `flex-1` item inside a wrapper that switches
+ * `flex-col`→`sm:flex-row` needs its own `w-full` for the `flex-col`
+ * state, it doesn't come for free.
  */
 export function ProjectCard({
   slug,
@@ -61,7 +81,7 @@ export function ProjectCard({
       </div>
       <div className="flex w-full flex-col items-start rounded-[32px] p-4 sm:p-6">
         <div className="flex w-full flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex min-w-0 flex-1 flex-col items-start gap-2">
+          <div className="flex w-full min-w-0 flex-1 flex-col items-start gap-2">
             <div className="caption flex w-full items-start gap-2">
               <span className="text-brand-500">{category}</span>
               <span className="text-on-surface-secondary">{year}</span>

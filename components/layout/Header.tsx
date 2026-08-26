@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 /**
  * Fixed/floating nav, per node 31:1911 "Frame 16" in the PORTIFÓLIO Figma file.
@@ -48,6 +49,32 @@ import Link from "next/link";
  * `sm`) so the pill never forces its content wider than the
  * `max-w-[calc(100%-32px)]` cap already in place — that cap is what
  * prevents horizontal overflow on narrow viewports.
+ *
+ * Mobile layout correction (2026-08-26, per Figma node 20:414 "Mobile" ->
+ * 31:1923 "Frame 16" — a dedicated 390px-wide header frame, confirmed via
+ * both get_metadata and get_design_context, and matching a reference
+ * screenshot the user shared directly): two changes, not a full
+ * pixel-clone of that frame's own geometry (its avatar/padding numbers
+ * don't proportionally match the desktop pill's already-verified 38px/
+ * 8px/24px measurements, and cloning a second rigid mobile artboard is
+ * exactly what docs/diretrizes-responsividade.md §1 asks NOT to do --
+ * "nenhum componente deve assumir que o breakpoint em que foi desenhado
+ * ... é o único estado possível"). Instead, the existing fluid pill
+ * keeps its validated measurements and adapts via two content changes:
+ * (1) "PRODUCT DESIGNER" is no longer hidden below `sm` -- the Mobile
+ * frame shows name+role stacked at every width, same as desktop, it was
+ * never meant to disappear on phones; (2) the PROJETOS/SOBRE/CONTATO nav
+ * is now hidden below `sm` -- the Mobile frame has no nav content at all,
+ * only the logo block, which is what the extra ~200px of the desktop
+ * pill's width was accommodating.
+ *
+ * RESOLVED (2026-08-26, same day): the usability gap this left — no way
+ * to reach /case-studies, #sobre, or #contato from the header below
+ * `sm` — is now closed by `<MobileNav />` (components/layout/MobileNav.tsx),
+ * a hamburger trigger + full-screen menu rendered right after this <nav>,
+ * each self-hiding at the opposite breakpoint (`<nav>` is `hidden
+ * sm:flex`, `MobileNav`'s trigger is `sm:hidden`) so exactly one
+ * navigation affordance is visible at any given width.
  */
 export function Header() {
   return (
@@ -64,10 +91,10 @@ export function Header() {
           />
           <span className="flex flex-col text-text-primary">
             <span className="heading-h4 -mb-1">JOÃO RIEDO</span>
-            <span className="caption hidden sm:block text-text-secondary">PRODUCT DESIGNER</span>
+            <span className="caption block text-text-secondary">PRODUCT DESIGNER</span>
           </span>
         </Link>
-        <nav className="flex items-center gap-3 sm:gap-6 lg:gap-8">
+        <nav className="hidden items-center gap-3 sm:flex sm:gap-6 lg:gap-8">
           <Link href="/case-studies" className="caption text-text-primary">
             PROJETOS
           </Link>
@@ -78,6 +105,7 @@ export function Header() {
             CONTATO
           </Link>
         </nav>
+        <MobileNav />
       </div>
     </header>
   );

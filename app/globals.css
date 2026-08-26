@@ -18,6 +18,16 @@
   color-scheme: dark;
 }
 
+/* `html` gets the same background as `body` (2026-08-26, alongside
+   `viewportFit: "cover"` in app/layout.tsx) as a defensive belt-and-
+   suspenders measure: with viewport-fit now covering the full physical
+   screen, this guarantees no unstyled default background can ever show
+   at the edges on any browser/OS combination, regardless of how it
+   handles the safe-area rectangle. */
+html {
+  background-color: rgb(var(--surface-background));
+}
+
 body {
   background-color: rgb(var(--surface-background));
   color: rgb(var(--text-primary));

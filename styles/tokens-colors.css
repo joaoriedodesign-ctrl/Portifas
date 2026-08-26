@@ -81,10 +81,10 @@
      expressed with Tailwind's built-in `bg-transparent` / `border-transparent`
      utilities in components, not a token here — "transparent" isn't a color. */
   --cta-primary-bg: var(--color-brand-500);
-  --cta-primary-bg-hover: var(--color-brand-600);
+  --cta-primary-bg-hover: var(--color-brand-400);
   --cta-primary-text: var(--color-primary-50);
   --cta-secondary-bg-hover: var(--color-primary-100);
-  --cta-secondary-border: var(--color-primary-900);
+  --cta-secondary-border: var(--color-primary-200);
   --cta-secondary-text: var(--color-primary-900);
   --cta-transparent-bg-hover: var(--color-primary-100);
   --cta-transparent-text: var(--color-brand-500);
