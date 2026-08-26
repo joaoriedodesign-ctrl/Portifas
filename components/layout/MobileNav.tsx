@@ -79,6 +79,23 @@ import { Button } from "@/components/ui/Button";
  * more robust cross-browser technique, since iOS Safari can still
  * rubber-band/bounce (and momentarily reveal whatever's behind a fixed
  * overlay) with `overflow: hidden` alone.
+ *
+ * Background changed (2026-08-26, user-requested) from solid
+ * `surface-primary` to the same frosted-glass treatment Header.tsx
+ * already uses for its own pill: `bg-surface-primary/60` +
+ * `backdrop-blur-sm`. The page behind the menu now shows through,
+ * blurred, instead of being fully hidden — same token + blur amount as
+ * Header, applied full-screen instead of to a small pill.
+ *
+ * Turned up further (2026-08-26, same day, user asked for more/darker
+ * blur): `surface-primary/60` + `backdrop-blur-sm` → `surface-background/80`
+ * + `backdrop-blur-lg` — the darkest neutral token instead of the
+ * lighter surface tone, at higher opacity, with a much stronger blur
+ * radius. This now diverges from Header.tsx's exact pill treatment
+ * (kept the same recipe intentionally at first for consistency, but
+ * this full-screen use case wanted a heavier effect than a small pill
+ * does) — noting the divergence so it doesn't read as an inconsistency
+ * bug later.
  */
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -138,7 +155,7 @@ export function MobileNav() {
           role="dialog"
           aria-modal="true"
           aria-label="Menu de navegação"
-          className="fixed inset-0 z-[60] flex h-[100dvh] flex-col items-center justify-center gap-10 overflow-y-auto bg-surface-primary px-6 pb-[max(4rem,env(safe-area-inset-bottom))] pt-[max(4rem,env(safe-area-inset-top))] sm:hidden"
+          className="fixed inset-0 z-[60] flex h-[100dvh] flex-col items-center justify-center gap-10 overflow-y-auto bg-surface-background/80 px-6 pb-[max(4rem,env(safe-area-inset-bottom))] pt-[max(4rem,env(safe-area-inset-top))] backdrop-blur-lg sm:hidden"
         >
           <nav className="flex flex-col items-center gap-8 text-center">
             <Link
