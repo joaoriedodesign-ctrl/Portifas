@@ -67,7 +67,7 @@
      nothing consumes it yet, and docs/design-tokens.md §3 already flagged
      it as the one that might want *more* separation from primary, not
      less, if a nested-surface case shows up. */
-  --border-surface-primary: var(--color-primary-200);
+  --border-surface-primary: 46 46 46;
   --border-surface-secondary: var(--color-primary-300);
   --on-surface-primary: var(--color-primary-900);
   --on-surface-secondary: var(--color-primary-700);
