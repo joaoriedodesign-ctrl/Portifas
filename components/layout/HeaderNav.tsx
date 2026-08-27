@@ -16,22 +16,22 @@ import { usePathname } from "next/navigation";
  * - Color is `text-brand-500` for both states — the *documented* token
  *   for this ("brand-500 ... links", docs/design-tokens.md §1.1), not a
  *   new value.
- * - `/case-studies` and `/sobre` get real active-state matching via
- *   `usePathname()` (prefix match, so a case-study detail page like
- *   `/case-studies/some-slug` still lights up PROJETOS).
- * - `/#contato` is deliberately excluded from active matching: it's a
- *   same-page anchor into a "Contato" section on the homepage that
- *   doesn't exist in the codebase yet (see project notes on Footer) —
- *   there's no route to match and no section to scroll-spy against.
- *   `CONTATO` still gets the hover-orange, just never the active state.
- *   If a Contato section gets built and "currently scrolled to it"
- *   highlighting is wanted, that needs a separate IntersectionObserver
- *   scroll-spy — flagging the gap rather than faking a state.
+ * - `/case-studies`, `/sobre` and `/contato` all get real active-state
+ *   matching via `usePathname()` (prefix match, so a case-study detail
+ *   page like `/case-studies/some-slug` still lights up PROJETOS).
+ *
+ * UPDATE 2026-08-27: `CONTATO` used to point at `/#contato`, a homepage
+ * anchor into a section that didn't exist yet, and was deliberately
+ * excluded from active-state matching for that reason (no route to
+ * match, no section to scroll-spy against). A real `/contato` page now
+ * exists (components/sections/ContactSection.tsx, reused there and on
+ * Home/case-study pages) — `CONTATO` is a normal route link now, same
+ * treatment as PROJETOS/SOBRE, no more exclusion.
  */
 const NAV_LINKS = [
   { href: "/case-studies", label: "PROJETOS" },
   { href: "/sobre", label: "SOBRE" },
-  { href: "/#contato", label: "CONTATO" },
+  { href: "/contato", label: "CONTATO" },
 ] as const;
 
 export function HeaderNav() {
@@ -40,8 +40,7 @@ export function HeaderNav() {
   return (
     <nav className="hidden items-center gap-3 sm:flex sm:gap-6 lg:gap-8">
       {NAV_LINKS.map(({ href, label }) => {
-        const isActive =
-          href !== "/#contato" && (pathname === href || pathname.startsWith(`${href}/`));
+        const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
         return (
           <Link

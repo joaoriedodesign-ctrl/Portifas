@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCaseStudyBySlug, caseStudies } from "@/lib/case-studies";
 import { PillarCard } from "@/components/ui/PillarCard";
 import { StatCard } from "@/components/ui/StatCard";
+import { ContactSection } from "@/components/sections/ContactSection";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -193,6 +194,13 @@ export default function CaseStudyPage({
           </Link>
         )}
       </section>
+
+      {/* Contato — added 2026-08-27 per explicit user request, so every
+          case study ends with a way to reach out instead of only a link
+          to the next project. See components/sections/ContactSection.tsx
+          for the form + WhatsApp-redirect logic (same component used on
+          Home and the standalone /contato page). */}
+      <ContactSection />
     </main>
   );
 }

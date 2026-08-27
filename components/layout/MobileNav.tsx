@@ -200,7 +200,7 @@ export function MobileNav() {
           </nav>
 
           <Link
-            href="/#contato"
+            href="/contato"
             onClick={() => setIsOpen(false)}
             className="inline-flex items-center gap-3 rounded-full bg-cta-primary-bg px-9 py-4 transition-colors hover:bg-cta-primary-bg-hover"
           >

@@ -15,11 +15,13 @@ import { ArrowRight } from "lucide-react";
  * decision the Figma frame itself doesn't specify — same kind of call
  * Header.tsx's own comment makes about its position:fixed behavior.
  *
- * CTA target is `/#contato` — matches the anchor Header.tsx already
- * points to. No "Contato" section exists on the home page yet
- * (app/page.tsx's own comment flags "sobre"/"contato" as not built), so
- * this is a known, pre-existing gap this component inherits, not one it
- * introduces.
+ * CTA target is `/contato` (updated 2026-08-27 — was `/#contato`, a
+ * homepage anchor into a section that didn't exist yet, same gap
+ * app/page.tsx's own comment used to flag). A real dedicated contact
+ * page now exists at that route (components/sections/ContactSection.tsx,
+ * a simple form that redirects to WhatsApp — also reused directly on
+ * Home and at the end of every case study), so this CTA finally lands
+ * somewhere real instead of a no-op anchor.
  *
  * CTA styling mirrors Hero's primary CTA link (hover:scale-105 + a
  * translating arrow icon, lucide-react `ArrowRight`) rather than the
@@ -57,7 +59,7 @@ export function Footer() {
       </div>
 
       <Link
-        href="/#contato"
+        href="/contato"
         className="group inline-flex items-center gap-3 rounded-full bg-cta-primary-bg px-9 py-4 transition-all duration-300 hover:scale-105 hover:bg-cta-primary-bg-hover active:scale-95"
       >
         <span className="label-button text-cta-primary-text">

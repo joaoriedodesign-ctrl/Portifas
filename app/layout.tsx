@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Sora, DM_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { ConditionalFooter } from "@/components/layout/ConditionalFooter";
 import "./globals.css";
 
 // These two variables are the ONLY place font-family is decided.
@@ -54,7 +54,7 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   );

@@ -118,8 +118,11 @@ import { HeaderNav } from "@/components/layout/HeaderNav";
  * was extracted into `<HeaderNav />` (components/layout/HeaderNav.tsx,
  * "use client") so it can read the current route and turn the current
  * page's link (and any hovered link) `text-brand-500` — see that file's
- * doc comment for the color-token and active-matching rules, including
- * why `/#contato` never gets an active state.
+ * doc comment for the color-token and active-matching rules. UPDATE
+ * 2026-08-27: CONTATO now links to a real `/contato` page (see
+ * app/contato/page.tsx) instead of the `/#contato` homepage-anchor gap
+ * this comment used to describe — it now gets the same active-matching
+ * treatment as PROJETOS/SOBRE, no more exclusion.
  */
 export function Header() {
   return (
