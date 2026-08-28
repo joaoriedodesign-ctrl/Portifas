@@ -1,25 +1,28 @@
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { caseStudies } from "@/lib/case-studies";
+import { publishedCaseStudies } from "@/lib/case-studies";
 
 /**
  * "Projetos selecionados" section — node 31:1838 ("Frame 14") in the
  * PORTIFÓLIO Figma file, home page. Eyebrow + H2 + subtitle header
  * (same shape as PillarsSection's header: caption/brand-500 eyebrow,
  * heading-h2/text-primary title), then a vertical stack of `ProjectCard`
- * pulled from `lib/case-studies.ts` — the same data source
- * app/case-studies/page.tsx already renders. One source of truth for
- * project copy; nothing duplicated between the home teaser and the full
- * list.
+ * pulled from `publishedCaseStudies` (lib/case-studies.ts) — the same
+ * data source app/case-studies/page.tsx already renders. One source of
+ * truth for project copy; nothing duplicated between the home teaser and
+ * the full list.
  *
  * Figma's canvas repeats one placeholder card 4× ("Plataforma de
  * Gamificação") — that's Figma mock content, not a spec for "always show
- * exactly 4" or "always show everything". There are currently three real
- * entries in `caseStudies`, so this renders all three (matches what the
- * case-studies index page does). FLAGGING for later: once there are more
- * than ~3-4 case studies, this section should probably filter to a
- * `featured` subset instead of dumping the whole list on the home page —
- * no such flag exists in the `CaseStudy` data model yet
+ * exactly 4" or "always show everything". There are three real entries in
+ * `caseStudies`, but this maps over `publishedCaseStudies` (the `!hidden`
+ * filter), so it renders however many of those are currently public —
+ * 2026-08-28: two, with "aurum-bet-torneios" set `hidden: true` at the
+ * user's request (matches what the case-studies index page does — same
+ * filtered export, same count). FLAGGING for later: once there are more
+ * than ~3-4 *published* case studies, this section should probably filter
+ * to a `featured` subset instead of dumping the whole published list on
+ * the home page — no such flag exists in the `CaseStudy` data model yet
  * (lib/case-studies.ts), so not inventing one now.
  *
  * v2 palette: eyebrow/heading/subtitle follow the same
@@ -54,7 +57,7 @@ export function ProjectsSection() {
       </div>
 
       <div className="mx-auto flex w-full max-w-[1312px] flex-col gap-4">
-        {caseStudies.map((cs, i) => (
+        {publishedCaseStudies.map((cs, i) => (
           <Reveal key={cs.slug} className="w-full" delay={i * 90}>
             <ProjectCard
               slug={cs.slug}

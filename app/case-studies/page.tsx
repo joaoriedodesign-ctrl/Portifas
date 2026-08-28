@@ -1,4 +1,4 @@
-import { caseStudies } from "@/lib/case-studies";
+import { publishedCaseStudies } from "@/lib/case-studies";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 
 /**
@@ -14,7 +14,7 @@ export default function CaseStudiesIndex() {
       <h1 className="heading-h1 text-center text-text-primary">Projetos</h1>
 
       <div className="mt-10 flex flex-col gap-4">
-        {caseStudies.map((cs) => (
+        {publishedCaseStudies.map((cs) => (
           <ProjectCard
             key={cs.slug}
             slug={cs.slug}

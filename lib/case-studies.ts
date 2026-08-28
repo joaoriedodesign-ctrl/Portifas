@@ -6,7 +6,20 @@ export interface Pillar {
 
 export interface ImageBlock {
   caption: string;
-  image?: string;
+  /** One image renders as a plain <img>; two or more render inside ImageCarousel (components/ui/ImageCarousel.tsx) — unless `variant` says otherwise. */
+  images?: string[];
+  /**
+   * "carousel" (default, or omitted) renders via ImageCarousel — one full
+   * uncropped image at a time, no peeking neighbors. "theme-peek" renders
+   * via ThemeCarousel instead (components/ui/ThemeCarousel.tsx) — a
+   * peek-style carousel purpose-built for "same component, different
+   * tenant theme" blocks, where neighbor cards peeking in on both sides
+   * is the point (sells the comparison at a glance), with chevron nav and
+   * labeled pills instead of dots.
+   */
+  variant?: "carousel" | "theme-peek";
+  /** Only read by the "theme-peek" variant — one label per image (e.g. ["Tema 1", "Tema 2", "Tema 3"]); ThemeCarousel falls back to "Tema N" if omitted. */
+  labels?: string[];
 }
 
 export interface Stat {
@@ -18,6 +31,8 @@ export interface CaseStudy {
   slug: string;
   /** True for case studies under NDA — content stays as the bracketed placeholders from the Figma template until divulgation is approved. */
   nda: boolean;
+  /** True to pull this case study out of every public listing (home ProjectsSection, /case-studies index) and 404 its own page/link — the entry itself stays in this file, just not published. Added 2026-08-28: temporary "close the portfolio" toggle, not an NDA flag. */
+  hidden?: boolean;
   category: string;
   title: string;
   subtitle: string;
@@ -69,6 +84,7 @@ export const caseStudies: CaseStudy[] = [
     cardDescription:
       "Design system multi-tenant com automação de tema por tenant e uma base de tokens única consumida via Storybook.",
     year: "2026",
+    coverImage: "/images/case-studies/multi-tenant-design-system/cover.jpg",
     metadata: {
       papel: "Arquitetura de Design System",
       duracao: "Em andamento desde janeiro",
@@ -108,11 +124,14 @@ export const caseStudies: CaseStudy[] = [
     imageBlocks: [
       {
         caption:
-          "Biblioteca de componentes documentada no Storybook, consumindo os tokens do design system",
-      },
-      {
-        caption:
-          "Mesmo componente com o tema aplicado automaticamente para tenants diferentes",
+          "Vários componentes do design system com o tema aplicado automaticamente para tenants diferentes",
+        images: [
+          "/images/case-studies/multi-tenant-design-system/tema-1.jpg",
+          "/images/case-studies/multi-tenant-design-system/tema-2.jpg",
+          "/images/case-studies/multi-tenant-design-system/tema-3.jpg",
+        ],
+        variant: "theme-peek",
+        labels: ["Tema 1", "Tema 2", "Tema 3"],
       },
     ],
     stats: [
@@ -135,6 +154,7 @@ export const caseStudies: CaseStudy[] = [
     cardDescription:
       "SaaS de gestão para creches e hotéis pet — do check-in ao check-out, com portal em tempo real para o tutor.",
     year: "2026",
+    coverImage: "/images/case-studies/zentupet/cover.jpg",
     metadata: {
       papel: "Pesquisa de mercado, UX/UI e Design System",
       duracao: "1 a 3 meses",
@@ -175,10 +195,22 @@ export const caseStudies: CaseStudy[] = [
       {
         caption:
           "Painel operacional do staff — agendamento, atividades e controle de banho, tosa e medicação do pet",
+        images: [
+          "/images/case-studies/zentupet/staff-1-agenda.jpg",
+          "/images/case-studies/zentupet/staff-2-timeline-pet.jpg",
+          "/images/case-studies/zentupet/staff-3-pets-do-dia.jpg",
+          "/images/case-studies/zentupet/staff-4-modal-atividade.jpg",
+        ],
       },
       {
         caption:
           "\"Janelinha\" do tutor — acompanhamento em tempo real de cada atualização do pet durante a estadia",
+        images: [
+          "/images/case-studies/zentupet/janelinha-1-timeline-wide.jpg",
+          "/images/case-studies/zentupet/janelinha-2-checkin-wide.jpg",
+          "/images/case-studies/zentupet/janelinha-3-timeline.jpg",
+          "/images/case-studies/zentupet/janelinha-4-checkin.jpg",
+        ],
       },
     ],
     stats: [
@@ -186,7 +218,10 @@ export const caseStudies: CaseStudy[] = [
       { value: "2", label: "perfis de usuário atendidos (staff e tutor)" },
       { value: "1", label: "design system estruturado do zero" },
     ],
-    nextProjectSlug: "aurum-bet-torneios",
+    // 2026-08-28: was "aurum-bet-torneios" — rerouted to skip it while
+    // that case study is hidden (see its `hidden: true` note below), so
+    // the "next project" link never points at an unpublished page.
+    nextProjectSlug: "multi-tenant-design-system",
   },
   // Real content added 2026-08-26. Company name "Aurum Bet" is explicitly
   // fictional per the user's own source draft (nda: false -- this is not
@@ -200,6 +235,11 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "aurum-bet-torneios",
     nda: false,
+    // 2026-08-28: hidden at the user's request — can't share other
+    // projects right now, so this one is pulled from public view to keep
+    // the portfolio to what's actually shareable. Content stays here,
+    // untouched, for whenever it's cleared to go back up.
+    hidden: true,
     category: "Sistema de Torneios",
     title: "Aurum Bet",
     subtitle:
@@ -265,6 +305,11 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
+/** `caseStudies` filtered to what's actually public — every listing (home ProjectsSection, /case-studies index) should map over this, never the raw array, so a `hidden: true` entry disappears from both in one place. */
+export const publishedCaseStudies: CaseStudy[] = caseStudies.filter(
+  (c) => !c.hidden
+);
+
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return caseStudies.find((c) => c.slug === slug);
+  return publishedCaseStudies.find((c) => c.slug === slug);
 }

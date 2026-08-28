@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCaseStudyBySlug, caseStudies } from "@/lib/case-studies";
+import { getCaseStudyBySlug, publishedCaseStudies } from "@/lib/case-studies";
 import { PillarCard } from "@/components/ui/PillarCard";
+import { ImageCarousel } from "@/components/ui/ImageCarousel";
+import { ThemeCarousel } from "@/components/ui/ThemeCarousel";
 import { StatCard } from "@/components/ui/StatCard";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 export function generateStaticParams() {
-  return caseStudies.map((cs) => ({ slug: cs.slug }));
+  return publishedCaseStudies.map((cs) => ({ slug: cs.slug }));
 }
 
 /**
@@ -154,11 +156,15 @@ export default function CaseStudyPage({
 
         {cs.imageBlocks.map((block, i) => (
           <div key={i} className="flex w-full flex-col items-start gap-3">
-            <div className="aspect-[16/9] w-full overflow-hidden rounded-[32px] bg-surface-primary sm:aspect-[21/9] sm:max-h-[400px]">
-              {block.image ? (
-                <img src={block.image} alt="" className="size-full rounded-[32px] object-cover" />
-              ) : null}
-            </div>
+            {block.variant === "theme-peek" ? (
+              <ThemeCarousel
+                images={block.images ?? []}
+                labels={block.labels}
+                alt={block.caption}
+              />
+            ) : (
+              <ImageCarousel images={block.images ?? []} alt={block.caption} />
+            )}
             <p className="body-sm w-full text-center text-text-secondary">{block.caption}</p>
           </div>
         ))}

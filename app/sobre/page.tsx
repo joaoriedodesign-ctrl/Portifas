@@ -193,6 +193,13 @@ const experience = [
       "Responsável pelo design ponta a ponta de produtos e gamificação em ambientes complexos de iGaming/Betting. Liderança de auditoria de Design Tokens e migração estruturada de bibliotecas para Supernova DS.",
   },
   {
+    period: "Dezembro 2025 – Fevereiro 2026",
+    role: "Product Designer Freelancer",
+    company: "Freelance",
+    description:
+      "Atuação como freelancer em projetos de Product Design entre o fim do período na Ana Gaming e o início na Multibet.",
+  },
+  {
     period: "Abril 2025 – Dezembro 2025",
     role: "UX Designer",
     company: "Ana Gaming (Cassino.bet / 7K.bet)",
@@ -200,22 +207,25 @@ const experience = [
       "Redesenho completo da experiência de sportsbook do Cassino.bet e estruturação dos alicerces iniciais do Design System unificado de múltiplos inquilinos.",
   },
   {
-    // Period inferred from the gap between the surrounding entries
-    // (Alterra ends Fevereiro 2025, Ana Gaming starts Abril 2025) — the
-    // user didn't give exact dates for this one, flagging that this is a
-    // proposed range, not a confirmed one.
-    period: "Fevereiro 2025 – Abril 2025",
+    period: "Abril 2024 – Abril 2025",
     role: "UI/UX Freelancer",
     company: "Freelance",
     description:
-      "Atuação como freelancer em projetos de UI/UX após o retorno dos Estados Unidos, até o início na Ana Gaming.",
+      "Atuação como freelancer em projetos de UI/UX após o retorno do intercâmbio nos Estados Unidos, até o início na Ana Gaming.",
   },
   {
-    period: "Junho 2024 – Fevereiro 2025",
+    period: "Dezembro 2023 – Março 2024",
     role: "Work and Travel",
     company: "Alterra Mountain Company",
     description:
       "Intercâmbio nos Estados Unidos com foco em aprimorar o inglês. Atuação no design e otimização de interfaces de reservas, backoffice e operações de hospitalidade digital voltados para experiências em montanhas.",
+  },
+  {
+    period: "Julho 2023 – Novembro 2023",
+    role: "UI/UX Freelancer",
+    company: "Freelance",
+    description:
+      "Atuação como freelancer em projetos de UI/UX entre a saída do Instituto ESPE e o início do intercâmbio nos Estados Unidos.",
   },
   {
     period: "Setembro 2020 – Julho 2023",
