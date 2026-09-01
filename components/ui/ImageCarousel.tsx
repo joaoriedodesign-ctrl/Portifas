@@ -7,6 +7,7 @@ import { Lightbox } from "@/components/ui/Lightbox";
 interface ImageCarouselProps {
   images: string[];
   alt?: string;
+  lang?: "pt" | "en";
 }
 
 /**
@@ -72,8 +73,16 @@ interface ImageCarouselProps {
  * `scrollIntoView` for the arrow/dot controls, `createPortal` (already a
  * project dependency via `react-dom`, not a new install) for the
  * lightbox.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en") purely for accessibility strings (aria-labels on the
+ * expand/prev/next/dot buttons) and to pass through to `<Lightbox>` — no
+ * visual change, this component has no on-page copy of its own (captions
+ * come from the case-study data via the `alt` prop, already
+ * language-correct by the time it gets here).
  */
-export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
+export function ImageCarousel({ images, alt = "", lang = "pt" }: ImageCarouselProps) {
+  const isEn = lang === "en";
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [index, setIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -86,6 +95,7 @@ export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
       src={lightboxIndex !== null ? images[lightboxIndex] : null}
       alt={alt}
       onClose={() => setLightboxIndex(null)}
+      lang={lang}
     />
   );
 
@@ -99,7 +109,7 @@ export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
         <div className={emptyBox}>
           <button
             type="button"
-            aria-label="Ampliar imagem"
+            aria-label={isEn ? "Expand image" : "Ampliar imagem"}
             onClick={() => setLightboxIndex(0)}
             className="size-full cursor-zoom-in appearance-none border-0 bg-transparent p-0"
           >
@@ -150,7 +160,7 @@ export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
             <button
               key={i}
               type="button"
-              aria-label="Ampliar imagem"
+              aria-label={isEn ? "Expand image" : "Ampliar imagem"}
               onClick={() => setLightboxIndex(i)}
               className="flex h-[280px] w-full shrink-0 cursor-zoom-in snap-start appearance-none items-center justify-center border-0 bg-transparent p-0 text-left sm:h-[380px] lg:h-[460px]"
             >
@@ -165,7 +175,7 @@ export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
 
         <button
           type="button"
-          aria-label="Imagem anterior"
+          aria-label={isEn ? "Previous image" : "Imagem anterior"}
           onClick={() => scrollToIndex(index - 1)}
           className="absolute left-1 top-1/2 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border-surface-primary bg-surface-primary/90 text-text-primary backdrop-blur-sm transition-colors hover:bg-surface-primary sm:flex"
         >
@@ -173,7 +183,7 @@ export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
         </button>
         <button
           type="button"
-          aria-label="Próxima imagem"
+          aria-label={isEn ? "Next image" : "Próxima imagem"}
           onClick={() => scrollToIndex(index + 1)}
           className="absolute right-1 top-1/2 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border-surface-primary bg-surface-primary/90 text-text-primary backdrop-blur-sm transition-colors hover:bg-surface-primary sm:flex"
         >
@@ -186,7 +196,7 @@ export function ImageCarousel({ images, alt = "" }: ImageCarouselProps) {
           <button
             key={i}
             type="button"
-            aria-label={`Ir para imagem ${i + 1}`}
+            aria-label={isEn ? `Go to image ${i + 1}` : `Ir para imagem ${i + 1}`}
             aria-current={i === index}
             onClick={() => scrollToIndex(i)}
             className={`size-1.5 rounded-full transition-colors ${

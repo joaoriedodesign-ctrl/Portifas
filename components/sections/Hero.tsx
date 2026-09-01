@@ -71,8 +71,22 @@ const Dithering = lazy(() =>
  *    header down to this card (24+54+24=102, 32+54+32=118). If the
  *    header's `top-*` or height changes again, this needs recomputing to
  *    stay symmetric — it won't update itself.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en") — same "page decides its own language" reasoning as
+ * ContactSection.tsx's own update note, since Hero (like ContactSection)
+ * has no route of its own. Only the body copy and the "EXPLORAR
+ * PROJETOS" CTA's label/href change; the shader/animation logic is
+ * untouched. The badge text ("Product Designer") and the headline
+ * ("Design Systems & Design Ops") were already English in the Portuguese
+ * version, so they stay as-is for both languages.
  */
-export function Hero() {
+interface HeroProps {
+  lang?: "pt" | "en";
+}
+
+export function Hero({ lang = "pt" }: HeroProps) {
+  const isEn = lang === "en";
   const [isHovered, setIsHovered] = useState(false);
   const [shaderColor, setShaderColor] = useState<string | null>(null);
 
@@ -120,20 +134,31 @@ export function Hero() {
               Design Systems &amp; Design Ops
             </p>
             <p className="heading-h4 max-w-[640px] text-text-secondary">
-              Sou{" "}
-              <span className="text-brand-500">PRODUCT DESIGNER</span>. Já construí produto e design system na Ana
-              Gaming (Cassino.bet e 7K.bet), e hoje sou Product Designer na
-              Multibet. Sempre equilibrando estratégia de produto, design
-              systems e IA pra fazer tudo escalar mais rápido.
+              {isEn ? (
+                <>
+                  I&apos;m a <span className="text-brand-500">PRODUCT DESIGNER</span>. I&apos;ve
+                  built product and design system work at Ana Gaming (Cassino.bet and
+                  7K.bet), and today I&apos;m a Product Designer at Multibet. Always
+                  balancing product strategy, design systems and AI to make everything
+                  scale faster.
+                </>
+              ) : (
+                <>
+                  Sou <span className="text-brand-500">PRODUCT DESIGNER</span>. Já construí produto e design system na Ana
+                  Gaming (Cassino.bet e 7K.bet), e hoje sou Product Designer na
+                  Multibet. Sempre equilibrando estratégia de produto, design
+                  systems e IA pra fazer tudo escalar mais rápido.
+                </>
+              )}
             </p>
           </div>
 
           <Link
-            href="/case-studies"
+            href={isEn ? "/en/case-studies" : "/case-studies"}
             className="group inline-flex items-center gap-2 rounded-full bg-cta-primary-bg px-8 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-cta-primary-bg-hover active:scale-95"
           >
             <span className="label-button text-cta-primary-text">
-              EXPLORAR PROJETOS
+              {isEn ? "EXPLORE PROJECTS" : "EXPLORAR PROJETOS"}
             </span>
             <ArrowRight
               aria-hidden

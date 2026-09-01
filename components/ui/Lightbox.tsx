@@ -9,6 +9,7 @@ interface LightboxProps {
   src: string | null;
   alt?: string;
   onClose: () => void;
+  lang?: "pt" | "en";
 }
 
 /**
@@ -27,8 +28,14 @@ interface LightboxProps {
  *
  * No new npm dependency — `react-dom`'s `createPortal` is already a
  * project dependency.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en"), threaded in from ImageCarousel.tsx/ThemeCarousel.tsx,
+ * for the default fullscreen `aria-label` and the close button's
+ * `aria-label` — the only two hardcoded strings in this component.
  */
-export function Lightbox({ src, alt = "", onClose }: LightboxProps) {
+export function Lightbox({ src, alt = "", onClose, lang = "pt" }: LightboxProps) {
+  const isEn = lang === "en";
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -71,7 +78,7 @@ export function Lightbox({ src, alt = "", onClose }: LightboxProps) {
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={alt || "Imagem em destaque"}
+      aria-label={alt || (isEn ? "Featured image" : "Imagem em destaque")}
       className="fixed inset-0 z-[60] flex items-center justify-center bg-surface-background/90 p-6 backdrop-blur-sm"
       onClick={onClose}
     >
@@ -83,7 +90,7 @@ export function Lightbox({ src, alt = "", onClose }: LightboxProps) {
       />
       <button
         type="button"
-        aria-label="Fechar"
+        aria-label={isEn ? "Close" : "Fechar"}
         onClick={onClose}
         className="fixed right-4 top-4 flex size-11 items-center justify-center rounded-full border border-border-surface-primary bg-surface-primary/90 text-text-primary backdrop-blur-sm transition-colors hover:bg-surface-primary sm:right-6 sm:top-6"
       >

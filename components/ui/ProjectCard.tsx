@@ -8,6 +8,7 @@ interface ProjectCardProps {
   title: string;
   description: string;
   image?: string;
+  lang?: "pt" | "en";
 }
 
 /**
@@ -75,6 +76,13 @@ interface ProjectCardProps {
  * violated — any `flex-1` item inside a wrapper that switches
  * `flex-col`→`sm:flex-row` needs its own `w-full` for the `flex-col`
  * state, it doesn't come for free.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en") — swaps the link target (`/case-studies/${slug}` vs.
+ * `/en/case-studies/${slug}`) and the "VER PROJETO" / "VIEW PROJECT"
+ * label. `slug` itself is unchanged between languages
+ * (lib/case-studies.en.ts reuses the same slugs as lib/case-studies.ts on
+ * purpose, so the same `slug` prop works for either route prefix).
  */
 export function ProjectCard({
   slug,
@@ -83,10 +91,13 @@ export function ProjectCard({
   title,
   description,
   image,
+  lang = "pt",
 }: ProjectCardProps) {
+  const isEn = lang === "en";
+
   return (
     <Link
-      href={`/case-studies/${slug}`}
+      href={isEn ? `/en/case-studies/${slug}` : `/case-studies/${slug}`}
       className="group flex w-full flex-col items-start gap-2.5 rounded-[32px] border border-border-surface-primary bg-surface-primary p-2"
     >
       <div className="aspect-[16/9] w-full overflow-hidden rounded-3xl bg-surface-background sm:aspect-[21/9] sm:max-h-[400px]">
@@ -112,7 +123,7 @@ export function ProjectCard({
           </div>
           <div className="flex shrink-0 items-center gap-2 pt-2 transition-colors group-hover:text-cta-transparent-text-hover">
             <span className="label-button text-on-surface-primary group-hover:text-cta-transparent-text-hover">
-              VER PROJETO
+              {isEn ? "VIEW PROJECT" : "VER PROJETO"}
             </span>
             <ArrowRight
               aria-hidden

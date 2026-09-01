@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 /**
@@ -29,9 +29,17 @@ import { ArrowLeft } from "lucide-react";
  * text-text-secondary`, hover → `brand-500`) so both breadcrumb patterns
  * on the site read as the same furniture despite the different
  * navigation mechanism underneath.
+ *
+ * UPDATE 2026-09-01 (English site): label reads "Back" instead of
+ * "Voltar" when the current route is under `/en/...` — reused on
+ * `app/en/contato/page.tsx` for the same reason it exists on the
+ * Portuguese `/contato`. Behavior (`router.back()`) is unchanged either
+ * way, only the button text.
  */
 export function BackLink() {
   const router = useRouter();
+  const pathname = usePathname();
+  const isEn = pathname?.startsWith("/en") ?? false;
 
   return (
     <button
@@ -40,7 +48,7 @@ export function BackLink() {
       className="label-button inline-flex items-center gap-2 text-text-secondary transition-colors hover:text-brand-500"
     >
       <ArrowLeft aria-hidden className="size-4" />
-      Voltar
+      {isEn ? "Back" : "Voltar"}
     </button>
   );
 }

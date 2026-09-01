@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AlignLeft, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -116,10 +117,17 @@ import { Button } from "@/components/ui/Button";
  * so its `fixed` positioning is finally relative to the real viewport.
  * A `mounted` guard delays the portal to after the first client-side
  * effect, since `document` doesn't exist during SSR.
+ *
+ * UPDATE 2026-09-01 (English site): reads `usePathname()` to detect the
+ * English site (`/en/...`) and swap every label + href + aria-label to
+ * English, same "path-based locale, no toggle" decision used across
+ * Header/HeaderNav/Footer/BackLink.
  */
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+  const isEn = pathname?.startsWith("/en") ?? false;
 
   useEffect(() => {
     setMounted(true);
@@ -165,7 +173,15 @@ export function MobileNav() {
       <Button
         variant="secondary"
         iconOnly
-        aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+        aria-label={
+          isOpen
+            ? isEn
+              ? "Close menu"
+              : "Fechar menu"
+            : isEn
+              ? "Open menu"
+              : "Abrir menu"
+        }
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
         onClick={() => setIsOpen((open) => !open)}
@@ -179,41 +195,41 @@ export function MobileNav() {
           id="mobile-menu"
           role="dialog"
           aria-modal="true"
-          aria-label="Menu de navegação"
+          aria-label={isEn ? "Navigation menu" : "Menu de navegação"}
           className="fixed inset-0 z-[60] flex h-[100dvh] flex-col items-center justify-center gap-10 overflow-y-auto bg-surface-background/80 px-6 pb-[max(4rem,env(safe-area-inset-bottom))] pt-[max(4rem,env(safe-area-inset-top))] backdrop-blur-lg sm:hidden"
         >
           <nav className="flex flex-col items-center gap-8 text-center">
             <Link
-              href="/sobre"
+              href={isEn ? "/en/sobre" : "/sobre"}
               onClick={() => setIsOpen(false)}
               className="heading-h2 text-text-primary"
             >
-              Sobre Mim
+              {isEn ? "About Me" : "Sobre Mim"}
             </Link>
             <Link
-              href="/case-studies"
+              href={isEn ? "/en/case-studies" : "/case-studies"}
               onClick={() => setIsOpen(false)}
               className="heading-h2 text-text-primary"
             >
-              Projetos
+              {isEn ? "Projects" : "Projetos"}
             </Link>
           </nav>
 
           <Link
-            href="/contato"
+            href={isEn ? "/en/contato" : "/contato"}
             onClick={() => setIsOpen(false)}
             className="inline-flex items-center gap-3 rounded-full bg-cta-primary-bg px-9 py-4 transition-colors hover:bg-cta-primary-bg-hover"
           >
             <ArrowRight aria-hidden className="size-[18px] text-cta-primary-text" />
             <span className="label-button text-cta-primary-text">
-              Entre em contato
+              {isEn ? "Get in touch" : "Entre em contato"}
             </span>
           </Link>
 
           <Button
             variant="transparent"
             iconOnly
-            aria-label="Fechar menu"
+            aria-label={isEn ? "Close menu" : "Fechar menu"}
             onClick={() => setIsOpen(false)}
           >
             <X aria-hidden className="size-6" />

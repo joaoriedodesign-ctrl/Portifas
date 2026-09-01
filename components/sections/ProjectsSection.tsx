@@ -1,6 +1,7 @@
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { publishedCaseStudies } from "@/lib/case-studies";
+import { publishedCaseStudiesEn } from "@/lib/case-studies.en";
 
 /**
  * "Projetos selecionados" section — node 31:1838 ("Frame 14") in the
@@ -40,24 +41,44 @@ import { publishedCaseStudies } from "@/lib/case-studies";
  * PillarsSection's grid and the case-studies index list. `heading-h2`
  * already steps down to `h3` size below `lg` automatically
  * (tokens-typography.css), so no manual breakpoint variant is needed here.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en") — same "page decides its own language" reasoning as
+ * Hero.tsx/ContactSection.tsx. Picks between `publishedCaseStudies` and
+ * the new `publishedCaseStudiesEn` (lib/case-studies.en.ts, a full
+ * translated mirror of lib/case-studies.ts — same slugs/images/hidden
+ * flags, only the copy differs) so the English homepage lists the
+ * English case-study content, not the Portuguese one.
  */
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  lang?: "pt" | "en";
+}
+
+export function ProjectsSection({ lang = "pt" }: ProjectsSectionProps) {
+  const isEn = lang === "en";
+  const items = isEn ? publishedCaseStudiesEn : publishedCaseStudies;
+
   return (
     <section
       id="projetos"
       className="flex w-full flex-col items-center justify-center gap-8 p-6 sm:p-10 lg:p-16"
     >
       <div className="flex max-w-[720px] flex-col items-center justify-center text-center">
-        <p className="caption text-brand-500">PORTFÓLIO & TRABALHOS</p>
-        <h2 className="heading-h2 text-text-primary">Projetos selecionados</h2>
+        <p className="caption text-brand-500">
+          {isEn ? "PORTFOLIO & WORK" : "PORTFÓLIO & TRABALHOS"}
+        </p>
+        <h2 className="heading-h2 text-text-primary">
+          {isEn ? "Selected projects" : "Projetos selecionados"}
+        </h2>
         <p className="body-lg text-text-secondary">
-          Alguns dos projetos mais recentes de produto que mais gosto de ter
-          feito — do discovery ao sistema que sustenta a interface.
+          {isEn
+            ? "Some of the most recent product projects I've enjoyed working on — from discovery to the system that holds the interface together."
+            : "Alguns dos projetos mais recentes de produto que mais gosto de ter feito — do discovery ao sistema que sustenta a interface."}
         </p>
       </div>
 
       <div className="mx-auto flex w-full max-w-[1312px] flex-col gap-4">
-        {publishedCaseStudies.map((cs, i) => (
+        {items.map((cs, i) => (
           <Reveal key={cs.slug} className="w-full" delay={i * 90}>
             <ProjectCard
               slug={cs.slug}
@@ -66,6 +87,7 @@ export function ProjectsSection() {
               title={cs.title}
               description={cs.cardDescription}
               image={cs.coverImage}
+              lang={lang}
             />
           </Reveal>
         ))}

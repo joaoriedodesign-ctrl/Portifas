@@ -7,9 +7,11 @@ import { Lightbox } from "@/components/ui/Lightbox";
 interface ThemeCarouselProps {
   images: string[];
   /** One label per image, e.g. ["Tema 1", "Tema 2", "Tema 3"]. Falls back
-   * to "Tema N" when omitted or shorter than `images`. */
+   * to a localized "Tema N" / "Theme N" when omitted or shorter than
+   * `images`. */
   labels?: string[];
   alt?: string;
+  lang?: "pt" | "en";
 }
 
 /**
@@ -67,15 +69,22 @@ interface ThemeCarouselProps {
  *     for the same "where am I" role.
  *
  * No new npm dependency — same reasoning as ImageCarousel.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en") for the same reason as ImageCarousel.tsx's update
+ * note — accessibility strings + the default "Tema N" / "Theme N"
+ * fallback label (rarely hit in practice, since lib/case-studies.en.ts
+ * always supplies real English `labels`) + passthrough to `<Lightbox>`.
  */
-export function ThemeCarousel({ images, labels, alt = "" }: ThemeCarouselProps) {
+export function ThemeCarousel({ images, labels, alt = "", lang = "pt" }: ThemeCarouselProps) {
+  const isEn = lang === "en";
   const [index, setIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const count = images.length;
 
   const go = (i: number) => setIndex(((i % count) + count) % count);
 
-  const labelFor = (i: number) => labels?.[i] ?? `Tema ${i + 1}`;
+  const labelFor = (i: number) => labels?.[i] ?? (isEn ? `Theme ${i + 1}` : `Tema ${i + 1}`);
 
   if (count === 0) {
     return (
@@ -97,7 +106,15 @@ export function ThemeCarousel({ images, labels, alt = "" }: ThemeCarouselProps) 
             <button
               key={src}
               type="button"
-              aria-label={isActive ? "Ampliar imagem" : `Ir para ${labelFor(i)}`}
+              aria-label={
+                isActive
+                  ? isEn
+                    ? "Expand image"
+                    : "Ampliar imagem"
+                  : isEn
+                    ? `Go to ${labelFor(i)}`
+                    : `Ir para ${labelFor(i)}`
+              }
               aria-current={isActive}
               onClick={() => (isActive ? setLightboxOpen(true) : go(i))}
               style={{
@@ -123,7 +140,7 @@ export function ThemeCarousel({ images, labels, alt = "" }: ThemeCarouselProps) 
 
         <button
           type="button"
-          aria-label="Tema anterior"
+          aria-label={isEn ? "Previous theme" : "Tema anterior"}
           onClick={() => go(index - 1)}
           className="absolute left-1 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border-surface-primary bg-surface-primary/90 text-text-primary backdrop-blur-sm transition-colors hover:bg-surface-primary sm:left-4"
         >
@@ -131,7 +148,7 @@ export function ThemeCarousel({ images, labels, alt = "" }: ThemeCarouselProps) 
         </button>
         <button
           type="button"
-          aria-label="Próximo tema"
+          aria-label={isEn ? "Next theme" : "Próximo tema"}
           onClick={() => go(index + 1)}
           className="absolute right-1 top-1/2 z-20 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border-surface-primary bg-surface-primary/90 text-text-primary backdrop-blur-sm transition-colors hover:bg-surface-primary sm:right-4"
         >
@@ -161,6 +178,7 @@ export function ThemeCarousel({ images, labels, alt = "" }: ThemeCarouselProps) 
         src={lightboxOpen ? images[index] : null}
         alt={`${alt} — ${labelFor(index)}`}
         onClose={() => setLightboxOpen(false)}
+        lang={lang}
       />
     </div>
   );

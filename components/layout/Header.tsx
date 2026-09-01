@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { HeaderNav } from "@/components/layout/HeaderNav";
 
@@ -123,15 +126,29 @@ import { HeaderNav } from "@/components/layout/HeaderNav";
  * app/contato/page.tsx) instead of the `/#contato` homepage-anchor gap
  * this comment used to describe — it now gets the same active-matching
  * treatment as PROJETOS/SOBRE, no more exclusion.
+ *
+ * UPDATE 2026-09-01 (English site): converted to a "use client" component
+ * (was a plain server component) so it can read `usePathname()` directly,
+ * the same way HeaderNav/MobileNav already do — needed to tell the
+ * English site (routes under `/en/...`, see lib/case-studies.en.ts and
+ * the app/en/ tree) apart from the Portuguese one and swap the logo link
+ * + avatar alt text accordingly. No visual/behavioral change on the
+ * existing Portuguese routes. This mirrors the "no toggle, path-based
+ * locale" decision (see project memory) rather than threading a `lang`
+ * prop down from app/layout.tsx, which mounts this component once for
+ * every route and has no per-route way to pass one in.
  */
 export function Header() {
+  const pathname = usePathname();
+  const isEn = pathname?.startsWith("/en") ?? false;
+
   return (
     <header className="fixed left-1/2 top-6 z-50 w-[564px] max-w-[calc(100%-32px)] -translate-x-1/2 rounded-[195px] border border-white/10 bg-surface-secondary/45 py-2 pl-2 pr-6 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl backdrop-saturate-150 before:pointer-events-none before:absolute before:inset-0 before:rounded-[195px] before:bg-gradient-to-b before:from-white/10 before:to-transparent before:content-[''] sm:top-8">
       <div className="relative z-10 flex items-center justify-between gap-2">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href={isEn ? "/en" : "/"} className="flex items-center gap-2">
           <Image
             src="/images/header/avatar.png"
-            alt="Foto de João Riedo"
+            alt={isEn ? "Photo of João Riedo" : "Foto de João Riedo"}
             width={76}
             height={76}
             priority

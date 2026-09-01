@@ -46,24 +46,40 @@ import { ArrowRight } from "lucide-react";
  * `lg:px-20`, the last exactly matching Figma's `px-[80px]`). The CTA
  * button keeps a ~52px tall hit area (`py-4` + label + icon), clearing the
  * project's 44×44px minimum touch target at every breakpoint.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en") so `ConditionalFooter.tsx` can render this in
+ * English for every route under `/en/...` — same pattern as Badge's
+ * `accent` prop / Button's `iconOnly` prop (extend, don't fork). Every
+ * route that doesn't pass `lang` renders byte-identical to before this
+ * change.
  */
-export function Footer() {
+interface FooterProps {
+  lang?: "pt" | "en";
+}
+
+export function Footer({ lang = "pt" }: FooterProps) {
+  const isEn = lang === "en";
+
   return (
     <footer className="flex w-full flex-col items-center gap-8 px-6 pb-8 pt-16 text-center sm:gap-10 sm:px-10 sm:pt-20 lg:px-20 lg:pt-[120px]">
       <div className="flex w-full max-w-[800px] flex-col items-center gap-4 sm:gap-6">
-        <p className="caption text-brand-500">VAMOS TRABALHAR JUNTOS?</p>
+        <p className="caption text-brand-500">
+          {isEn ? "LET'S WORK TOGETHER?" : "VAMOS TRABALHAR JUNTOS?"}
+        </p>
         <p className="heading-h1 text-text-primary">
-          Vamos conversar sobre design systems, automação, ou pra onde a IA
-          tá levando o product design?
+          {isEn
+            ? "Let's talk about design systems, automation, or where AI is taking product design?"
+            : "Vamos conversar sobre design systems, automação, ou pra onde a IA tá levando o product design?"}
         </p>
       </div>
 
       <Link
-        href="/contato"
+        href={isEn ? "/en/contato" : "/contato"}
         className="group inline-flex items-center gap-3 rounded-full bg-cta-primary-bg px-9 py-4 transition-all duration-300 hover:scale-105 hover:bg-cta-primary-bg-hover active:scale-95"
       >
         <span className="label-button text-cta-primary-text">
-          ENTRAR EM CONTATO
+          {isEn ? "GET IN TOUCH" : "ENTRAR EM CONTATO"}
         </span>
         <ArrowRight
           aria-hidden
@@ -72,8 +88,9 @@ export function Footer() {
       </Link>
 
       <p className="caption max-w-[289px] text-text-secondary">
-        © {new Date().getFullYear()} João Riedo. Todos os direitos
-        reservados.
+        {isEn
+          ? `© ${new Date().getFullYear()} João Riedo. All rights reserved.`
+          : `© ${new Date().getFullYear()} João Riedo. Todos os direitos reservados.`}
       </p>
     </footer>
   );

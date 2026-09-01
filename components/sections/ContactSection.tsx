@@ -66,10 +66,27 @@ import { ArrowRight } from "lucide-react";
  * already gives: this is one of the most important CTAs on the site, so
  * it gets the richer treatment already established for that class of
  * CTA instead of introducing a third button style.
+ *
+ * UPDATE 2026-09-01 (English site): added an optional `lang` prop ("pt",
+ * default, or "en"). Every page that mounts this section now decides its
+ * language explicitly (app/page.tsx / app/contato/page.tsx / the
+ * case-study detail page pass nothing → "pt"; their app/en/... mirrors
+ * pass lang="en") — unlike Header/Footer/BackLink this isn't
+ * path-derived, since the section itself has no route of its own, it's
+ * composed into pages that already know their own language. The
+ * WhatsApp number and redirect target are unchanged either way — only
+ * the on-page copy and the message template sent to WhatsApp switch
+ * language.
  */
 const WHATSAPP_NUMBER = "5543984121348";
 
-export function ContactSection() {
+interface ContactSectionProps {
+  lang?: "pt" | "en";
+}
+
+export function ContactSection({ lang = "pt" }: ContactSectionProps) {
+  const isEn = lang === "en";
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -77,7 +94,9 @@ export function ContactSection() {
     const nome = String(data.get("nome") ?? "").trim();
     const mensagem = String(data.get("mensagem") ?? "").trim();
 
-    const text = `Olá, João! Meu nome é ${nome}.\n\n${mensagem}`;
+    const text = isEn
+      ? `Hi, João! My name is ${nome}.\n\n${mensagem}`
+      : `Olá, João! Meu nome é ${nome}.\n\n${mensagem}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 
     window.open(url, "_blank", "noopener,noreferrer");
@@ -90,13 +109,14 @@ export function ContactSection() {
       className="flex w-full flex-col items-center gap-10 px-6 py-16 sm:gap-12 sm:px-10 sm:py-20 lg:px-16 lg:py-24"
     >
       <div className="flex w-full max-w-[640px] flex-col items-center gap-4 text-center">
-        <p className="caption text-brand-500">CONTATO</p>
+        <p className="caption text-brand-500">{isEn ? "CONTACT" : "CONTATO"}</p>
         <p className="heading-h2 text-text-primary">
-          Vamos conversar sobre o seu projeto?
+          {isEn ? "Let's talk about your project?" : "Vamos conversar sobre o seu projeto?"}
         </p>
         <p className="body-lg text-text-secondary">
-          Preencha os campos abaixo — sua mensagem chega direto no meu
-          WhatsApp, sem formulário de e-mail e sem espera.
+          {isEn
+            ? "Fill in the fields below — your message goes straight to my WhatsApp, no email form and no waiting."
+            : "Preencha os campos abaixo — sua mensagem chega direto no meu WhatsApp, sem formulário de e-mail e sem espera."}
         </p>
       </div>
 
@@ -109,7 +129,7 @@ export function ContactSection() {
             htmlFor="contato-nome"
             className="caption uppercase tracking-wide text-text-secondary"
           >
-            Nome
+            {isEn ? "Name" : "Nome"}
           </label>
           <input
             id="contato-nome"
@@ -117,7 +137,7 @@ export function ContactSection() {
             type="text"
             autoComplete="name"
             required
-            placeholder="Como posso te chamar?"
+            placeholder={isEn ? "What should I call you?" : "Como posso te chamar?"}
             className="body-base w-full rounded-2xl border border-border-surface-primary bg-surface-primary px-5 py-3.5 text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-border-surface-secondary"
           />
         </div>
@@ -127,14 +147,18 @@ export function ContactSection() {
             htmlFor="contato-mensagem"
             className="caption uppercase tracking-wide text-text-secondary"
           >
-            Mensagem
+            {isEn ? "Message" : "Mensagem"}
           </label>
           <textarea
             id="contato-mensagem"
             name="mensagem"
             required
             rows={5}
-            placeholder="Conte um pouco sobre o que você precisa..."
+            placeholder={
+              isEn
+                ? "Tell me a bit about what you need..."
+                : "Conte um pouco sobre o que você precisa..."
+            }
             className="body-base w-full resize-none rounded-2xl border border-border-surface-primary bg-surface-primary px-5 py-3.5 text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-border-surface-secondary"
           />
         </div>
@@ -144,7 +168,7 @@ export function ContactSection() {
           className="group mt-2 inline-flex items-center gap-3 rounded-full bg-cta-primary-bg px-9 py-4 transition-all duration-300 hover:scale-105 hover:bg-cta-primary-bg-hover active:scale-95"
         >
           <span className="label-button text-cta-primary-text">
-            ENVIAR NO WHATSAPP
+            {isEn ? "SEND ON WHATSAPP" : "ENVIAR NO WHATSAPP"}
           </span>
           <ArrowRight
             aria-hidden
