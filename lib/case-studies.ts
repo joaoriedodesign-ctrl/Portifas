@@ -4,6 +4,13 @@ export interface Pillar {
   description: string;
 }
 
+export interface Screen {
+  /** Section label rendered above its mobile/desktop pair, e.g. "Home", "Gamepage", "Welcome Bonus". */
+  titulo: string;
+  /** Exactly 2 paths: [mobile, desktop]. */
+  images: [string, string];
+}
+
 export interface ImageBlock {
   caption: string;
   /** One image renders as a plain <img>; two or more render inside ImageCarousel (components/ui/ImageCarousel.tsx) — unless `variant` says otherwise. */
@@ -15,11 +22,22 @@ export interface ImageBlock {
    * peek-style carousel purpose-built for "same component, different
    * tenant theme" blocks, where neighbor cards peeking in on both sides
    * is the point (sells the comparison at a glance), with chevron nav and
-   * labeled pills instead of dots.
+   * labeled pills instead of dots. "screen-map" renders via
+   * ScreenMapBlock instead (components/ui/ScreenMapBlock.tsx) — stacked
+   * "screen name + mobile/desktop pair" sections for showing real
+   * production screens across breakpoints (reads `screens`, ignores
+   * `images`). "contain" stays on ImageCarousel but only changes its
+   * single-image path: instead of the usual full-bleed `object-cover`
+   * crop, the image is letterboxed with `object-contain` inside the same
+   * box on the `bg-surface-primary` backdrop — for a single image whose
+   * real aspect ratio (e.g. a tall portrait screenshot) would be
+   * destroyed by the default wide-banner crop.
    */
-  variant?: "carousel" | "theme-peek";
+  variant?: "carousel" | "theme-peek" | "screen-map" | "contain";
   /** Only read by the "theme-peek" variant — one label per image (e.g. ["Tema 1", "Tema 2", "Tema 3"]); ThemeCarousel falls back to "Tema N" if omitted. */
   labels?: string[];
+  /** Only read by the "screen-map" variant — one entry per screen section, each carrying its own [mobile, desktop] pair. */
+  screens?: Screen[];
 }
 
 export interface Stat {
@@ -59,7 +77,9 @@ export interface CaseStudy {
 // Confirmed directly with the user before filling this in — see the 3
 // pendências the source case-study draft itself flagged as blocking:
 //  1. Attribution: the DS was architected and built from scratch at
-//     Multibet (not brought over from Ana Gaming) — safe to name Multibet.
+//     Play4tune — corrected 2026-09-17 (was Multibet; user can now name
+//     Play4tune publicly). The DS also supports Multibet and Supernova as
+//     tenants, but Play4tune is where it was built.
 //  2. Figma → Storybook bridge: manual/custom-script sync, no Tokens
 //     Studio or Style Dictionary in the pipeline — do not claim otherwise.
 //  3. Governance process (how a component gets reviewed/versioned) is
@@ -69,8 +89,11 @@ export interface CaseStudy {
 //     "approval flow" language later without checking with the user again.
 // Bonus metric (3 tenants) and platform (Web multi-tenant) were also
 // user-confirmed, not inferred — the source draft didn't mention either.
-// coverImage and imageBlocks[].image are still empty; add real screenshots
-// when available.
+// 2026-09-17: coverImage and imageBlocks filled with real Play4tune
+// screenshots (see the "screen-map" entry below) — no longer
+// placeholders. The Storybook component-library block, previously
+// removed for confidentiality, is back with a components-name-only
+// screenshot (no real screens shown).
 export const caseStudies: CaseStudy[] = [
   {
     slug: "multi-tenant-design-system",
@@ -78,11 +101,11 @@ export const caseStudies: CaseStudy[] = [
     category: "Design System",
     title: "Design System Multi-tenant",
     subtitle:
-      "De arquivos Figma defasados a uma base de tokens única para múltiplos tenants",
+      "De arquivos Figma defasados na Play4tune a uma base de tokens única que hoje também sustenta a Multibet e a Supernova",
     summary:
-      "Antes deste sistema, cada tela nova nascia garimpando componentes em arquivos Figma específicos que ficavam defasados quase na hora — sem fonte única, cada designer trabalhava com uma versão diferente da interface. Estruturei a arquitetura de tokens (primitivas → semânticas) e uma camada de automação de tema por tenant, hoje sustentando 87 telas e mais de 200 componentes consumidos direto no Storybook.",
+      "Arquitetado e construído do zero para sustentar a operação multi-tenant da Play4tune (Brasil, Colômbia, Paquistão), o design system hoje também dá suporte à Multibet e à Supernova — 87 telas, 200+ componentes, cortando o tempo de criação de novas telas em ~80%.",
     cardDescription:
-      "Design system multi-tenant com automação de tema por tenant e uma base de tokens única consumida via Storybook.",
+      "Design system arquitetado do zero na Play4tune, hoje também em uso na Multibet e na Supernova, com automação de tema por tenant.",
     year: "2026",
     coverImage: "/images/case-studies/multi-tenant-design-system/cover.jpg",
     metadata: {
@@ -124,14 +147,39 @@ export const caseStudies: CaseStudy[] = [
     imageBlocks: [
       {
         caption:
-          "Vários componentes do design system com o tema aplicado automaticamente para tenants diferentes",
-        images: [
-          "/images/case-studies/multi-tenant-design-system/tema-1.jpg",
-          "/images/case-studies/multi-tenant-design-system/tema-2.jpg",
-          "/images/case-studies/multi-tenant-design-system/tema-3.jpg",
+          "Telas reais em produção, do mobile ao desktop, com os mesmos tokens e componentes do design system.",
+        variant: "screen-map",
+        screens: [
+          {
+            titulo: "Home",
+            images: [
+              "/images/case-studies/multi-tenant-design-system/screen-home-mobile.png",
+              "/images/case-studies/multi-tenant-design-system/screen-home-desktop.png",
+            ],
+          },
+          {
+            titulo: "Gamepage",
+            images: [
+              "/images/case-studies/multi-tenant-design-system/screen-gamepage-mobile.png",
+              "/images/case-studies/multi-tenant-design-system/screen-gamepage-desktop.png",
+            ],
+          },
+          {
+            titulo: "Welcome Bonus",
+            images: [
+              "/images/case-studies/multi-tenant-design-system/screen-welcome-bonus-mobile.png",
+              "/images/case-studies/multi-tenant-design-system/screen-welcome-bonus-desktop.png",
+            ],
+          },
         ],
-        variant: "theme-peek",
-        labels: ["Tema 1", "Tema 2", "Tema 3"],
+      },
+      {
+        caption:
+          "Biblioteca de componentes documentada no Storybook — nomes catalogados, sem exibir nenhuma tela real por confidencialidade.",
+        images: [
+          "/images/case-studies/multi-tenant-design-system/storybook-components.jpg",
+        ],
+        variant: "contain",
       },
     ],
     stats: [

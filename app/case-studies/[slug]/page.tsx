@@ -4,6 +4,7 @@ import { getCaseStudyBySlug, publishedCaseStudies } from "@/lib/case-studies";
 import { PillarCard } from "@/components/ui/PillarCard";
 import { ImageCarousel } from "@/components/ui/ImageCarousel";
 import { ThemeCarousel } from "@/components/ui/ThemeCarousel";
+import { ScreenMapBlock } from "@/components/ui/ScreenMapBlock";
 import { StatCard } from "@/components/ui/StatCard";
 import { ContactSection } from "@/components/sections/ContactSection";
 
@@ -162,8 +163,14 @@ export default function CaseStudyPage({
                 labels={block.labels}
                 alt={block.caption}
               />
+            ) : block.variant === "screen-map" ? (
+              <ScreenMapBlock screens={block.screens ?? []} alt={block.caption} />
             ) : (
-              <ImageCarousel images={block.images ?? []} alt={block.caption} />
+              <ImageCarousel
+                images={block.images ?? []}
+                alt={block.caption}
+                fit={block.variant === "contain" ? "contain" : "cover"}
+              />
             )}
             <p className="body-sm w-full text-center text-text-secondary">{block.caption}</p>
           </div>

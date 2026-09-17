@@ -8,6 +8,19 @@ interface ImageCarouselProps {
   images: string[];
   alt?: string;
   lang?: "pt" | "en";
+  /**
+   * "cover" (default) — the single-image path crops full-bleed into the
+   * usual wide banner box, same as every other case-study hero shot.
+   * "contain" — added 2026-09-17 for a single image whose real aspect
+   * ratio (e.g. a tall portrait screenshot) the wide-banner crop would
+   * destroy: the image is letterboxed with `object-contain` inside the
+   * same box instead, padded so it doesn't touch the box edges, with
+   * `bg-surface-primary` showing through as the surrounding mat. Only
+   * affects the 1-image path — 2+ images already use `object-contain`
+   * with no crop (per the Cut 2/3 corrections documented below), so this
+   * prop is a no-op there.
+   */
+  fit?: "cover" | "contain";
 }
 
 /**
@@ -81,7 +94,7 @@ interface ImageCarouselProps {
  * come from the case-study data via the `alt` prop, already
  * language-correct by the time it gets here).
  */
-export function ImageCarousel({ images, alt = "", lang = "pt" }: ImageCarouselProps) {
+export function ImageCarousel({ images, alt = "", lang = "pt", fit = "cover" }: ImageCarouselProps) {
   const isEn = lang === "en";
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [index, setIndex] = useState(0);
@@ -104,6 +117,7 @@ export function ImageCarousel({ images, alt = "", lang = "pt" }: ImageCarouselPr
   }
 
   if (images.length === 1) {
+    const isContain = fit === "contain";
     return (
       <>
         <div className={emptyBox}>
@@ -111,12 +125,20 @@ export function ImageCarousel({ images, alt = "", lang = "pt" }: ImageCarouselPr
             type="button"
             aria-label={isEn ? "Expand image" : "Ampliar imagem"}
             onClick={() => setLightboxIndex(0)}
-            className="size-full cursor-zoom-in appearance-none border-0 bg-transparent p-0"
+            className={
+              isContain
+                ? "flex size-full cursor-zoom-in appearance-none items-center justify-center border-0 bg-transparent p-6 sm:p-10"
+                : "size-full cursor-zoom-in appearance-none border-0 bg-transparent p-0"
+            }
           >
             <img
               src={images[0]}
               alt={alt}
-              className="size-full rounded-[32px] object-cover"
+              className={
+                isContain
+                  ? "h-full w-auto max-w-full rounded-2xl object-contain"
+                  : "size-full rounded-[32px] object-cover"
+              }
             />
           </button>
         </div>
