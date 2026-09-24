@@ -58,6 +58,13 @@ export interface CaseStudy {
   cardDescription: string;
   year: string;
   coverImage?: string;
+  /**
+   * Optional link to the live project (e.g. a landing page hosted as a
+   * static copy under public/projects/<slug>/). When set, the case-study
+   * hero renders a "Ver site ao vivo" / "View live site" CTA that opens it
+   * in a new tab. Added 2026-09-24 for the landing-page case studies.
+   */
+  liveUrl?: string;
   metadata: {
     papel: string;
     duracao: string;
@@ -266,9 +273,167 @@ export const caseStudies: CaseStudy[] = [
       { value: "2", label: "perfis de usuário atendidos (staff e tutor)" },
       { value: "1", label: "design system estruturado do zero" },
     ],
-    // 2026-08-28: was "aurum-bet-torneios" — rerouted to skip it while
-    // that case study is hidden (see its `hidden: true` note below), so
-    // the "next project" link never points at an unpublished page.
+    // 2026-08-28: was "aurum-bet-torneios" (hidden). 2026-09-24: now
+    // points to the new dr-carlos-mattos landing-page case, continuing the
+    // cycle multi-tenant → zentupet → dr-carlos-mattos → marina-alves → multi-tenant.
+    nextProjectSlug: "dr-carlos-mattos",
+  },
+  // Added 2026-09-24. Real client (confirmed by the user). The live page
+  // is a static English copy of the delivered LP, hosted at
+  // public/projects/dr-carlos-mattos/ (translated for the portfolio, per
+  // user request). Contact data on the page (CRM/RQE, WhatsApp number)
+  // are still the placeholders from the delivered file.
+  // Assumed, NOT user-confirmed: metadata.duracao, metadata.papel wording
+  // (design + front-end), year. No performance/conversion metrics were
+  // given — stats below are scope facts read from the delivered code only.
+  {
+    slug: "dr-carlos-mattos",
+    nda: false,
+    category: "Landing Page",
+    title: "Dr. Carlos Mattos",
+    subtitle:
+      "Landing page para um consultório de psiquiatria em Curitiba, com toda a jornada levando a um único canal de agendamento: o WhatsApp",
+    summary:
+      "Landing page para um psiquiatra que atende presencialmente em Curitiba e por teleconsulta em todo o Brasil. A página parte das situações que o paciente reconhece no próprio dia a dia, apresenta o médico e explica o tratamento em 4 passos — com o agendamento pelo WhatsApp sempre a um toque de distância, em qualquer ponto da rolagem.",
+    cardDescription:
+      "Landing page para consultório de psiquiatria — identificação, confiança e agendamento pelo WhatsApp em uma única página.",
+    year: "2026",
+    coverImage: "/images/case-studies/dr-carlos-mattos/cover.jpg",
+    liveUrl: "/projects/dr-carlos-mattos/index.html",
+    metadata: {
+      papel: "UX/UI Design e desenvolvimento front-end",
+      duracao: "Menos de 1 mês",
+      plataforma: "Web (landing page responsiva)",
+      squad: "Eu (design e código) + o cliente",
+    },
+    contexto: {
+      paragraph:
+        "Procurar um psiquiatra costuma acontecer num momento de desgaste: a pessoa já convive há tempo com falta de foco, ansiedade ou um TDAH nunca diagnosticado, e qualquer atrito no caminho vira motivo para adiar mais uma vez. O desafio era construir uma página que gerasse identificação e confiança rápido, respondesse às dúvidas que normalmente travam o primeiro contato (convênio, teleconsulta, tempo de espera, medicação atual) e transformasse essa decisão em uma mensagem no WhatsApp.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Começar pela identificação",
+        description:
+          "Logo depois do hero, a seção \"Você se identifica com alguma dessas situações?\" lista sinais concretos do dia a dia em cards numerados — o paciente se reconhece antes de ler qualquer credencial, e a página já responde que existe explicação clínica e tratamento objetivo.",
+      },
+      {
+        number: "02",
+        title: "Um único canal de conversão",
+        description:
+          "Todo CTA leva ao WhatsApp com mensagem pré-preenchida: header, hero, seção de tratamento, menu mobile, rodapé e um botão flutuante que acompanha a rolagem no mobile. Nada de formulário — o agendamento acontece no canal que o paciente já usa.",
+      },
+      {
+        number: "03",
+        title: "Confiança antes do clique",
+        description:
+          "Sobre o médico com trajetória e citação em primeira pessoa, CRM/RQE visíveis no hero e no rodapé, jornada de tratamento em 4 passos (agendamento, primeira consulta, plano e acompanhamento), endereço com mapa e FAQ em acordeão cobrindo convênio, teleconsulta, prazo e pagamento.",
+      },
+      {
+        number: "04",
+        title: "Leve e acessível por padrão",
+        description:
+          "HTML, CSS e JavaScript puros, sem framework. Imagens em WebP com versões separadas para mobile e desktop, fontes carregadas sem bloquear a renderização, lazy loading, animações que respeitam o \"reduzir movimento\" do sistema, skip link e navegação por teclado no menu mobile.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Principais seções da página no mobile e no desktop — hero, sinais, sobre o médico, jornada de tratamento e FAQ",
+        variant: "screen-map",
+        screens: [
+          { titulo: "Hero", images: ["/images/case-studies/dr-carlos-mattos/screen-hero-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-hero-desktop.jpg"] },
+          { titulo: "Sinais e desafios", images: ["/images/case-studies/dr-carlos-mattos/screen-signs-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-signs-desktop.jpg"] },
+          { titulo: "Sobre o médico", images: ["/images/case-studies/dr-carlos-mattos/screen-about-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-about-desktop.jpg"] },
+          { titulo: "Como funciona o tratamento", images: ["/images/case-studies/dr-carlos-mattos/screen-treatment-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-treatment-desktop.jpg"] },
+          { titulo: "Perguntas frequentes", images: ["/images/case-studies/dr-carlos-mattos/screen-faq-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-faq-desktop.jpg"] },
+        ],
+      },
+    ],
+    stats: [
+      { value: "6", label: "seções, do primeiro sinal ao agendamento" },
+      { value: "6", label: "pontos de contato levando ao WhatsApp" },
+      { value: "2", label: "modalidades de atendimento (presencial e teleconsulta)" },
+      { value: "0", label: "frameworks — HTML, CSS e JS puros" },
+    ],
+    nextProjectSlug: "marina-alves",
+  },
+  // Added 2026-09-24. Concept project: "Marina Alves" is a FICTIONAL
+  // persona (confirmed by the user — not a real client), disclosed as such
+  // in subtitle/summary, same approach as aurum-bet-torneios' fictional
+  // name. All numbers on the page itself (followers, prices, brand
+  // testimonials) are part of the fiction, so none of them are used as
+  // case-study results. Assumed: metadata.duracao, year.
+  {
+    slug: "marina-alves",
+    nda: false,
+    category: "Landing Page · Mídia Kit",
+    title: "Marina Alves",
+    subtitle:
+      "Mídia kit online para uma influenciadora de skincare (persona fictícia) — números, audiência e pacotes prontos para a marca fechar pelo WhatsApp",
+    summary:
+      "Projeto conceito: um mídia kit em formato de landing page para uma criadora de conteúdo de skincare e rotina real (Marina Alves é uma persona fictícia). A página substitui o PDF que circula por e-mail por uma vitrine viva — métricas, perfil de audiência, melhores conteúdos, depoimentos de marcas e pacotes com preço — e ainda oferece o mídia kit em PDF para quem precisa anexar numa proposta.",
+    cardDescription:
+      "Projeto conceito de mídia kit online para influenciadora — métricas, audiência e pacotes com contratação direta pelo WhatsApp.",
+    year: "2026",
+    coverImage: "/images/case-studies/marina-alves/cover.jpg",
+    liveUrl: "/projects/marina-alves/index.html",
+    metadata: {
+      papel: "UX/UI Design e desenvolvimento front-end",
+      duracao: "Menos de 1 mês",
+      plataforma: "Web (landing page responsiva)",
+      squad: "Eu (projeto autoral)",
+    },
+    contexto: {
+      paragraph:
+        "Mídia kit de influenciador normalmente é um PDF que desatualiza rápido, não mostra vídeo e obriga a marca a trocar vários e-mails para descobrir o básico: quanto custa e como contratar. A proposta aqui foi pensar o mídia kit do ponto de vista de quem compra — o gerente de marca que precisa avaliar audiência, ver provas de resultado e sair com um pacote escolhido, tudo em poucos minutos e muitas vezes pelo celular, dentro do próprio Instagram.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Organizado pela decisão da marca",
+        description:
+          "A ordem das seções segue as perguntas de quem vai contratar: quem é ela (hero com vídeo), qual o alcance (métricas), para quem ela fala (gênero, idade, cidades e assuntos), o que já funcionou (melhores conteúdos e depoimentos) e quanto custa (serviços e pacotes).",
+      },
+      {
+        number: "02",
+        title: "Preço visível e contratação em um toque",
+        description:
+          "4 serviços avulsos e 2 pacotes completos, com o mais pedido em destaque. Cada botão abre o WhatsApp com uma mensagem já preenchida com o nome e o valor do pacote — a conversa começa com a marca sabendo exatamente o que quer.",
+      },
+      {
+        number: "03",
+        title: "Dados que se movem",
+        description:
+          "Contadores animados nas métricas, barras de audiência que se preenchem na rolagem, carrosséis horizontais de vídeos e depoimentos (com rolagem automática no mobile) — tudo como progressive enhancement: sem JavaScript, ou com \"reduzir movimento\" ativo, todo o conteúdo aparece estático e completo.",
+      },
+      {
+        number: "04",
+        title: "Pensado para o navegador do Instagram",
+        description:
+          "Como o link vive na bio, a página foi tratada para os navegadores internos (Instagram/WhatsApp) e para o modo escuro forçado do Samsung Internet, que inverte cores sozinho — ali a página recebe um tema escuro próprio para não quebrar a identidade visual. O mídia kit em PDF continua disponível para download.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Principais seções do mídia kit no mobile e no desktop — hero, métricas, audiência, serviços e contato",
+        variant: "screen-map",
+        screens: [
+          { titulo: "Hero", images: ["/images/case-studies/marina-alves/screen-hero-mobile.jpg", "/images/case-studies/marina-alves/screen-hero-desktop.jpg"] },
+          { titulo: "Métricas", images: ["/images/case-studies/marina-alves/screen-metrics-mobile.jpg", "/images/case-studies/marina-alves/screen-metrics-desktop.jpg"] },
+          { titulo: "Audiência", images: ["/images/case-studies/marina-alves/screen-audience-mobile.jpg", "/images/case-studies/marina-alves/screen-audience-desktop.jpg"] },
+          { titulo: "Serviços e pacotes", images: ["/images/case-studies/marina-alves/screen-services-mobile.jpg", "/images/case-studies/marina-alves/screen-services-desktop.jpg"] },
+          { titulo: "Contato", images: ["/images/case-studies/marina-alves/screen-contact-mobile.jpg", "/images/case-studies/marina-alves/screen-contact-desktop.jpg"] },
+        ],
+      },
+    ],
+    stats: [
+      { value: "8", label: "seções seguindo a decisão de compra da marca" },
+      { value: "6", label: "pacotes com mensagem de WhatsApp pré-preenchida" },
+      { value: "1", label: "mídia kit em PDF para download" },
+      { value: "0", label: "conteúdo perdido sem JavaScript (progressive enhancement)" },
+    ],
     nextProjectSlug: "multi-tenant-design-system",
   },
   // Real content added 2026-08-26. Company name "Aurum Bet" is explicitly

@@ -177,6 +177,154 @@ export const caseStudiesEn: CaseStudy[] = [
       { value: "2", label: "user profiles served (staff and owner)" },
       { value: "1", label: "design system built from scratch" },
     ],
+    nextProjectSlug: "dr-carlos-mattos",
+  },
+  // Added 2026-09-24 — English mirror of the dr-carlos-mattos entry in
+  // lib/case-studies.ts (see the notes there on assumed fields).
+  {
+    slug: "dr-carlos-mattos",
+    nda: false,
+    category: "Landing Page",
+    title: "Dr. Carlos Mattos",
+    subtitle:
+      "A landing page for a psychiatry practice in Curitiba, Brazil, where the whole journey leads to a single booking channel: WhatsApp",
+    summary:
+      "A landing page for a psychiatrist who sees patients in person in Curitiba and via telehealth across Brazil. The page starts from situations patients recognize in their own daily lives, introduces the doctor and explains treatment in 4 steps — with WhatsApp booking always one tap away, at any point of the scroll.",
+    cardDescription:
+      "Landing page for a psychiatry practice — recognition, trust and WhatsApp booking on a single page.",
+    year: "2026",
+    coverImage: "/images/case-studies/dr-carlos-mattos/cover.jpg",
+    liveUrl: "/projects/dr-carlos-mattos/index.html",
+    metadata: {
+      papel: "UX/UI Design and front-end development",
+      duracao: "Under 1 month",
+      plataforma: "Web (responsive landing page)",
+      squad: "Me (design and code) + the client",
+    },
+    contexto: {
+      paragraph:
+        "People usually look for a psychiatrist when they're already worn out: they've lived for a long time with poor focus, anxiety or undiagnosed ADHD, and any friction along the way becomes another reason to put it off. The challenge was to build a page that creates recognition and trust quickly, answers the questions that usually block the first contact (insurance, telehealth, wait time, current medication) and turns that decision into a WhatsApp message.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Start with recognition",
+        description:
+          "Right after the hero, the \"Do any of these sound familiar?\" section lists concrete everyday signs in numbered cards — patients recognize themselves before reading any credentials, and the page immediately answers that there is a clinical explanation and an objective treatment.",
+      },
+      {
+        number: "02",
+        title: "One conversion channel",
+        description:
+          "Every CTA leads to WhatsApp with a pre-filled message: header, hero, treatment section, mobile menu, footer and a floating button that follows the scroll on mobile. No forms — booking happens in the channel patients already use.",
+      },
+      {
+        number: "03",
+        title: "Trust before the click",
+        description:
+          "An about section with the doctor's background and a first-person quote, license numbers visible in the hero and footer, a 4-step treatment journey (booking, first appointment, plan and follow-up), address with a map, and an accordion FAQ covering insurance, telehealth, wait time and payment.",
+      },
+      {
+        number: "04",
+        title: "Lightweight and accessible by default",
+        description:
+          "Plain HTML, CSS and JavaScript, no framework. WebP images with separate mobile and desktop versions, non-render-blocking fonts, lazy loading, animations that respect the system's \"reduce motion\" setting, a skip link and keyboard navigation in the mobile menu.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Key sections of the page on mobile and desktop — hero, signs, about the doctor, treatment journey and FAQ",
+        variant: "screen-map",
+        screens: [
+          { titulo: "Hero", images: ["/images/case-studies/dr-carlos-mattos/screen-hero-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-hero-desktop.jpg"] },
+          { titulo: "Signs and challenges", images: ["/images/case-studies/dr-carlos-mattos/screen-signs-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-signs-desktop.jpg"] },
+          { titulo: "About the doctor", images: ["/images/case-studies/dr-carlos-mattos/screen-about-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-about-desktop.jpg"] },
+          { titulo: "How treatment works", images: ["/images/case-studies/dr-carlos-mattos/screen-treatment-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-treatment-desktop.jpg"] },
+          { titulo: "FAQ", images: ["/images/case-studies/dr-carlos-mattos/screen-faq-mobile.jpg", "/images/case-studies/dr-carlos-mattos/screen-faq-desktop.jpg"] },
+        ],
+      },
+    ],
+    stats: [
+      { value: "6", label: "sections, from the first sign to booking" },
+      { value: "6", label: "touchpoints leading to WhatsApp" },
+      { value: "2", label: "care options (in person and telehealth)" },
+      { value: "0", label: "frameworks — plain HTML, CSS and JS" },
+    ],
+    nextProjectSlug: "marina-alves",
+  },
+  // Added 2026-09-24 — English mirror of the marina-alves entry (fictional
+  // persona, concept project — see lib/case-studies.ts).
+  {
+    slug: "marina-alves",
+    nda: false,
+    category: "Landing Page · Media Kit",
+    title: "Marina Alves",
+    subtitle:
+      "An online media kit for a skincare creator (fictional persona) — numbers, audience and ready-made packages brands can book on WhatsApp",
+    summary:
+      "Concept project: a media kit built as a landing page for a skincare and real-routine content creator (Marina Alves is a fictional persona). The page replaces the PDF that gets passed around by email with a living showcase — metrics, audience profile, top content, brand testimonials and priced packages — while still offering the PDF media kit for anyone who needs to attach it to a proposal.",
+    cardDescription:
+      "Concept online media kit for a creator — metrics, audience and packages brands can book straight on WhatsApp.",
+    year: "2026",
+    coverImage: "/images/case-studies/marina-alves/cover.jpg",
+    liveUrl: "/projects/marina-alves/index.html",
+    metadata: {
+      papel: "UX/UI Design and front-end development",
+      duracao: "Under 1 month",
+      plataforma: "Web (responsive landing page)",
+      squad: "Me (personal project)",
+    },
+    contexto: {
+      paragraph:
+        "A creator's media kit is usually a PDF that goes stale fast, can't show video, and forces brands into several emails just to learn the basics: how much it costs and how to book. The idea here was to design the media kit from the buyer's point of view — the brand manager who needs to assess the audience, see proof of results and leave with a package chosen, all in a few minutes and often on a phone, inside Instagram itself.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Structured around the brand's decision",
+        description:
+          "The section order follows the questions a buyer asks: who she is (hero with video), how far she reaches (metrics), who she talks to (gender, age, cities and topics), what has worked (top content and testimonials) and what it costs (services and packages).",
+      },
+      {
+        number: "02",
+        title: "Visible pricing, one-tap booking",
+        description:
+          "4 single services and 2 full packages, with the most popular one highlighted. Every button opens WhatsApp with a message already filled in with the package name and price — the conversation starts with the brand knowing exactly what it wants.",
+      },
+      {
+        number: "03",
+        title: "Data that moves",
+        description:
+          "Animated counters on the metrics, audience bars that fill on scroll, horizontal carousels for videos and testimonials (auto-scrolling on mobile) — all as progressive enhancement: without JavaScript, or with \"reduce motion\" on, every piece of content still shows up, static and complete.",
+      },
+      {
+        number: "04",
+        title: "Built for Instagram's in-app browser",
+        description:
+          "Since the link lives in the bio, the page was tuned for in-app browsers (Instagram/WhatsApp) and for Samsung Internet's forced dark mode, which inverts colors on its own — there the page gets its own dark theme so the visual identity doesn't break. The PDF media kit is still available to download.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Key sections of the media kit on mobile and desktop — hero, metrics, audience, services and contact",
+        variant: "screen-map",
+        screens: [
+          { titulo: "Hero", images: ["/images/case-studies/marina-alves/screen-hero-mobile.jpg", "/images/case-studies/marina-alves/screen-hero-desktop.jpg"] },
+          { titulo: "Metrics", images: ["/images/case-studies/marina-alves/screen-metrics-mobile.jpg", "/images/case-studies/marina-alves/screen-metrics-desktop.jpg"] },
+          { titulo: "Audience", images: ["/images/case-studies/marina-alves/screen-audience-mobile.jpg", "/images/case-studies/marina-alves/screen-audience-desktop.jpg"] },
+          { titulo: "Services and packages", images: ["/images/case-studies/marina-alves/screen-services-mobile.jpg", "/images/case-studies/marina-alves/screen-services-desktop.jpg"] },
+          { titulo: "Contact", images: ["/images/case-studies/marina-alves/screen-contact-mobile.jpg", "/images/case-studies/marina-alves/screen-contact-desktop.jpg"] },
+        ],
+      },
+    ],
+    stats: [
+      { value: "8", label: "sections following the brand's buying decision" },
+      { value: "6", label: "packages with a pre-filled WhatsApp message" },
+      { value: "1", label: "downloadable PDF media kit" },
+      { value: "0", label: "content lost without JavaScript (progressive enhancement)" },
+    ],
     nextProjectSlug: "multi-tenant-design-system",
   },
   {

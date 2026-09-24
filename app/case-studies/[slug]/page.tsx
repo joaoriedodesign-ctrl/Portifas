@@ -88,6 +88,17 @@ export default function CaseStudyPage({
         <p className="heading-h3 min-w-full text-text-secondary">{cs.subtitle}</p>
         <p className="body-lg max-w-[800px] text-text-secondary">{cs.summary}</p>
 
+        {cs.liveUrl && (
+          <a
+            href={cs.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="label-button inline-flex items-center justify-center gap-2 rounded-full bg-cta-primary-bg px-6 py-3 text-cta-primary-text transition-colors hover:bg-cta-primary-bg-hover"
+          >
+            Ver site ao vivo <span aria-hidden="true">↗</span>
+          </a>
+        )}
+
         <div className="grid w-full grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-8">
           <div className="flex flex-col gap-1">
             <p className="caption uppercase text-text-secondary">PAPEL</p>
