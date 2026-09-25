@@ -195,6 +195,83 @@ export const caseStudies: CaseStudy[] = [
       { value: "3", label: "tenants atendidos pela automação de tema" },
       { value: "1/5", label: "do tempo para criar uma tela nova" },
     ],
+    nextProjectSlug: "instituto-mais",
+  },
+  // Added 2026-09-25. Real client, live at institutomaislondrina.com.br
+  // (liveUrl points to the real domain, per user request — no local copy).
+  // Assumed, NOT user-confirmed: metadata.duracao, metadata.papel wording,
+  // year. No traffic/conversion metrics given — stats are scope facts read
+  // from the delivered code only.
+  {
+    slug: "instituto-mais",
+    nda: false,
+    category: "Site Institucional",
+    title: "Instituto MAIS",
+    subtitle:
+      "Site institucional para uma clínica multidisciplinar em Londrina — 7 especialidades, 9 profissionais e um caminho curto até o agendamento",
+    summary:
+      "Site da clínica Instituto MAIS, que reúne psicologia, psicopedagogia, psicanálise, neuropsicologia, neuropsicopedagogia, pilates e massoterapia no mesmo endereço. A página organiza tudo isso a partir de quem procura ajuda — por especialidade, por fase da vida e por profissional — e leva cada caminho ao WhatsApp da clínica com a mensagem certa já escrita.",
+    cardDescription:
+      "Site institucional para clínica multidisciplinar — especialidades, equipe e agendamento direto com cada profissional pelo WhatsApp.",
+    year: "2026",
+    coverImage: "/images/case-studies/instituto-mais/cover.jpg",
+    liveUrl: "https://institutomaislondrina.com.br",
+    metadata: {
+      papel: "UX/UI Design e desenvolvimento front-end",
+      duracao: "1 a 3 meses",
+      plataforma: "Web (site institucional responsivo)",
+      squad: "Eu (design e código) + a clínica",
+    },
+    contexto: {
+      paragraph:
+        "Uma clínica com 7 especialidades corre o risco de virar uma lista de nomes técnicos que o paciente não sabe diferenciar — quem procura ajuda para um filho com dificuldade na escola não necessariamente sabe se precisa de psicopedagogia, neuropsicopedagogia ou psicologia. O desafio era apresentar a clínica como um lugar só, com uma identidade clara (acolher, desenvolver, transformar), ajudar quem não sabe por onde começar e encurtar ao máximo o caminho entre a primeira visita ao site e a conversa com a equipe.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Organizado por quem procura",
+        description:
+          "Três portas de entrada para o mesmo cuidado: as especialidades explicadas em linguagem simples, as fases da vida (crianças, adolescentes, adultos e famílias) e o cuidado integrado mostrando como as áreas se combinam. Para quem ainda não sabe o que precisa, um card dedicado: \"Não sabe por onde começar? A gente ajuda.\"",
+      },
+      {
+        number: "02",
+        title: "Agendamento direto com cada profissional",
+        description:
+          "Cada um dos 9 profissionais tem seu próprio botão de agendamento, que abre o WhatsApp com o nome e a especialidade já na mensagem. A recepção recebe o contato sabendo com quem o paciente quer falar, sem idas e vindas.",
+      },
+      {
+        number: "03",
+        title: "Identidade que se move",
+        description:
+          "O mosaico da marca vira linguagem visual do site inteiro — nos selos, ícones das especialidades e na seção de cuidado integrado, onde os blocos convergem conforme a rolagem (\"os olhares se encontram\"). Tema claro e escuro seguem o dispositivo, com botão para alternar.",
+      },
+      {
+        number: "04",
+        title: "Pronto para ser encontrado e medido",
+        description:
+          "SEO local com dados estruturados de clínica, sitemap e Open Graph; fontes hospedadas no próprio site; e Google Tag Manager, GA4 e Meta Pixel já preparados, com cada clique no WhatsApp registrado como evento de conversão para as campanhas da clínica.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Principais seções do site no mobile e no desktop — hero, especialidades, cuidado integrado, equipe e tema escuro",
+        variant: "screen-map",
+        screens: [
+          { titulo: "Hero", images: ["/images/case-studies/instituto-mais/screen-hero-mobile.jpg", "/images/case-studies/instituto-mais/screen-hero-desktop.jpg"] },
+          { titulo: "Especialidades", images: ["/images/case-studies/instituto-mais/screen-specialties-mobile.jpg", "/images/case-studies/instituto-mais/screen-specialties-desktop.jpg"] },
+          { titulo: "Cuidado integrado", images: ["/images/case-studies/instituto-mais/screen-integrated-mobile.jpg", "/images/case-studies/instituto-mais/screen-integrated-desktop.jpg"] },
+          { titulo: "Equipe", images: ["/images/case-studies/instituto-mais/screen-team-mobile.jpg", "/images/case-studies/instituto-mais/screen-team-desktop.jpg"] },
+          { titulo: "Tema escuro", images: ["/images/case-studies/instituto-mais/screen-dark-mobile.jpg", "/images/case-studies/instituto-mais/screen-dark-desktop.jpg"] },
+        ],
+      },
+    ],
+    stats: [
+      { value: "7", label: "especialidades apresentadas em linguagem simples" },
+      { value: "9", label: "profissionais com agendamento direto pelo WhatsApp" },
+      { value: "4", label: "fases da vida atendidas (crianças a famílias)" },
+      { value: "2", label: "temas — claro e escuro, seguindo o dispositivo" },
+    ],
     nextProjectSlug: "zentupet",
   },
   {

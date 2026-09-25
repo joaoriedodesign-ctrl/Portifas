@@ -99,6 +99,80 @@ export const caseStudiesEn: CaseStudy[] = [
       { value: "3", label: "tenants served by the theme automation" },
       { value: "1/5", label: "of the time to create a new screen" },
     ],
+    nextProjectSlug: "instituto-mais",
+  },
+  // Added 2026-09-25 — English mirror of the instituto-mais entry in
+  // lib/case-studies.ts (real client; see notes there on assumed fields).
+  {
+    slug: "instituto-mais",
+    nda: false,
+    category: "Institutional Website",
+    title: "Instituto MAIS",
+    subtitle:
+      "Website for a multidisciplinary clinic in Londrina, Brazil — 7 specialties, 9 professionals and a short path to booking",
+    summary:
+      "Website for Instituto MAIS, a clinic that brings psychology, educational psychology, psychoanalysis, neuropsychology, neuro-educational psychology, pilates and massage therapy under one roof. The site organizes all of it around the person looking for help — by specialty, by life stage and by professional — and sends every path to the clinic's WhatsApp with the right message already written.",
+    cardDescription:
+      "Website for a multidisciplinary clinic — specialties, team and direct WhatsApp booking with each professional.",
+    year: "2026",
+    coverImage: "/images/case-studies/instituto-mais/cover.jpg",
+    liveUrl: "https://institutomaislondrina.com.br",
+    metadata: {
+      papel: "UX/UI Design and front-end development",
+      duracao: "1 to 3 months",
+      plataforma: "Web (responsive website)",
+      squad: "Me (design and code) + the clinic",
+    },
+    contexto: {
+      paragraph:
+        "A clinic with 7 specialties can easily turn into a list of technical names patients can't tell apart — a parent looking for help for a child struggling at school doesn't necessarily know whether they need educational psychology, neuro-educational psychology or psychology. The challenge was to present the clinic as one place with a clear identity (welcome, develop, transform), help people who don't know where to start, and make the path from the first visit to a conversation with the team as short as possible.",
+    },
+    pillars: [
+      {
+        number: "01",
+        title: "Organized around the visitor",
+        description:
+          "Three entry points to the same care: specialties explained in plain language, life stages (children, teens, adults and families) and integrated care showing how the areas combine. For anyone who still isn't sure what they need, a dedicated card: \"Not sure where to start? We'll help.\"",
+      },
+      {
+        number: "02",
+        title: "Direct booking with each professional",
+        description:
+          "Each of the 9 professionals has their own booking button, which opens WhatsApp with their name and specialty already in the message. The front desk gets the contact already knowing who the patient wants to see, with no back-and-forth.",
+      },
+      {
+        number: "03",
+        title: "An identity that moves",
+        description:
+          "The brand's mosaic becomes the visual language of the whole site — in the badges, the specialty icons and the integrated care section, where the blocks converge as you scroll (\"perspectives meet\"). Light and dark themes follow the device, with a toggle to switch.",
+      },
+      {
+        number: "04",
+        title: "Ready to be found and measured",
+        description:
+          "Local SEO with clinic structured data, sitemap and Open Graph; self-hosted fonts; and Google Tag Manager, GA4 and Meta Pixel ready to go, with every WhatsApp click tracked as a conversion event for the clinic's campaigns.",
+      },
+    ],
+    imageBlocks: [
+      {
+        caption:
+          "Key sections of the site on mobile and desktop — hero, specialties, integrated care, team and dark theme",
+        variant: "screen-map",
+        screens: [
+          { titulo: "Hero", images: ["/images/case-studies/instituto-mais/screen-hero-mobile.jpg", "/images/case-studies/instituto-mais/screen-hero-desktop.jpg"] },
+          { titulo: "Specialties", images: ["/images/case-studies/instituto-mais/screen-specialties-mobile.jpg", "/images/case-studies/instituto-mais/screen-specialties-desktop.jpg"] },
+          { titulo: "Integrated care", images: ["/images/case-studies/instituto-mais/screen-integrated-mobile.jpg", "/images/case-studies/instituto-mais/screen-integrated-desktop.jpg"] },
+          { titulo: "Team", images: ["/images/case-studies/instituto-mais/screen-team-mobile.jpg", "/images/case-studies/instituto-mais/screen-team-desktop.jpg"] },
+          { titulo: "Dark theme", images: ["/images/case-studies/instituto-mais/screen-dark-mobile.jpg", "/images/case-studies/instituto-mais/screen-dark-desktop.jpg"] },
+        ],
+      },
+    ],
+    stats: [
+      { value: "7", label: "specialties explained in plain language" },
+      { value: "9", label: "professionals with direct WhatsApp booking" },
+      { value: "4", label: "life stages served (children to families)" },
+      { value: "2", label: "themes — light and dark, following the device" },
+    ],
     nextProjectSlug: "zentupet",
   },
   {
