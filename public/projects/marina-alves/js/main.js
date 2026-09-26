@@ -27,7 +27,7 @@
      2. Contadores (métricas e porcentagens)
      ------------------------------------------------------------------ */
   function formatNumber(value, decimals) {
-    return value.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    return value.toLocaleString('pt-BR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   }
 
   function prepareCounter(el, target, decimals, suffix) {
@@ -134,7 +134,7 @@
       void menu.offsetWidth;
       menu.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close menu');
+      toggle.setAttribute('aria-label', 'Fechar menu');
       document.body.classList.add('menu-open');
       if (viaKeyboard) {
         var first = focusables()[0];
@@ -149,7 +149,7 @@
       if (menu.hidden) return;
       menu.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open menu');
+      toggle.setAttribute('aria-label', 'Abrir menu');
       document.body.classList.remove('menu-open');
       var done = function () { if (!menu.classList.contains('is-open')) menu.hidden = true; };
       if (reduceMotion) done(); else setTimeout(done, 420);
@@ -239,7 +239,7 @@
       var id = link.dataset.yt;
       var iframe = document.createElement('iframe');
       iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
-      iframe.title = link.getAttribute('aria-label') || 'YouTube video';
+      iframe.title = link.getAttribute('aria-label') || 'Vídeo do YouTube';
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.allowFullscreen = true;
       link.appendChild(iframe);

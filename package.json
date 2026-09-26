@@ -1,29 +1,24 @@
 {
-  "name": "portfolio-joao-lucas",
-  "version": "0.1.0",
-  "private": true,
+  "name": "joaoriedo-portfolio",
+  "version": "1.0.0",
+  "description": "Portf\u00f3lio v2 de Jo\u00e3o Riedo \u2014 site est\u00e1tico PT/EN gerado a partir de conte\u00fado e tokens do Figma",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "node build.mjs",
+    "serve": "node serve.mjs",
+    "dev": "node build.mjs && node serve.mjs",
+    "tokens": "node scripts/build-tokens.mjs",
+    "placeholders": "node scripts/placeholders.mjs",
+    "hero-layout": "node scripts/hero-layout.mjs",
+    "og": "node scripts/og.mjs",
+    "verify": "node scripts/verify.mjs",
+    "preview": "node build.mjs && node scripts/preview.mjs"
   },
-  "dependencies": {
-    "@paper-design/shaders-react": "^0.0.80",
-    "lucide-react": "^1.34.0",
-    "next": "^14.2.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
+  "license": "UNLICENSED",
   "devDependencies": {
-    "@types/node": "^20.14.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.5",
-    "postcss": "^8.4.40",
-    "tailwindcss": "^3.4.7",
-    "typescript": "^5.5.4"
-  }
+    "@fontsource-variable/outfit": "^5.3.0",
+    "@fontsource/righteous": "^5.3.0",
+    "esbuild": "^0.25.12"
+  },
+  "private": true,
+  "type": "module"
 }
